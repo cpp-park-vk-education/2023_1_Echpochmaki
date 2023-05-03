@@ -3,12 +3,12 @@ using namespace sf;
 
 int main()
 {
-	RenderWindow window(sf::VideoMode(640, 480), "Lesson 8. kychka-pc.ru");
+	RenderWindow window(sf::VideoMode(640, 480), "Nss");
 
 	float CurrentFrame = 0;//хранит текущий кадр
 	Clock clock;
 
-	Player p("../textures/HeroKnight.png",250,250,72.0, 68.0);//создаем объект p класса player,задаем "hero.png" как имя файла+расширение, далее координата Х,У, ширина, высота.
+	Player p("Graphics/textures/HeroKnight.png",250,250,72.0, 68.0);//создаем объект p класса player,задаем "hero.png" как имя файла+расширение, далее координата Х,У, ширина, высота.
 	while (window.isOpen())
 	{
 
@@ -23,6 +23,7 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
+		//0 - игрок , 1 - cундук
 
 
 		///////////////////////////////////////////Управление персонажем с анимацией////////////////////////////////////////////////////////////////////////
