@@ -45,6 +45,20 @@ class Component
  public:
 	Entity* entity;
 
+	virtual void Init()
+	{
+		entity = nullptr;
+	}
+	virtual void Update(TimeValueType timePassed)
+	{
+	}
+	virtual void Draw()
+	{
+	}
+
+	virtual ~Component()
+	{
+	}
 };
 
 
