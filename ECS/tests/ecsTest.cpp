@@ -8,13 +8,20 @@
 using namespace std;
 
 
+TEST(Entity,basicAdd)
+{
+	Entity entity;
+	entity.AddComponent<Component>();
+	EXPECT_EQ(entity.HasComponent<Component>(), true);
+}
+
 
 
 TEST(Entity,basicAdd)
 {
 	Entity entity;
-	entity.AddComponent<PositionComponent>(32,32);
-	EXPECT_EQ(entity.HasComponent<PositionComponent>(), true);
+	entity.AddComponent<Component>();
+	EXPECT_EQ(entity.HasComponent<Component>(), true);
 }
 
 
@@ -45,7 +52,7 @@ TEST(Entity,failedRemove)
 TEST(Entity,getComponentFailed)
 {
 	Entity entity;
-	EXPECT_EQ(entity.HasComponent<PositionComponent>(), false);
+	EXPECT_EQ(entity.HasComponent<Component>(), false);
 }
 
 
@@ -57,5 +64,7 @@ TEST(Entity,doubleAdd)
 	auto component2 = entity.AddComponent<PositionComponent>(43,12);
 	EXPECT_EQ(&component2, &entity.GetComponent<PositionComponent>());
 }
+
+
 
 
