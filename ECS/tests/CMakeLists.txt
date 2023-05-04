@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 set(This ExampleTests)
 
-set(Sources ecs_test.cpp)
+set(Sources ecsTest.cpp entityManagerTest.cpp)
 
 include_directories(ECS/Components)
 include_directories(ECS)
