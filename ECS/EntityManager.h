@@ -32,15 +32,20 @@ class EntityManager
 	std::vector<Entity*> entities;
 	std::set<ISystem*> systems;
  public:
-	bool addEntity(Entity * entity);
-	bool addSystem(ISystem* system);
+	void addEntity(Entity * entity)
+	{
+		entities.push_back(entity);
+	}
+	bool addSystem(ISystem* system) // returns isSucceded
+	{
+		return systems.insert(system).second;
+	}
 
 
 	template<typename... TArgs>
 	void selectEntites(std::vector<Entity*> &dest)
 	{
-
-		//ToDO::fixthis
+		//TODO::Implement this
 	}
 
 	Entity* getEntity(int keyID)

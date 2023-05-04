@@ -93,12 +93,15 @@ class Entity
 		return *static_cast<T*>(ptr);
 	}
 
-	template<typename T,typename... TArgs>
+	template<typename... TArgs>
 	bool HasComponents() const
 	{
 		//set<>
-		std::tuple<std::vector<TArgs>...> types; // TODO::FIXthis
-		return std::get<std::vector<T>>;
+		std::vector<bool> componentIsContained{ HasComponent<TArgs>()...};
+		for (bool contains : componentIsContained)
+			if (!contains)
+				return false;
+		return true;
 	}
 
 	template<typename T>

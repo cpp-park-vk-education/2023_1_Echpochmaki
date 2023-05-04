@@ -8,6 +8,10 @@ find_package(SFML COMPONENTS system window graphics network audio REQUIRED)
 
 
 
+enable_testing()
+find_package(GTest REQUIRED)
+include(GoogleTest)
+
 include_directories(Graphics/include)
 include_directories(ECS/Components)
 include_directories(ECS)
