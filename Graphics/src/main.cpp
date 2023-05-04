@@ -1,4 +1,5 @@
 #include <animatable.h>
+#include <iostream>
 using namespace sf;
 
 int main()
