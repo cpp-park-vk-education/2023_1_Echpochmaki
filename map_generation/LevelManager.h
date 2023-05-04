@@ -8,12 +8,12 @@
 
 class RoomGenerator : public IRoomGenerator{
 public:
-    tileMap generateRoom(const roomDescriptionBase &parameters) override;
+    tileMap generateRoom(const RoomDescriptionBase &parameters) override;
 };
 
 class MapGenerator : public IMapGenerator{
 public:
-    tileMap generateMap(const mapDescriptionBase& parameters) override;
+    tileMap generateMap(const MapDescriptionBase& parameters) override;
     void setRoomGenerator(std::unique_ptr<IRoomGenerator> generator) override;
 
 private:

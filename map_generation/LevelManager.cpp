@@ -1,15 +1,18 @@
 #include "LevelManager.h"
 
-tileMap RoomGenerator::generateRoom(const roomDescriptionBase &parameters) {
+tileMap RoomGenerator::generateRoom(const RoomDescriptionBase &parameters) {
     // Принимает размер области для комнаты, вписывает комнату и заполняет ее тайлами
     // Возвращает кусочек тайл мапы, который описывает только одну комнату
-    return {};
+
+    tileMap map(3, std::vector<EntityTileBase>(3));
+    return map;
 };
 
-tileMap MapGenerator::generateMap(const mapDescriptionBase &parameters) {
+tileMap MapGenerator::generateMap(const MapDescriptionBase &parameters) {
     // Cоздание карты, внутри вызов roomGenerator
 
-    return roomGenerator->generateRoom();
+    RoomDescriptionBase room = {10, 10};
+    return roomGenerator->generateRoom(room);
 }
 
 void MapGenerator::setRoomGenerator(std::unique_ptr<IRoomGenerator> generator) {
@@ -35,7 +38,9 @@ tileMap LevelManager::createMap() {
 
     srand(seed);
 
-    return mapGenerator->generateMap();
+    MapDescriptionBase map = {100, 100};
+
+    return mapGenerator->generateMap(map);
 }
 
 int LevelManager::getSeed() {

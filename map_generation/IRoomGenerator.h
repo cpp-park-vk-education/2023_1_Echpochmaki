@@ -11,21 +11,21 @@
 // Все спрайты энтити
 // Возвращаю матрицу тайлов на всю карту
 
-struct entityTileBase{
+struct EntityTileBase{
     int objectId;
 };
 
-struct roomDescriptionBase{
+struct RoomDescriptionBase{
     int width;
     int height;
 };
 
-using tileMap = std::vector<std::vector<entityTileBase&>>;
+using tileMap = std::vector<std::vector<EntityTileBase>>;
 
 
 class IRoomGenerator{
 public:
-    virtual tileMap generateRoom(const roomDescriptionBase &parameters) = 0;
+    virtual tileMap generateRoom(const RoomDescriptionBase &parameters) = 0;
     virtual ~IRoomGenerator() = default;
 };
 

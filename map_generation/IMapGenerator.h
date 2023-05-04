@@ -6,14 +6,14 @@
 #include <memory>
 #include "IRoomGenerator.h"
 
-struct mapDescriptionBase{
+struct MapDescriptionBase{
     int width;
     int height;
 };
 
 class IMapGenerator{
 public:
-    virtual tileMap generateMap(const mapDescriptionBase& parameters) = 0;
+    virtual tileMap generateMap(const MapDescriptionBase& parameters) = 0;
     virtual void setRoomGenerator(std::unique_ptr<IRoomGenerator> generator) = 0;
 
     virtual ~IMapGenerator() = default;
