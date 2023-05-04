@@ -67,6 +67,10 @@ int main()
 		window.draw(p.sprite);//рисуем спрайт объекта p класса player
 		window.display();
 	}
+	//Testing area
+
+
+
 
 	return 0;
 }

@@ -53,6 +53,7 @@ class Component
 class Entity
 {
  public:
+	int id;
 
 	bool IsActive() const
 	{
@@ -92,7 +93,28 @@ class Entity
 		return *static_cast<T*>(ptr);
 	}
 
+	template<typename T,typename... TArgs>
+	bool HasComponents() const
+	{
+		//set<>
+		std::tuple<std::vector<TArgs>...> types; // TODO::FIXthis
+		return std::get<std::vector<T>>;
+	}
+
+	template<typename T>
+	bool RemoveComponent() const
+	{
+		if (!componentBitSet[getComponentTypeID<T>()]) //Component already deleted
+			return false;
+		components[getComponentTypeID<T>()].reset();
+		componentBitSet[getComponentTypeID<T>()] = true;
+	}
+
+
+
+
  private:
+
 	bool active = true;
 	std::vector<std::unique_ptr<Component>> components;
 

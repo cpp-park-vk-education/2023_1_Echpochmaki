@@ -14,7 +14,8 @@ include_directories(ECS)
 set(Srcs "Graphics/src/main.cpp")
 set(Hdrs  "Graphics/include/animatable.h"  "ECS/ECS.h" "ECS/Components/SpriteComponent.h" "ECS/Components/PositionComponent.h" "ECS/Components/AnimationComponent.h"
         "ECS/Components/VelocityComponent.h" "ECS/Components/AttackComponent.h" "ECS/Components/AttackComponent.h"
-        "ECS/Components/HealthComponent.h" "ECS/Components/TargetComponent.h"
+        "ECS/Components/HealthComponent.h" "ECS/Components/TargetComponent.h" "ECS/Components/CollisionComponent.h"
+        "ECS/EntityManager.h"
         )
 
 add_executable(ECS ${Srcs} ${Hdrs})
