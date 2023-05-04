@@ -17,11 +17,7 @@ struct ISystem // Fake system for compiling
 };
 
 
-struct Game // Fake game for compiling
-{
-
-};
-
+class Game; // Fake game for compiling
 
 
 using namespace sf;

@@ -10,7 +10,7 @@
 
 class Game {
 public:
-    void getMap();
+    void loadMap();
     void run();
     void load(const char *config);
 
