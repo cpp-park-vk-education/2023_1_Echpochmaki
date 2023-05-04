@@ -12,13 +12,19 @@
 #include <bitset>
 #include <array>
 
+#include "../map_generation/IRoomGenerator.h"
+#include "Tile.h"
+
 class Component;
 class Entity;
 
 using ComponentID = std::size_t;
 using TimeValueType = double;
 
-
+class EntityCreator {
+public:
+    std::vector<Entity*> createEntitiesByMap(const tileMap& tilemap){}
+};
 
 
 inline ComponentID getComponentTypeID()

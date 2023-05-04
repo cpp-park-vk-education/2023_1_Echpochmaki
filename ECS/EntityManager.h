@@ -32,6 +32,11 @@ class EntityManager
 	{
 		entities.push_back(entity);
 	}
+
+    void setEntities(std::vector<Entity*>&& entities){
+        ; // Замена Всех энтити
+    }
+
 	bool addSystem(ISystem* system) // returns isSucceded
 	{
 		return systems.insert(system).second;

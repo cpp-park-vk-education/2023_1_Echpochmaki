@@ -7,21 +7,15 @@
 
 #include <iostream>
 #include <vector>
+#include "../ECS/Tile.h"
 
 // Все спрайты энтити
 // Возвращаю матрицу тайлов на всю карту
-
-struct EntityTileBase{
-    int objectId;
-};
 
 struct RoomDescriptionBase{
     int width;
     int height;
 };
-
-using tileMap = std::vector<std::vector<EntityTileBase>>;
-
 
 class IRoomGenerator{
 public:

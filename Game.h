@@ -18,7 +18,8 @@ private:
     tileMap map;
 
     std::unique_ptr<LevelManager> level;
-    std::unique_ptr<EntityManager> entity;
+    std::unique_ptr<EntityManager> entityManager;
+    std::unique_ptr<EntityCreator> entityCreator;
     std::unique_ptr<Network> network;
 };
 

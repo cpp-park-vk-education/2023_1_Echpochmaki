@@ -2,8 +2,10 @@
 
 void Game::loadMap(){
     // Получение карты, передача Entity Creator
-    map = level->createMap();
     // map -> EntityCreator -> (vector <Entity>) -> EntityManager
+    map = level->createMap();
+    auto entities = entityCreator->createEntitiesByMap(map);
+    entityManager->setEntities(std::move(entities));
 }
 
 void Game::load(const char *config) {
@@ -22,5 +24,7 @@ void Game::run() {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
+        // TODO: Update frames
     }
 }
