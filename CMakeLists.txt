@@ -13,7 +13,10 @@ include_directories(ECS/Components)
 include_directories(ECS)
 set(Srcs "Graphics/src/main.cpp")
 set(Hdrs  "Graphics/include/animatable.h"  "ECS/ECS.h" "ECS/Components/SpriteComponent.h" "ECS/Components/PositionComponent.h" "ECS/Components/AnimationComponent.h"
-        "Animation/Animation.h" "Animation/IAnimation.h" "ECS/Components/VelocityComponent.h")
+        "ECS/Components/VelocityComponent.h" "ECS/Components/AttackComponent.h" "ECS/Components/AttackComponent.h"
+        "ECS/Components/HealthComponent.h" "ECS/Components/TargetComponent.h"
+        )
+
 add_executable(ECS ${Srcs} ${Hdrs})
 target_link_libraries(ECS sfml-graphics)
 install(TARGETS ECS DESTINATION bin)

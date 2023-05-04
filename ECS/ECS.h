@@ -70,6 +70,7 @@ class Entity
 	}
 
 
+
 	template<typename T, typename... TArgs>
 	T& AddComponent(TArgs&& ... mArgs)
 	{
