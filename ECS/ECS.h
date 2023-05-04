@@ -23,7 +23,7 @@ using TimeValueType = double;
 
 class EntityCreator {
 public:
-    std::vector<Entity*> createEntitiesByMap(const tileMap& tilemap){}
+    std::vector<Entity*> createEntitiesByMap(const tileMap& tilemap){return std::vector<Entity*>();}
 };
 
 
