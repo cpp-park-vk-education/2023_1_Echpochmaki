@@ -27,5 +27,4 @@ public:
     void update(){}; 
 
     bool send(sf::Packet& packet) {return false;};   
-
 };
