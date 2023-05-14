@@ -15,7 +15,7 @@ add_subdirectory(ECS)
 
 add_executable(app main.cpp)
 
-option(BUILD_TESTS "build tests")
+option(BUILD_TESTS "build tests" ON)
 if (BUILD_TESTS)
     enable_testing()
     find_package(GTest REQUIRED)
