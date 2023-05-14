@@ -19,6 +19,8 @@
 #include "HitBoxSystem.h"
 
 
+const int DELTA_TIME = 60.0;
+
 class Game {
 public:
     void loadMap();

@@ -15,7 +15,7 @@ void Game::load(const char *config) {
 void Game::run() {
     // Loop обновление по кадрам всего
     RenderWindow window(sf::VideoMode(640, 480), "Nss");
-
+	window.setFramerateLimit(1.0f / DELTA_TIME);
 	//Components
 	EntityManager manager;
 	Entity player;
@@ -62,8 +62,8 @@ void Game::run() {
         }
 
         // TODO: Update frames
-		//window.clear();
-		window.draw(sprite);
+		window.clear();
+
 		manager.update(this);
 
 		window.display();

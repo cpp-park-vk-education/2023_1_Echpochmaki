@@ -24,6 +24,9 @@ class MoveSystem : public BaseSystem
 		std::vector<Entity*> entities;
 		manager->selectEntites<PositionComponent>(entities);
 
+		if (entities.size() == 1)
+			entities[0]->getComponent<PositionComponent>().position += entities[0]->getComponent<VelocityComponent>().velocity;
+
 		for (auto it1 = entities.begin(); it1 != entities.end() - 1; it1++)
 		{
 			if ((*it1)->HasComponent<VelocityComponent>())
