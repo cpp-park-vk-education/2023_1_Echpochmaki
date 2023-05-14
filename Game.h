@@ -29,7 +29,9 @@ public:
 
     void load(const char *config);
 
-    // Game() :
+    explicit Game(std::unique_ptr<LevelManager> levelMgr) {
+        level.swap(levelMgr);
+    }
 
 private:
 
