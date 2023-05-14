@@ -12,7 +12,7 @@
 #include <bitset>
 #include <array>
 
-#include "../map_generation/IRoomGenerator.h"
+
 #include "Tile.h"
 
 class Component;

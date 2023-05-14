@@ -6,19 +6,13 @@
 
 using TypeId = int;
 
-struct EnemyComponent : public Component
-{
+struct EnemyComponent : public Component {
     TypeId id;
 
-    HealthComponent() = default;
+    EnemyComponent() = default;
 
-    HealthComponent(HealthValueType healthSrc)
-    {
-        health = healthSrc;
-    }
 
-    TypeId GetId() const
-    {
+    TypeId GetId() const {
         return id;
     }
 };

@@ -5,16 +5,17 @@
 #include <vector>
 #include <memory>
 #include "IRoomGenerator.h"
-#include "../ECS/Tile.h"
+#include "../../ECS/inc/Tile.h"
 
-struct MapDescriptionBase{
+struct MapDescriptionBase {
     int width;
     int height;
 };
 
-class IMapGenerator{
+class IMapGenerator {
 public:
-    virtual tileMap generateMap(const MapDescriptionBase& parameters) = 0;
+    virtual tileMap generateMap(const MapDescriptionBase &parameters) = 0;
+
     virtual void setRoomGenerator(std::unique_ptr<IRoomGenerator> generator) = 0;
 
     virtual ~IMapGenerator() = default;

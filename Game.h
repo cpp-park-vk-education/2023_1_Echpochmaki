@@ -3,15 +3,17 @@
 
 #include <memory>
 
-#include "map_generation/LevelManager.h"
-#include "ECS/EntityManager.h"
-#include "net/Network.hpp"
+#include "MapGeneration/inc/LevelManager.h"
+#include "ECS/inc/EntityManager.h"
+#include "net/inc/Network.hpp"
 
 
 class Game {
 public:
     void loadMap();
+
     void run();
+
     void load(const char *config);
 
 private:

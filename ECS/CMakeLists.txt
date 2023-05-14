@@ -1,18 +1,8 @@
-cmake_minimum_required(VERSION 3.12)
-project(Example)
-set(This Example)
+add_library(EntityManager src/EntityManager.cpp)
+target_include_directories(EntityManager PUBLIC inc)
 
-project(${This} C CXX)
+add_subdirectory(Systems)
 
-
-set(CMAKE_CXX_STANDARD 20)
-
-include_directories(ECS/Components)
-include_directories(ECS)
-
-enable_testing()
-set(Headers ECS.h EntityManager.hpp)
-set(Sources EntityManager.cpp)
-add_library(Example STATIC ${Sources} ${Headers})
-
-add_subdirectory(tests)
+if(BUILD_TESTS)
+    add_subdirectory(tests)
+endif()

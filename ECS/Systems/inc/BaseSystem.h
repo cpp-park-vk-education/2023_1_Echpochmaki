@@ -1,20 +1,20 @@
 #ifndef ECS_BASESYSTEM_H
 #define ECS_BASESYSTEM_H
 
-#include "../../EntityManager.h"
+#include "EntityManager.h"
 
 class BaseSystem {
 public:
     virtual int getSystemId();
 
-    virtual void update(EntityManager* manager);
+    virtual void update(EntityManager *manager);
 
     virtual bool added();//TODO::find out what to return
 
-    template <typename T>
+    template<typename T>
     void setBefore();
 
-    template <typename T>
+    template<typename T>
     void setAfter();
 
     virtual ~BaseSystem() = default;

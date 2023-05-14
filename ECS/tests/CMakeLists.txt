@@ -1,15 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
-set(This test)
+add_executable(ecs_tests src/componentTest.cpp src/ecsTest.cpp src/entityManagerTest.cpp)
+target_link_libraries(ecs_tests ../inc ../Components GTest::gtest_main)
 
-set("Sources ecsTest.cpp" "entityManagerTest.cpp" "componentTest.cpp")
-
-include_directories(ECS/Components)
-include_directories(ECS)
-
-add_executable(${This} ${Sources})
-target_link_libraries(${This} PUBLIC gtest-main Example)
-
-add_test(
-        Name ${This}
-        COMMAND ${This}
-)
+add_test(ecs_tests ecs_tests)
