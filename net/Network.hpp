@@ -15,17 +15,16 @@ public:
     shared_ptr<IClient> currentClient;
 
 
-    bool isHost() const {return false;};
-    bool isClient() const {return false;};
+    bool isHost() const;
+    bool isClient() const;
 
-    weak_ptr<IHost> runHost() {return weak_ptr<IHost>(shared_ptr<IHost>(nullptr));};
+    weak_ptr<IHost> runHost();
 
-    bool connectToHost(const sf::IpAddress& addr, sf::Uint32 port) {return false;};
+    bool connectToHost(const sf::IpAddress& addr, sf::Uint32 port);
 
-    bool closeHost() {return false;};
+    bool closeHost();
 
-    void update(){}; 
+    void update(); 
 
-    bool send(sf::Packet& packet) {return false;};   
-
+    bool send(sf::Packet& packet);
 };

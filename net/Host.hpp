@@ -8,9 +8,9 @@ class Host : IHost {
     sf::IpAddress addr;
     sf::Uint16 port;
 
-    virtual void handleClient(IClient* c) override {};
+    virtual void handleClient(IClient* c) override;
 
-    virtual void disconnectClient(int id) override {};
+    virtual void disconnectClient(int id) override;
 
-    virtual bool send(sf::Packet& pack) override {return false;};
+    virtual bool send(sf::Packet& pack) override;
 };

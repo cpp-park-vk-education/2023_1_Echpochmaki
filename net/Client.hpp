@@ -7,7 +7,7 @@ class Client : IClient {
     sf::IpAddress addr;
     sf::Uint16 port;
 
-    virtual void disconnect() override {};
+    virtual void disconnect() override;
 
-    virtual bool send(sf::Packet& packet) override {return false;};
+    virtual bool send(sf::Packet& packet) override;
 };
