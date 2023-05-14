@@ -47,7 +47,6 @@ class MoveSystem : public BaseSystem
 						IntRect rect2 = (*it2)->getComponent<CollisionComponent>().collisionBox;
 						if (rect2.intersects(rect1))
 						{
-							std::cout<< "Collided\n";
 							(*it1)->getComponent<PositionComponent>().position = oldPosition;
 							(*it1)->getComponent<VelocityComponent>().velocity = {0,0};
 							break;
