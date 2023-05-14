@@ -11,6 +11,7 @@ find_package(SFML COMPONENTS system window graphics network audio REQUIRED)
 add_subdirectory(MapGeneration)
 add_subdirectory(Graphics)
 add_subdirectory(events)
+add_subdirectory(net)
 add_subdirectory(ECS)
 
 add_executable(app main.cpp Game.cpp MapGeneration/src/LevelManager.cpp)

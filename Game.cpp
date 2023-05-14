@@ -26,7 +26,7 @@ void Game::run() {
     player.AddComponent<PlayerComponent>();
 
     Image image;
-    image.loadFromFile("../Graphics/textures/HeroKnight.png");
+    image.loadFromFile("./Graphics/textures/HeroKnight.png");
     Texture texture;
     texture.loadFromImage(image);
     Sprite sprite;
@@ -68,7 +68,7 @@ void Game::run() {
     enemy.AddComponent<EnemyComponent>();
 
     Image enemy_img;
-    enemy_img.loadFromFile("../Graphics/textures/HeroKnight.png");
+    enemy_img.loadFromFile("./Graphics/textures/HeroKnight.png");
     Texture enemy_texture;
     enemy_texture.loadFromImage(image);
     Sprite enemy_sprite;

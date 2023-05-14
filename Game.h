@@ -5,7 +5,7 @@
 
 #include "MapGeneration/inc/LevelManager.h"
 #include "ECS/inc/EntityManager.h"
-#include "net/inc/Network.hpp"
+#include "net/inc/Network.h"
 
 #include "PositionComponent.h"
 #include "VelocityComponent.h"
