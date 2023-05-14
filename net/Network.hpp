@@ -9,6 +9,10 @@ using std::weak_ptr;
 using std::shared_ptr;
 
 class Network {
+public:
+    static constexpr sf::Uint16 HOST_PORT = 5008;
+    static constexpr sf::Uint16 CLIENT_PORT = 5007;
+
 
 public:
     shared_ptr<IHost> currentHost;
@@ -27,4 +31,7 @@ public:
     void update(); 
 
     bool send(sf::Packet& packet);
+
+private:
+    
 };

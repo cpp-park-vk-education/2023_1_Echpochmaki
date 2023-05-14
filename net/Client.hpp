@@ -2,10 +2,8 @@
 
 #include "IClient.hpp"
 
-class Client : IClient {
-    sf::UdpSocket socket;
-    sf::IpAddress addr;
-    sf::Uint16 port;
+class Client : public IClient {
+    virtual bool connectToHost(const sf::IpAddress& addr, sf::Uint16 port) override;
 
     virtual void disconnect() override;
 
