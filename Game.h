@@ -7,6 +7,17 @@
 #include "ECS/EntityManager.h"
 #include "net/Network.hpp"
 
+#include "PositionComponent.h"
+#include "VelocityComponent.h"
+#include "EnemyComponent.h"
+#include "PlayerComponent.h"
+#include "SpriteComponent.h"
+
+#include "DrawSystem.h"
+#include "MoveSystem.h"
+#include "PlayerSystem.h"
+#include "HitBoxSystem.h"
+
 
 class Game {
 public:

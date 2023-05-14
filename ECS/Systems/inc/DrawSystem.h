@@ -10,13 +10,10 @@ const int DrawSystemID = 2321;
 
 #include "BaseSystem.h"
 #include "SpriteComponent.h"
-class DrawSystem : BaseSystem
+
+class DrawSystem : public BaseSystem
 {
  public:
-	virtual int getSystemId() override
-	{
-		return ID;
-	}
 
 	virtual void update(EntityManager* manager)
 	{
@@ -28,7 +25,6 @@ class DrawSystem : BaseSystem
 
 	virtual bool added()
 	{
-		ID = MoveSystemID;
 		return true;
 	}
 
@@ -36,6 +32,12 @@ class DrawSystem : BaseSystem
 	{
 		window = windowSrc;
 	}
+
+	virtual int getSystemID() override
+	{
+		return DrawSystemID;
+	}
+
 	~DrawSystem() override = default;
 
  private:

@@ -6,6 +6,8 @@
 #include "EnemyComponent.h"
 #include "PlayerComponent.h"
 
+#include "EntityManager.h"
+
 #include "EnemyComponent.h"
 #include "PositionComponent.h"
 #include "VelocityComponent.h"
@@ -17,10 +19,6 @@
 
 class EnemySystem : public BaseSystem {
 public:
-    int getSystemId() override
-    {
-
-    }
 
 
     void update(EntityManager* manager) override {
@@ -66,7 +64,13 @@ public:
 
     ~EnemySystem() override = default;
 
-protected:
+	virtual int getSystemID() override
+	{
+		return ID;
+	}
+
+
+ protected:
     // находит вектор, перемещающий e1 в e2
     static Vector2<DistanceValueType> CalcOffset(Entity* e1, Entity* e2) {
         auto pos1 = e1->getComponent<PositionComponent>();
@@ -83,6 +87,8 @@ protected:
 
         return distance;
     }
+ private:
+	static int ID;
 
 };
 

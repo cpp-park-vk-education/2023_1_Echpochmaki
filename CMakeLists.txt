@@ -13,6 +13,7 @@ find_package(SFML COMPONENTS system window graphics network audio REQUIRED)
 include_directories(Graphics/include)
 include_directories(ECS/Components)
 include_directories(ECS)
+include_directories(ECS/Systems/inc)
 
 set(Srcs "main.cpp" "Game.cpp" "map_generation/LevelManager.cpp"
         "ECS/Systems/src/BaseSystem.cpp" "ECS/Systems/src/EnemySystem.cpp" "ECS/Systems/src/HitBoxSystem.cpp"
