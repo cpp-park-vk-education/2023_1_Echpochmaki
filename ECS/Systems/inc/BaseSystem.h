@@ -9,7 +9,7 @@ public:
 
     virtual void update(EntityManager* manager);
 
-    virtual bool added();
+    virtual bool added();//TODO::find out what to return
 
     template <typename T>
     void setBefore();
