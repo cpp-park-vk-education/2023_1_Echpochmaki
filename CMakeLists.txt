@@ -13,7 +13,8 @@ add_subdirectory(Graphics)
 add_subdirectory(events)
 add_subdirectory(ECS)
 
-add_executable(app main.cpp)
+add_executable(app main.cpp Game.cpp)
+target_include_directories(app PUBLIC ECS/Systems/inc/ ECS/Components/)
 
 option(BUILD_TESTS "build tests" ON)
 if (BUILD_TESTS)

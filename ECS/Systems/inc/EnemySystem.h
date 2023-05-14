@@ -6,7 +6,7 @@
 #include "EnemyComponent.h"
 #include "PlayerComponent.h"
 
-#include "EntityManager.h"
+#include "../../inc/EntityManager.h"
 
 #include "EnemyComponent.h"
 #include "PositionComponent.h"
@@ -21,25 +21,22 @@ class EnemySystem : public BaseSystem {
 public:
 
 
-    void update(EntityManager* manager) override {
+    void update(EntityManager *manager) override {
         //manager->
-        std::vector<Entity*> enemies;
-        std::vector<Entity*> players;
+        std::vector<Entity *> enemies;
+        std::vector<Entity *> players;
         manager->selectEntites<EnemyComponent>(enemies);
         manager->selectEntites<PlayerComponent>(players);
 
-        Entity* player_selected = nullptr;
+        Entity *player_selected = nullptr;
 
-        for (auto enemy : enemies)
-        {
+        for (auto enemy: enemies) {
             DistanceValueType min_distance = CalcDistance(enemy, players.front());
 
-            for (auto player: players)
-            {
+            for (auto player: players) {
                 DistanceValueType cur_distance = CalcDistance(enemy, player);
 
-                if (min_distance > cur_distance)
-                {
+                if (min_distance > cur_distance) {
                     min_distance = cur_distance;
                     player_selected = player;
                 }
@@ -57,33 +54,32 @@ public:
     }
 
 
-    bool added() override
-    {
+    bool added() override {
         return true;
     }
 
     ~EnemySystem() override = default;
 
-	virtual int getSystemID() override
-	{
-		return EnemyId;
-	}
+    virtual int getSystemID() override {
+        return EnemyId;
+    }
 
 
- protected:
+protected:
     // находит вектор, перемещающий e1 в e2
-    static Vector2<DistanceValueType> CalcOffset(Entity* e1, Entity* e2) {
+    static Vector2<DistanceValueType> CalcOffset(Entity *e1, Entity *e2) {
         auto pos1 = e1->getComponent<PositionComponent>();
         auto pos2 = e2->getComponent<PositionComponent>();
 
         return Vector2<DistanceValueType>{pos2.position.x - pos1.position.x, pos2.position.y - pos1.position.y};
     }
 
-    static DistanceValueType CalcDistance(Entity* e1, Entity* e2) {
+    static DistanceValueType CalcDistance(Entity *e1, Entity *e2) {
         auto pos1 = e1->getComponent<PositionComponent>();
         auto pos2 = e2->getComponent<PositionComponent>();
 
-        auto distance = (DistanceValueType)sqrt(pow(pos1.position.x - pos2.position.x, 2) + pow(pos1.position.y - pos2.position.y, 2));
+        auto distance = (DistanceValueType) sqrt(
+                pow(pos1.position.x - pos2.position.x, 2) + pow(pos1.position.y - pos2.position.y, 2));
 
         return distance;
     }

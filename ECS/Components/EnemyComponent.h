@@ -1,7 +1,7 @@
 #ifndef GAME_ENEMYCOMPONENT_H
 #define GAME_ENEMYCOMPONENT_H
 
-#include "ECS.h"
+#include "../inc/ECS.h"
 #include <SFML/Graphics.hpp>
 
 using TypeId = int;
@@ -11,8 +11,7 @@ struct EnemyComponent : public Component {
 
     EnemyComponent() = default;
 
-    EnemyComponent(TypeId id) : id(id)
-    {
+    EnemyComponent(TypeId id) : id(id) {
     }
 
     TypeId GetId() const {

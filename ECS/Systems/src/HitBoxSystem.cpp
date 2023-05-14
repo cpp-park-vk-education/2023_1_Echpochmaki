@@ -1,1 +1,1 @@
-#include "../inc/HitBoxSystem.h"
+#include "HitBoxSystem.h"

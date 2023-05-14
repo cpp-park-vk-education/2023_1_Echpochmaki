@@ -29,8 +29,9 @@ public:
 
     void load(const char *config);
 
+    Game() :
+
 private:
-    tileMap map;
 
     std::unique_ptr<LevelManager> level;
     std::unique_ptr<EntityManager> entityManager;

@@ -1,1 +1,1 @@
-#include "../inc/SyncSystem.h"
+#include "SyncSystem.h"

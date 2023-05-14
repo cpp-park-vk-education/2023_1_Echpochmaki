@@ -9,12 +9,7 @@
 
 #include "ECS.h"
 #include <SFML/Graphics.hpp>
-
-
-struct ISystem // Fake system for compiling
-{
-    int id;
-};
+#include "BaseSystem.h"
 
 
 class Game; // Fake game for compiling
@@ -25,7 +20,7 @@ using namespace sf;
 class EntityManager {
 private:
     std::vector<Entity *> entities;
-    std::set<ISystem *> systems;
+    std::set<BaseSystem *> systems;
 public:
     void addEntity(Entity *entity) {
         entities.push_back(entity);
@@ -35,15 +30,14 @@ public:
         ; // Замена Всех энтити
     }
 
-    bool addSystem(ISystem *system) // returns isSucceded
+    bool addSystem(BaseSystem *system) // returns isSucceded
     {
         return systems.insert(system).second;
     }
 
-    bool hasSystem(ISystem *system) // returns isSucceded
+    bool hasSystem(BaseSystem *system) // returns isSucceded
     {
         //return systems.contains(system);
-        return true;
     }
 
 
@@ -62,13 +56,16 @@ public:
     }
 
 
-    ISystem *getSystem(int keyID) {
-        for (ISystem *system: systems)
-            if (system->id == keyID)
+    BaseSystem *getSystem(int keyID) {
+        for (BaseSystem *system: systems)
+            if (system->getSystemID() == keyID)
                 return system;
     }
 
     void update(Game *game) {
+        for (auto s: systems) {
+            s->update(this);
+        }
         //TODO::Make Implementation
     }
 
