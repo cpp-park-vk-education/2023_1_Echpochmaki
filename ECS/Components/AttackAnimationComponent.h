@@ -4,7 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "ECS.h"
+#include "../inc/ECS.h"
 
 struct AttackAnimationComponent : public Component{
     AttackAnimationComponent(std::vector<sf::Texture>& frames, sf::Texture base_frame) : frames(frames),

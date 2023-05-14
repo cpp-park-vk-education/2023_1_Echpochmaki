@@ -1,11 +1,14 @@
 #include "AttackAnimationComponent.h"
 #include "BaseSystem.h"
-#include "EntityManager.h"
+#include "../../inc/EntityManager.h"
 #include "SpriteComponent.h"
 
 //using TypeId = size_t;
 
 constexpr TypeId AttackID = 383962;
+
+
+
 
 class AttackAnimationSystem : public BaseSystem
 {
