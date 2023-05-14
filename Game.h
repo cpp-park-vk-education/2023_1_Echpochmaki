@@ -7,6 +7,19 @@
 #include "ECS/inc/EntityManager.h"
 #include "net/inc/Network.hpp"
 
+#include "PositionComponent.h"
+#include "VelocityComponent.h"
+#include "EnemyComponent.h"
+#include "PlayerComponent.h"
+#include "SpriteComponent.h"
+
+#include "DrawSystem.h"
+#include "MoveSystem.h"
+#include "PlayerSystem.h"
+#include "HitBoxSystem.h"
+
+
+const int DELTA_TIME = 10.0;
 
 class Game {
 public:

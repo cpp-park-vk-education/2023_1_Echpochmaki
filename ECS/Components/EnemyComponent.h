@@ -11,6 +11,10 @@ struct EnemyComponent : public Component {
 
     EnemyComponent() = default;
 
+    EnemyComponent(TypeId srcID)
+    {
+        id = srcID;
+    }
 
     TypeId GetId() const {
         return id;

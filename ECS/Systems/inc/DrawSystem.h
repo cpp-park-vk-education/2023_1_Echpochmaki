@@ -10,25 +10,24 @@ const int DrawSystemID = 2321;
 
 #include "BaseSystem.h"
 #include "SpriteComponent.h"
-class DrawSystem : BaseSystem
+
+class DrawSystem : public BaseSystem
 {
  public:
-	virtual int getSystemId() override
-	{
-		return ID;
-	}
 
 	virtual void update(EntityManager* manager)
 	{
 		std::vector<Entity*> entities;
 		manager->selectEntites<SpriteComponent>(entities);
 		for (Entity* e:entities)
-			window->draw(e->getComponent<SpriteComponent>().sprite); //TODO:: make order of drawing
+		{
+			e->getComponent<SpriteComponent>().sprite.setPosition(e->getComponent<PositionComponent>().position); //TODO:: might be a wrong place to do this
+			window->draw(e->getComponent<SpriteComponent>().sprite);
+		}
 	}
 
 	virtual bool added()
 	{
-		ID = MoveSystemID;
 		return true;
 	}
 
@@ -36,6 +35,12 @@ class DrawSystem : BaseSystem
 	{
 		window = windowSrc;
 	}
+
+	virtual int getSystemID() override
+	{
+		return DrawSystemID;
+	}
+
 	~DrawSystem() override = default;
 
  private:

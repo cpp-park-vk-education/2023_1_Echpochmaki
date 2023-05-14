@@ -2,19 +2,17 @@
 #define ECS_HITBOXSYSTEM_H
 
 #include "BaseSystem.h"
+#include "EntityManager.h"
 #include "CollisionComponent.h"
 #include "HealthComponent.h"
 #include "AttackComponent.h"
 
-const int MoveSystemID = 5;
+const int HitBoxSystemID = 5;
 
-class HitBoxSystem : BaseSystem
+class HitBoxSystem :public BaseSystem
 {
  public:
-	virtual int getSystemId() override
-	{
-		return ID;
-	}
+
 
 	virtual void update(EntityManager* manager)
 	{
@@ -39,9 +37,15 @@ class HitBoxSystem : BaseSystem
 		}
 	}
 
+	virtual int  getSystemID() override
+	{
+		return ID;
+	}
+
+
 	virtual bool added()
 	{
-		ID = MoveSystemID; //TODO::find out what to return
+		ID = HitBoxSystemID; //TODO::find out what to return
 		return true;
 	}
 
