@@ -1,7 +1,7 @@
-#include "Network.hpp"
-#include "Host.hpp"
-#include "Client.hpp"
-#include "packets.hpp"
+#include "Network.h"
+#include "Host.h"
+#include "Client.h"
+#include "Packets.h"
 #include <iostream>
 
 

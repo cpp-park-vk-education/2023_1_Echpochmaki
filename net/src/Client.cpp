@@ -1,5 +1,5 @@
-#include "Client.hpp"
-#include "packets.hpp"
+#include "Client.h"
+#include "Packets.h"
 
 void Client::disconnect() 
 {

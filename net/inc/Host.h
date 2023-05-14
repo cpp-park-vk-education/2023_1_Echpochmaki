@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SFML/Network.hpp"
-#include "IHost.hpp"
+#include "IHost.h"
 
 struct Host : public IHost {
 

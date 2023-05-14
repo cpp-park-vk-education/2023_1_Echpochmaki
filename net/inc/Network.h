@@ -1,8 +1,8 @@
 #pragma once
 
 #include "SFML/Network.hpp"
-#include "IHost.hpp"
-#include "IClient.hpp"
+#include "IHost.h"
+#include "IClient.h"
 #include <memory>
 
 using std::weak_ptr;

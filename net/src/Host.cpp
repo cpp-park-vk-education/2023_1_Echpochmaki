@@ -1,6 +1,6 @@
-#include "Host.hpp"
-#include "packets.hpp"
-#include "IClient.hpp"
+#include "Host.h"
+#include "Packets.h"
+#include "IClient.h"
 
 
 void Host::handleClient(IClient* c) 

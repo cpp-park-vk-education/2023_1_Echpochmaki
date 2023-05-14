@@ -1,4 +1,4 @@
-#include "packets.hpp"
+#include "Packets.h"
 
 sf::Packet Packets::askConnectionPack = [] {
     sf::Packet pack;

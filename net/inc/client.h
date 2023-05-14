@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IClient.hpp"
+#include "IClient.h"
 
 class Client : public IClient {
     virtual bool connectToHost(const sf::IpAddress& addr, sf::Uint16 port) override;
