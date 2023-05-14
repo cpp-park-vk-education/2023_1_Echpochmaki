@@ -42,6 +42,11 @@ class EntityManager
 		return systems.insert(system).second;
 	}
 
+	bool hasSystem(ISystem* system) // returns isSucceded
+	{
+		return systems.contains(system);
+	}
+
 
 	template<typename... TArgs>
 	void selectEntites(std::vector<Entity*> &dest)

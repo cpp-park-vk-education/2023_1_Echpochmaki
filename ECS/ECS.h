@@ -107,7 +107,7 @@ class Entity
 	}
 
 	template<typename T>
-	T& GetComponent() const
+	T& getComponent() const
 	{
 		auto ptr(componentArray[getComponentTypeID<T>()]);
 		return *static_cast<T*>(ptr);

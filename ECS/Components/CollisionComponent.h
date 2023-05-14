@@ -21,6 +21,7 @@ struct CollisionComponent : public Component
 		collisionBox = collisionBoxSrc;
 	}
 
+
 };
 
 
