@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "EnemySystem.h"
 #include "AnimateDirectionSystem.h"
+#include "AttackAnimationSystem.h"
 #include "ECS/utils/FramesCreator.h"
 
 void Game::loadMap(){
@@ -43,6 +44,8 @@ void Game::run() {
 
 	player.AddComponent<CollisionComponent>(sprite.getTextureRect());
     player.AddComponent<MoveDirectionComponent>();
+    std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
+    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
     manager.addEntity(&player);
 
 
@@ -73,11 +76,16 @@ void Game::run() {
     AnimateDirectionSystem animateDirectionSystem;
     manager.addSystem(&animateDirectionSystem);
 
+    AttackAnimationSystem attackAnimationSystem;
+    manager.addSystem(&attackAnimationSystem);
+
     Entity enemy;
     enemy.AddComponent<EnemyComponent>();
     enemy.AddComponent<VelocityComponent>(1, 1);
     enemy.AddComponent<PositionComponent>(350, 350);
     enemy.AddComponent<MoveDirectionComponent>();
+    enemy.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
+    //enemy.AddComponent<>();
     //enemy.AddComponent<CollisionComponent>();
     //enemy.AddComponent<EnemyComponent>();
 

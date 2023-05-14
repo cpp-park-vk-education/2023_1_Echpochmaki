@@ -5,6 +5,9 @@
 #include "PlayerComponent.h"
 #include "VelocityComponent.h"
 #include "EntityManager.h"
+#include "AttackAnimationComponent.h"
+#include "SpriteComponent.h"
+
 
 const int PlayerSystemID = 234;
 
@@ -47,6 +50,18 @@ class PlayerSystem : public BaseSystem //TODO:: must be used before intersection
 				dir = 2;
 			else
 				dir = 0;
+
+            auto& attack = entity->getComponent<AttackAnimationComponent>();
+            //auto base_frame = entity->getComponent<SpriteComponent>().sprite.getTexture();
+            //attack.base_frame = *base_frame;
+
+                            //bool attack_started = false;
+            if (Mouse::isButtonPressed(Mouse::Left) && !attack.animation_started) {
+                attack.animation_started = true;
+                std::cout << "left btn clicked" << std::endl;
+                //entity->AddComponent<A>();
+                //attack_started = true;
+            }
 
 			Vector2<DistanceValueType> newVelocity = entity->getComponent<VelocityComponent>().velocity;
 			DistanceValueType defaultSpeed = entity->getComponent<PlayerComponent>().speed;
