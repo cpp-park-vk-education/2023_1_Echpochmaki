@@ -1,5 +1,7 @@
 #include "Game.h"
 #include "EnemySystem.h"
+#include "AnimateDirectionSystem.h"
+#include "ECS/utils/FramesCreator.h"
 
 void Game::loadMap() {
     // Получение карты, передача Entity Creator
@@ -21,30 +23,37 @@ void Game::run() {
     EntityManager manager;
     Entity player;
 
-    player.AddComponent<PositionComponent>(200, 200);
-    player.AddComponent<VelocityComponent>();
-    player.AddComponent<PlayerComponent>();
+    std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
 
-    Image image;
-    image.loadFromFile("./Graphics/textures/HeroKnight.png");
-    Texture texture;
-    texture.loadFromImage(image);
-    Sprite sprite;
-    sprite.setTexture(texture);
-    sprite.setTextureRect(IntRect(0, 0, 100, 100));
-    player.AddComponent<SpriteComponent>(sprite);
+    FramesCreator creator{hero_king_texture_path};
+    auto frames = creator.GetFrames(9, 10);
 
-    player.AddComponent<CollisionComponent>(sprite.getTextureRect());
+	player.AddComponent<PositionComponent>(200,200);
+	player.AddComponent<VelocityComponent>();
+	player.AddComponent<PlayerComponent>();
 
+	//Image image;
+	//image.loadFromFile("../Graphics/textures/HeroKnight.png");
+	//Texture texture;
+	//texture.loadFromImage(image);
+	Sprite sprite;
+	sprite.setTexture(frames[0]);
+	//sprite.setTextureRect(IntRect(0, 0, 100, 100));
+	player.AddComponent<SpriteComponent>(sprite);
+
+	player.AddComponent<CollisionComponent>(sprite.getTextureRect());
+    player.AddComponent<MoveDirectionComponent>();
     manager.addEntity(&player);
-    //Collider starts here
-    Sprite collider;
-    collider.setTexture(texture);
-    collider.setTextureRect(IntRect(100, 100, 200, 200));
-    Entity testCollider;
-    testCollider.AddComponent<PositionComponent>(0, 0);
-    testCollider.AddComponent<CollisionComponent>(collider.getTextureRect());
-    testCollider.AddComponent<SpriteComponent>(collider);
+
+
+	//Collider starts here
+	Sprite collider;
+	collider.setTexture(frames[0]);
+	//collider.setTextureRect(IntRect(100, 100, 200, 200));
+	Entity testCollider;
+	testCollider.AddComponent<PositionComponent>(0, 0);
+	testCollider.AddComponent<CollisionComponent>(collider.getTextureRect());
+	testCollider.AddComponent<SpriteComponent>(collider);
 
     manager.addEntity(&testCollider);
     //Systems
@@ -61,25 +70,52 @@ void Game::run() {
     EnemySystem enemy_system;
     manager.addSystem(&enemy_system);
 
+    AnimateDirectionSystem animateDirectionSystem;
+    manager.addSystem(&animateDirectionSystem);
+
     Entity enemy;
     enemy.AddComponent<EnemyComponent>();
-    enemy.AddComponent<VelocityComponent>();
-    enemy.AddComponent<PositionComponent>(300, 300);
-    enemy.AddComponent<EnemyComponent>();
+    enemy.AddComponent<VelocityComponent>(1, 1);
+    enemy.AddComponent<PositionComponent>(350, 350);
+    enemy.AddComponent<MoveDirectionComponent>();
+    //enemy.AddComponent<CollisionComponent>();
+    //enemy.AddComponent<EnemyComponent>();
 
+<<<<<<< HEAD
     Image enemy_img;
     enemy_img.loadFromFile("./Graphics/textures/HeroKnight.png");
     Texture enemy_texture;
     enemy_texture.loadFromImage(image);
+=======
+
+    //Image enemy_img;
+    //enemy_img.loadFromFile("../Graphics/textures/HeroKnight.png");
+    //Texture enemy_texture;
+    //enemy_texture.loadFromImage(image);
+>>>>>>> origin/dev_systems_demo_enemy_system
     Sprite enemy_sprite;
-    enemy_sprite.setTexture(texture);
-    enemy_sprite.setTextureRect(IntRect(0, 0, 100, 100));
+    enemy_sprite.setTexture(frames[0]);
+    //enemy_sprite.setTextureRect(IntRect(0, 0, 100, 100));
     enemy.AddComponent<SpriteComponent>(enemy_sprite);
+    enemy.AddComponent<CollisionComponent>(enemy_sprite.getTextureRect());
+
 
     manager.addEntity(&enemy);
 
 
+<<<<<<< HEAD
     while (window.isOpen()) {
+=======
+
+
+
+
+
+
+
+    while (window.isOpen())
+    {
+>>>>>>> origin/dev_systems_demo_enemy_system
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
