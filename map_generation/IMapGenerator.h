@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include "IRoomGenerator.h"
+#include "../ECS/Tile.h"
 
 struct MapDescriptionBase{
     int width;
