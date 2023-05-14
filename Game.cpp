@@ -36,7 +36,6 @@ void Game::run() {
 
 	player.AddComponent<CollisionComponent>(sprite.getTextureRect());
 
-	manager.addEntity(&player);
 	//Collider starts here
 	Sprite collider;
 	collider.setTexture(texture);
@@ -63,9 +62,12 @@ void Game::run() {
 
     Entity enemy;
     enemy.AddComponent<EnemyComponent>();
-    enemy.AddComponent<VelocityComponent>();
-    enemy.AddComponent<PositionComponent>(300, 300);
-    enemy.AddComponent<EnemyComponent>();
+    enemy.AddComponent<VelocityComponent>(1, 1);
+    enemy.AddComponent<PositionComponent>(350, 350);
+    //enemy.AddComponent<CollisionComponent>();
+    //enemy.AddComponent<EnemyComponent>();
+    manager.addEntity(&player);
+
 
     Image enemy_img;
     enemy_img.loadFromFile("../Graphics/textures/HeroKnight.png");
@@ -75,8 +77,12 @@ void Game::run() {
     enemy_sprite.setTexture(texture);
     enemy_sprite.setTextureRect(IntRect(0, 0, 100, 100));
     enemy.AddComponent<SpriteComponent>(enemy_sprite);
+    enemy.AddComponent<CollisionComponent>(enemy_sprite.getTextureRect());
+
 
     manager.addEntity(&enemy);
+
+
 
 
 

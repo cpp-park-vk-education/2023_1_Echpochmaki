@@ -38,7 +38,7 @@ public:
             {
                 DistanceValueType cur_distance = CalcDistance(enemy, player);
 
-                if (min_distance > cur_distance)
+                if (min_distance >= cur_distance)
                 {
                     min_distance = cur_distance;
                     player_selected = player;
@@ -46,10 +46,30 @@ public:
             }
 
             auto velocity_component = enemy->getComponent<VelocityComponent>();
-            DistanceValueType len = velocity_component.velocity.x + velocity_component.velocity.y;
+            DistanceValueType len = sqrt(pow(velocity_component.velocity.x, 2) + pow(velocity_component.velocity.y, 2));
             Vector2<DistanceValueType> offset = CalcOffset(enemy, player_selected);
-            Vector2<DistanceValueType> new_velocity = velocity_component.velocity / len;
-            velocity_component.velocity = new_velocity;
+            Vector2<DistanceValueType> velocity_to_set;
+            if (len != 0)
+            {
+                DistanceValueType offset_len = sqrt(pow(offset.x, 2) + pow(offset.y, 2));
+                Vector2<DistanceValueType> new_velocity = offset / offset_len * len;
+                velocity_to_set = new_velocity;
+            }
+            else
+            {
+                DistanceValueType offset_len = sqrt(pow(offset.x, 2) + pow(offset.y, 2));
+                Vector2<DistanceValueType> new_velocity  = offset / offset_len; // придумать как обрабатывать ситуацию клгда лен == 0,
+                // пока вектор просто нормируется
+                velocity_to_set = new_velocity;
+            }
+//            velocity_component.velocity = new_velocity;
+                enemy->getComponent<VelocityComponent>().velocity.x = velocity_to_set.x;
+                enemy->getComponent<VelocityComponent>().velocity.y = velocity_to_set.y;
+//                std::cout << velocity_to_set.x << " " << velocity_to_set.y << std::endl;
+//                std::cout << enemy->getComponent<VelocityComponent>().velocity.x << " "
+//                          << enemy->getComponent<VelocityComponent>().velocity.x << std::endl;
+
+
 
             //Vector2<DistanceValueType> cur_vel = player_selected->getComponent<>()
         }
@@ -73,6 +93,12 @@ public:
  protected:
     // находит вектор, перемещающий e1 в e2
     static Vector2<DistanceValueType> CalcOffset(Entity* e1, Entity* e2) {
+
+        if (!e1 || !e2)
+        {
+            throw std::runtime_error("Entity nullptr");
+        }
+
         auto pos1 = e1->getComponent<PositionComponent>();
         auto pos2 = e2->getComponent<PositionComponent>();
 
