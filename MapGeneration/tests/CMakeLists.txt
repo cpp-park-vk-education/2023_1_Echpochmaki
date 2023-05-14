@@ -1,0 +1,4 @@
+add_executable(generation_test src/generation_test.cpp)
+target_link_libraries(generation_test map_generation GTest::gtest_main)
+
+add_test(generation_test generation_test)
