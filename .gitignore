@@ -8,3 +8,4 @@ CMakeFiles
 Game
 Makefile
 cmake_install.cmake
+*.log
