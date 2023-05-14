@@ -9,23 +9,29 @@ using std::weak_ptr;
 using std::shared_ptr;
 
 class Network {
+public:
+    static constexpr sf::Uint16 HOST_PORT = 5008;
+    static constexpr sf::Uint16 CLIENT_PORT = 5007;
+
 
 public:
     shared_ptr<IHost> currentHost;
     shared_ptr<IClient> currentClient;
 
 
-    bool isHost() const {return false;};
-    bool isClient() const {return false;};
+    bool isHost() const;
+    bool isClient() const;
 
-    weak_ptr<IHost> runHost() {return weak_ptr<IHost>(shared_ptr<IHost>(nullptr));};
+    weak_ptr<IHost> runHost();
 
-    bool connectToHost(const sf::IpAddress& addr, sf::Uint32 port) {return false;};
+    bool connectToHost(const sf::IpAddress& addr, sf::Uint32 port);
 
-    bool closeHost() {return false;};
+    bool closeHost();
 
-    void update(){}; 
+    void update(); 
 
-    bool send(sf::Packet& packet) {return false;};   
+    bool send(sf::Packet& packet);
 
+private:
+    
 };

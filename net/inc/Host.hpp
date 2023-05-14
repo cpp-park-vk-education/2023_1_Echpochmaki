@@ -3,14 +3,16 @@
 #include "SFML/Network.hpp"
 #include "IHost.hpp"
 
-class Host : IHost {
-    sf::UdpSocket socket;
-    sf::IpAddress addr;
-    sf::Uint16 port;
+struct Host : public IHost {
 
-    virtual void handleClient(IClient* c) override {};
+    // virtual sf::UdpSocket getSocket() = 0;
 
-    virtual void disconnectClient(int id) override {};
+    virtual void handleClient(IClient* c) override;
 
-    virtual bool send(sf::Packet& pack) override {return false;};
+    virtual void disconnectClient(int id) override;
+    virtual void disconnectClient(const sf::IpAddress& addr) override;
+
+    virtual bool disconnectAll() override;
+
+    virtual bool send(sf::Packet& pack) override;
 };
