@@ -38,6 +38,7 @@ public:
     bool hasSystem(BaseSystem *system) // returns isSucceded
     {
         //return systems.contains(system);
+        return false;
     }
 
 

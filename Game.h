@@ -29,7 +29,7 @@ public:
 
     void load(const char *config);
 
-    Game() :
+    // Game() :
 
 private:
 

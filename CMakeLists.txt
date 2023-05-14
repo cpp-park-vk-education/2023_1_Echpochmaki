@@ -15,6 +15,10 @@ add_subdirectory(ECS)
 
 add_executable(app main.cpp Game.cpp)
 target_include_directories(app PUBLIC ECS/Systems/inc/ ECS/Components/)
+target_link_libraries(app sfml-graphics)
+target_link_libraries(app sfml-system)
+target_link_libraries(app sfml-window)
+target_link_libraries(app sfml-network)
 
 option(BUILD_TESTS "build tests" ON)
 if (BUILD_TESTS)
