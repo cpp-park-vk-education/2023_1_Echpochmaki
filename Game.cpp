@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "EnemySystem.h"
+#include "AnimateDirectionSystem.h"
 #include "ECS/utils/FramesCreator.h"
 
 void Game::loadMap(){
@@ -25,7 +26,7 @@ void Game::run() {
     std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
 
     FramesCreator creator{hero_king_texture_path};
-    auto frames = creator.GetFrames(12, 8);
+    auto frames = creator.GetFrames(9, 10);
 
 	player.AddComponent<PositionComponent>(200,200);
 	player.AddComponent<VelocityComponent>();
@@ -41,6 +42,9 @@ void Game::run() {
 	player.AddComponent<SpriteComponent>(sprite);
 
 	player.AddComponent<CollisionComponent>(sprite.getTextureRect());
+    player.AddComponent<MoveDirectionComponent>();
+    manager.addEntity(&player);
+
 
 	//Collider starts here
 	Sprite collider;
@@ -66,13 +70,16 @@ void Game::run() {
     EnemySystem enemy_system;
     manager.addSystem(&enemy_system);
 
+    AnimateDirectionSystem animateDirectionSystem;
+    manager.addSystem(&animateDirectionSystem);
+
     Entity enemy;
     enemy.AddComponent<EnemyComponent>();
     enemy.AddComponent<VelocityComponent>(1, 1);
     enemy.AddComponent<PositionComponent>(350, 350);
+    enemy.AddComponent<MoveDirectionComponent>();
     //enemy.AddComponent<CollisionComponent>();
     //enemy.AddComponent<EnemyComponent>();
-    manager.addEntity(&player);
 
 
     //Image enemy_img;

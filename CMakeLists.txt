@@ -29,7 +29,7 @@ set(Hdrs  "Game.h" "Graphics/include/animatable.h"  "ECS/ECS.h" "ECS/Components/
         "ECS/EntityManager.h" "ECS/Tile.h" "ECS/Components/EnemyComponent.h"
         "net/Client.hpp" "net/IClient.hpp" "net/IHost.hpp" "net/Host.hpp" "net/Network.hpp"
         "map_generation/IMapGenerator.h" "map_generation/IRoomGenerator.h" "map_generation/LevelManager.h"
-        "Animation/Animation.h" "Animation/IAnimation.h" "ECS/Systems/inc/EnemySystem.h" "ECS/Components/PlayerComponent.h" "ECS/Systems/inc/EnemySystem.h" "ECS/utils/FramesCreator.h")
+        "Animation/Animation.h" "Animation/IAnimation.h" "ECS/Systems/inc/EnemySystem.h" "ECS/Components/PlayerComponent.h" "ECS/Systems/inc/EnemySystem.h" "ECS/utils/FramesCreator.h" ECS/Components/MoveDirectionComponent.h ECS/Systems/inc/AnimateDirectionSystem.h ECS/Systems/inc/AnimateDirectionSystem.h ECS/Systems/inc/AnimateDirectionSystem.h)
 
 
 add_executable(Game ${Srcs} ${Hdrs})

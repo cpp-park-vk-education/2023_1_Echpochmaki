@@ -8,6 +8,7 @@
 #include "VelocityComponent.h"
 #include "CollisionComponent.h"
 #include "EnemyComponent.h"
+#include "MoveDirectionComponent.h"
 
 const int MoveSystemID = 2;
 
@@ -34,6 +35,30 @@ class MoveSystem : public BaseSystem
 		{
 			if ((*it1)->HasComponent<VelocityComponent>())
 			{
+                if ((*it1)->HasComponent<MoveDirectionComponent>()) {
+                    auto& dir = (*it1)->getComponent<MoveDirectionComponent>();
+                    auto& vel = (*it1)->getComponent<VelocityComponent>();
+                    if (vel.velocity.x > 0 && dir.dir == Direction::LEFT || vel.velocity.x < 0 && dir.dir == Direction::RIGHT) {
+                        //(*it1)->getComponent<MoveDirectionComponent>().has_dir_changed = true;
+                        dir.has_dir_changed = true;
+                    }
+                    else {
+                        //(*it1)->getComponent<MoveDirectionComponent>().has_dir_changed = false;
+                        dir.has_dir_changed = false;
+                    }
+
+                    if (vel.velocity.x < 0)
+                    {
+                        dir.dir = Direction::LEFT;
+                    }
+                    else if (vel.velocity.x > 0)
+                    {
+                        dir.dir = Direction::RIGHT;
+                    }
+
+
+                }
+
 				Vector2<DistanceValueType> oldPosition = (*it1)->getComponent<PositionComponent>().position;
 				(*it1)->getComponent<PositionComponent>().position += (*it1)->getComponent<VelocityComponent>().velocity;
 
