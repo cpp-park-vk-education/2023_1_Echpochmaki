@@ -12,9 +12,8 @@ struct EnemyComponent : public Component
 
     EnemyComponent() = default;
 
-    EnemyComponent(TypeId srcID)
+    EnemyComponent(TypeId id) : id(id)
     {
-        id = srcID;
     }
 
     TypeId GetId() const
