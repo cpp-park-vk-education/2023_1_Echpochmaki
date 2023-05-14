@@ -10,11 +10,10 @@ struct EnemyComponent : public Component
 {
     TypeId id;
 
-    HealthComponent() = default;
+    EnemyComponent() = default;
 
-    HealthComponent(HealthValueType healthSrc)
+    EnemyComponent(TypeId id) : id(id)
     {
-        health = healthSrc;
     }
 
     TypeId GetId() const
