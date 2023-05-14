@@ -20,7 +20,7 @@ void Game::run() {
 	EntityManager manager;
 	Entity player;
 
-	player.AddComponent<PositionComponent>();
+	player.AddComponent<PositionComponent>(200,200);
 	player.AddComponent<VelocityComponent>();
 	player.AddComponent<PlayerComponent>();
 
@@ -32,9 +32,20 @@ void Game::run() {
 	sprite.setTexture(texture);
 	sprite.setTextureRect(IntRect(0, 0, 100, 100));
 	player.AddComponent<SpriteComponent>(sprite);
+
+	player.AddComponent<CollisionComponent>(sprite.getTextureRect());
+
 	manager.addEntity(&player);
+	//Collider starts here
+	Sprite collider;
+	collider.setTexture(texture);
+	collider.setTextureRect(IntRect(100, 100, 200, 200));
+	Entity testCollider;
+	testCollider.AddComponent<PositionComponent>();
+	testCollider.AddComponent<CollisionComponent>(collider.getTextureRect());
+	testCollider.AddComponent<SpriteComponent>(collider);
 
-
+	manager.addEntity(&testCollider);
 	//Systems
 	DrawSystem drawSystem;
 	drawSystem.setRenderWindow(&window);

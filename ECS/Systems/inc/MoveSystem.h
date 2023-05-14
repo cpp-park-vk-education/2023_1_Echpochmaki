@@ -39,11 +39,17 @@ class MoveSystem : public BaseSystem
 				{
 					for (auto it2 = it1 + 1; it2 != entities.end(); it2++)
 					{
+						(*it1)->getComponent<CollisionComponent>().collisionBox.left = (*it1)->getComponent<PositionComponent>().position.x;
+						(*it1)->getComponent<CollisionComponent>().collisionBox.top = (*it1)->getComponent<PositionComponent>().position.y;
+						(*it2)->getComponent<CollisionComponent>().collisionBox.left = (*it2)->getComponent<PositionComponent>().position.x;
+						(*it2)->getComponent<CollisionComponent>().collisionBox.top = (*it2)->getComponent<PositionComponent>().position.y;
 						IntRect rect1 = (*it1)->getComponent<CollisionComponent>().collisionBox; //TODO::Might be costly
 						IntRect rect2 = (*it2)->getComponent<CollisionComponent>().collisionBox;
-						if (rect1.intersects(rect2))
+						if (rect2.intersects(rect1))
 						{
+							std::cout<< "Collided\n";
 							(*it1)->getComponent<PositionComponent>().position = oldPosition;
+							(*it1)->getComponent<VelocityComponent>().velocity = {0,0};
 							break;
 						}
 					}
