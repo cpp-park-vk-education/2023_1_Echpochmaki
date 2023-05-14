@@ -24,7 +24,7 @@ void Game::run() {
     EntityManager manager;
     Entity player;
 
-    std::string hero_king_texture_path = "./Graphics/textures/HeroKnight.png";
+    std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
 
     FramesCreator creator{hero_king_texture_path};
     auto frames = creator.GetFrames(9, 10);
