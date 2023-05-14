@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "EnemySystem.h"
+#include "ECS/utils/FramesCreator.h"
 
 void Game::loadMap(){
     // Получение карты, передача Entity Creator
@@ -21,25 +22,30 @@ void Game::run() {
 	EntityManager manager;
 	Entity player;
 
+    std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
+
+    FramesCreator creator{hero_king_texture_path};
+    auto frames = creator.GetFrames(12, 8);
+
 	player.AddComponent<PositionComponent>(200,200);
 	player.AddComponent<VelocityComponent>();
 	player.AddComponent<PlayerComponent>();
 
-	Image image;
-	image.loadFromFile("../Graphics/textures/HeroKnight.png");
-	Texture texture;
-	texture.loadFromImage(image);
+	//Image image;
+	//image.loadFromFile("../Graphics/textures/HeroKnight.png");
+	//Texture texture;
+	//texture.loadFromImage(image);
 	Sprite sprite;
-	sprite.setTexture(texture);
-	sprite.setTextureRect(IntRect(0, 0, 100, 100));
+	sprite.setTexture(frames[0]);
+	//sprite.setTextureRect(IntRect(0, 0, 100, 100));
 	player.AddComponent<SpriteComponent>(sprite);
 
 	player.AddComponent<CollisionComponent>(sprite.getTextureRect());
 
 	//Collider starts here
 	Sprite collider;
-	collider.setTexture(texture);
-	collider.setTextureRect(IntRect(100, 100, 200, 200));
+	collider.setTexture(frames[0]);
+	//collider.setTextureRect(IntRect(100, 100, 200, 200));
 	Entity testCollider;
 	testCollider.AddComponent<PositionComponent>(0, 0);
 	testCollider.AddComponent<CollisionComponent>(collider.getTextureRect());
@@ -69,13 +75,13 @@ void Game::run() {
     manager.addEntity(&player);
 
 
-    Image enemy_img;
-    enemy_img.loadFromFile("../Graphics/textures/HeroKnight.png");
-    Texture enemy_texture;
-    enemy_texture.loadFromImage(image);
+    //Image enemy_img;
+    //enemy_img.loadFromFile("../Graphics/textures/HeroKnight.png");
+    //Texture enemy_texture;
+    //enemy_texture.loadFromImage(image);
     Sprite enemy_sprite;
-    enemy_sprite.setTexture(texture);
-    enemy_sprite.setTextureRect(IntRect(0, 0, 100, 100));
+    enemy_sprite.setTexture(frames[0]);
+    //enemy_sprite.setTextureRect(IntRect(0, 0, 100, 100));
     enemy.AddComponent<SpriteComponent>(enemy_sprite);
     enemy.AddComponent<CollisionComponent>(enemy_sprite.getTextureRect());
 
