@@ -72,7 +72,7 @@ class PlayerSystem : BaseSystem //TODO:: must be used before intersections or ev
 	}
 
 
-	virtual ~PlayerSystem();
+	~PlayerSystem() override = default;
  private:
 	static int ID;
 };

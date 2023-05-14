@@ -49,7 +49,7 @@ class MoveSystem : public BaseSystem
 		return true; //TODO::find out what to return
 	}
 
-	virtual ~MoveSystem();
+	~MoveSystem() override = default;
  private:
 	static int ID;
 };
