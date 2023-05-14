@@ -45,7 +45,8 @@ class HitBoxSystem : BaseSystem
 		return true;
 	}
 
-	virtual ~HitBoxSystem();
+	~HitBoxSystem() override = default;
+
  private:
 	static int ID;
 };
