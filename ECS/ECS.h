@@ -87,7 +87,7 @@ class Entity
 	template<typename T>
 	bool HasComponent() const
 	{
-		return componentBitSet[getComponentTypeID<T>()];//TODO::make several contents choice
+		return componentBitSet[getComponentTypeID<T>()];
 	}
 
 
@@ -117,11 +117,12 @@ class Entity
 	bool HasComponents() const
 	{
 		//set<>
-		std::vector<bool> componentIsContained{ HasComponent<TArgs>()...};
+		/*std::vector<bool> componentIsContained{ HasComponent<TArgs>()...};
 		for (bool contains : componentIsContained)
 			if (!contains)
 				return false;
-		return true;
+		return true;*/
+		return (componentBitSet[getComponentTypeID<TArgs>()] && ...); //TODO::make several contents choice
 	}
 
 	template<typename T>

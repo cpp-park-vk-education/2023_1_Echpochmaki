@@ -46,7 +46,10 @@ class EntityManager
 	template<typename... TArgs>
 	void selectEntites(std::vector<Entity*> &dest)
 	{
-		//TODO::Implement this
+
+		for (Entity* elem : entities)
+			if (elem->HasComponents<TArgs...>())
+				dest.push_back(elem);
 	}
 
 	Entity* getEntity(int keyID)
