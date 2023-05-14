@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "EnemySystem.h"
 
 void Game::loadMap(){
     // Получение карты, передача Entity Creator
@@ -41,7 +42,7 @@ void Game::run() {
 	collider.setTexture(texture);
 	collider.setTextureRect(IntRect(100, 100, 200, 200));
 	Entity testCollider;
-	testCollider.AddComponent<PositionComponent>();
+	testCollider.AddComponent<PositionComponent>(0, 0);
 	testCollider.AddComponent<CollisionComponent>(collider.getTextureRect());
 	testCollider.AddComponent<SpriteComponent>(collider);
 
@@ -56,6 +57,26 @@ void Game::run() {
 
 	MoveSystem moveSystem;
 	manager.addSystem(&moveSystem);
+
+    EnemySystem enemy_system;
+    manager.addSystem(&enemy_system);
+
+    Entity enemy;
+    enemy.AddComponent<EnemyComponent>();
+    enemy.AddComponent<VelocityComponent>();
+    enemy.AddComponent<PositionComponent>(300, 300);
+    enemy.AddComponent<EnemyComponent>();
+
+    Image enemy_img;
+    enemy_img.loadFromFile("../Graphics/textures/HeroKnight.png");
+    Texture enemy_texture;
+    enemy_texture.loadFromImage(image);
+    Sprite enemy_sprite;
+    enemy_sprite.setTexture(texture);
+    enemy_sprite.setTextureRect(IntRect(0, 0, 100, 100));
+    enemy.AddComponent<SpriteComponent>(enemy_sprite);
+
+    manager.addEntity(&enemy);
 
 
 

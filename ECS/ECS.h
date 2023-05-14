@@ -14,6 +14,7 @@
 
 #include "../map_generation/IRoomGenerator.h"
 #include "Tile.h"
+#include <stdexcept>
 
 class Component;
 class Entity;
@@ -110,6 +111,13 @@ class Entity
 	T& getComponent() const
 	{
 		auto ptr(componentArray[getComponentTypeID<T>()]);
+        //std::cout << com << getComponentTypeID<T> << std::endl;
+        if (ptr == nullptr)
+        {
+            throw std::runtime_error(std::string{"Has no component: "} + typeid(T).name());
+        }
+
+
 		return *static_cast<T*>(ptr);
 	}
 

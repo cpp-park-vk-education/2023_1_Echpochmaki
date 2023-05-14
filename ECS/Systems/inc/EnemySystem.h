@@ -14,7 +14,7 @@
 #include <cmath>
 
 
-
+const int EnemyId = 3456;
 
 
 class EnemySystem : public BaseSystem {
@@ -66,7 +66,7 @@ public:
 
 	virtual int getSystemID() override
 	{
-		return ID;
+		return EnemyId;
 	}
 
 
@@ -87,8 +87,8 @@ public:
 
         return distance;
     }
- private:
-	static int ID;
+// private:
+//	static int ID;
 
 };
 
