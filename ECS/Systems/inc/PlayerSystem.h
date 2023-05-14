@@ -36,7 +36,7 @@ class PlayerSystem : public BaseSystem //TODO:: must be used before intersection
 	{
 		if (entity->HasComponent<VelocityComponent>())
 		{
-			int dir; //Handling the
+			int dir; //Handling the direction
 			if ((Keyboard::isKeyPressed(Keyboard::Left) || (Keyboard::isKeyPressed(Keyboard::A))))
 				dir = -1;
 			else if ((Keyboard::isKeyPressed(Keyboard::Right) || (Keyboard::isKeyPressed(Keyboard::D))))
@@ -45,27 +45,34 @@ class PlayerSystem : public BaseSystem //TODO:: must be used before intersection
 				dir = 3;
 			else if ((Keyboard::isKeyPressed(Keyboard::Down) || (Keyboard::isKeyPressed(Keyboard::S))))
 				dir = 2;
+			else
+				dir = 0;
 
 			Vector2<DistanceValueType> newVelocity = entity->getComponent<VelocityComponent>().velocity;
 			DistanceValueType defaultSpeed = entity->getComponent<PlayerComponent>().speed;
 			switch (dir)//реализуем поведение в зависимости от направления. (каждая цифра соответствует направлению)
 			{
 			case 1:
-				newVelocity.x += defaultSpeed;
+				newVelocity.x = defaultSpeed;
 				newVelocity.y = 0;
 				break;
 			case -1:
-				newVelocity.x += -defaultSpeed;
+				newVelocity.x = -defaultSpeed;
 				newVelocity.y = 0;
 				break;
 			case 2:
 				newVelocity.x = 0;
-				newVelocity.y += defaultSpeed;
+				newVelocity.y = defaultSpeed;
 				break;
 			case 3:
 				newVelocity.x = 0;
-				newVelocity.y += -defaultSpeed;
+				newVelocity.y = -defaultSpeed;
 				break;
+			case 0:
+				newVelocity.x = 0;
+				newVelocity.y = 0;
+				break;
+
 			}
 			entity->getComponent<VelocityComponent>().velocity = newVelocity;
 		}

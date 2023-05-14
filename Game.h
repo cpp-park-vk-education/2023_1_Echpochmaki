@@ -19,7 +19,7 @@
 #include "HitBoxSystem.h"
 
 
-const int DELTA_TIME = 60.0;
+const int DELTA_TIME = 10.0;
 
 class Game {
 public:

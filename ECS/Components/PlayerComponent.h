@@ -14,7 +14,7 @@ using TypeId = int;
 
 using DistanceValueType = float;
 
-const float defaultSpeed = 0.01;
+const float defaultSpeed = 2;
 
 
 struct PlayerComponent : public Component

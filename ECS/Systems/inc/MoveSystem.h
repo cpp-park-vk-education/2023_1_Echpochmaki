@@ -25,7 +25,9 @@ class MoveSystem : public BaseSystem
 		manager->selectEntites<PositionComponent>(entities);
 
 		if (entities.size() == 1)
+		{
 			entities[0]->getComponent<PositionComponent>().position += entities[0]->getComponent<VelocityComponent>().velocity;
+		}
 
 		for (auto it1 = entities.begin(); it1 != entities.end() - 1; it1++)
 		{
