@@ -5,6 +5,9 @@
 #include "PlayerComponent.h"
 #include "VelocityComponent.h"
 #include "../../inc/EntityManager.h"
+#include "AttackAnimationComponent.h"
+#include "SpriteComponent.h"
+
 
 const int PlayerSystemID = 234;
 
@@ -28,6 +31,43 @@ public:
     }
 
     ~PlayerSystem() override = default;
+
+            // auto& attack = entity->getComponent<AttackAnimationComponent>();
+            // //auto base_frame = entity->getComponent<SpriteComponent>().sprite.getTexture();
+            // //attack.base_frame = *base_frame;
+
+            //                 //bool attack_started = false;
+            // if (Mouse::isButtonPressed(Mouse::Left) && !attack.animation_started) {
+            //     attack.animation_started = true;
+            //     std::cout << "left btn clicked" << std::endl;
+            //     //entity->AddComponent<A>();
+            //     //attack_started = true;
+            // }
+
+			// Vector2<DistanceValueType> newVelocity = entity->getComponent<VelocityComponent>().velocity;
+			// DistanceValueType defaultSpeed = entity->getComponent<PlayerComponent>().speed;
+			// switch (dir)//реализуем поведение в зависимости от направления. (каждая цифра соответствует направлению)
+			// {
+			// case 1:
+			// 	newVelocity.x = defaultSpeed;
+			// 	newVelocity.y = 0;
+			// 	break;
+			// case -1:
+			// 	newVelocity.x = -defaultSpeed;
+			// 	newVelocity.y = 0;
+			// 	break;
+			// case 2:
+			// 	newVelocity.x = 0;
+			// 	newVelocity.y = defaultSpeed;
+			// 	break;
+			// case 3:
+			// 	newVelocity.x = 0;
+			// 	newVelocity.y = -defaultSpeed;
+			// 	break;
+			// case 0:
+			// 	newVelocity.x = 0;
+			// 	newVelocity.y = 0;
+			// 	break;
 
 protected:
     void controlEntity(Entity *entity) {

@@ -12,7 +12,9 @@
 #include "PositionComponent.h"
 #include "VelocityComponent.h"
 #include <cmath>
-
+#include "SpriteComponent.h"
+#include "AttackAnimationComponent.h"
+#include "CollisionComponent.h"
 
 const int EnemyId = 3456;
 
@@ -32,8 +34,17 @@ public:
 
         for (auto enemy: enemies) {
             DistanceValueType min_distance = CalcDistance(enemy, players.front());
+            bool collided = false;
 
-            for (auto player: players) {
+            auto enemy_rect = enemy->getComponent<CollisionComponent>().collisionBox;
+            for (auto player: players)
+            {
+                if (player->getComponent<CollisionComponent>().collisionBox.intersects(enemy_rect))
+                {
+                    std::cout << "collided wtf" << std::endl;
+                    collided = true;
+                }
+
                 DistanceValueType cur_distance = CalcDistance(enemy, player);
 
                 if (min_distance >= cur_distance)
@@ -42,6 +53,18 @@ public:
                     player_selected = player;
                 }
             }
+
+            auto& attack = enemy->getComponent<AttackAnimationComponent>();
+            if (collided && !attack.animation_started)
+            {
+                attack.animation_started = true;
+            }
+
+            if (!collided)
+            {
+                attack.animation_started = false;
+            }
+
 
             auto velocity_component = enemy->getComponent<VelocityComponent>();
             DistanceValueType len = sqrt(pow(velocity_component.velocity.x, 2) + pow(velocity_component.velocity.y, 2));
