@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../../LevelManager.h"
+#include "../../inc/LevelManager.h"
 
 TEST(RoomGeneration, RoomWithZeroWidth) {
     RoomGenerator generator;
@@ -81,7 +81,7 @@ TEST(MapGeneration, MapGenerationWithoutRoomGenerator) {
     EXPECT_THROW(generator.generateMap(params), std::exception);
 }
 
-struct MockRoomGenerator : IRoomGenerator{
+struct MockRoomGenerator : IRoomGenerator {
     tileMap generateRoom(const RoomDescriptionBase &parameters) override{
         ++roomsCount;
     }

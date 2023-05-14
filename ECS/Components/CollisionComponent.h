@@ -5,7 +5,7 @@
 #ifndef ECS_2023_1_ECHPOCHMAKI_ECS_COMPONENTS_COLLISIONCOMPONENT_H_
 #define ECS_2023_1_ECHPOCHMAKI_ECS_COMPONENTS_COLLISIONCOMPONENT_H_
 
-#include "../../inc/ECS.h"
+#include "../inc/ECS.h"
 #include <SFML/Graphics.hpp>
 
 using namespace sf;

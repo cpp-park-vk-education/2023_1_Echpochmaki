@@ -3,7 +3,7 @@
 
 #endif //GAME_ANIMATEDIRECTIONSYSTEM_H
 
-#include "EntityManager.h"
+#include "../../inc/EntityManager.h"
 #include "BaseSystem.h"
 #include "MoveDirectionComponent.h"
 #include "VelocityComponent.h"

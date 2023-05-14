@@ -88,9 +88,6 @@ public:
 
 protected:
     // находит вектор, перемещающий e1 в e2
-<<<<<<< HEAD
-    static Vector2<DistanceValueType> CalcOffset(Entity *e1, Entity *e2) {
-=======
     static Vector2<DistanceValueType> CalcOffset(Entity* e1, Entity* e2) {
 
         if (!e1 || !e2)
@@ -98,7 +95,6 @@ protected:
             throw std::runtime_error("Entity nullptr");
         }
 
->>>>>>> origin/dev_systems_demo_enemy_system
         auto pos1 = e1->getComponent<PositionComponent>();
         auto pos2 = e2->getComponent<PositionComponent>();
 

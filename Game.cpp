@@ -23,7 +23,7 @@ void Game::run() {
     EntityManager manager;
     Entity player;
 
-    std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
+    std::string hero_king_texture_path = "./Graphics/textures/HeroKnight.png";
 
     FramesCreator creator{hero_king_texture_path};
     auto frames = creator.GetFrames(9, 10);
@@ -81,18 +81,11 @@ void Game::run() {
     //enemy.AddComponent<CollisionComponent>();
     //enemy.AddComponent<EnemyComponent>();
 
-<<<<<<< HEAD
-    Image enemy_img;
-    enemy_img.loadFromFile("./Graphics/textures/HeroKnight.png");
-    Texture enemy_texture;
-    enemy_texture.loadFromImage(image);
-=======
 
     //Image enemy_img;
     //enemy_img.loadFromFile("../Graphics/textures/HeroKnight.png");
     //Texture enemy_texture;
     //enemy_texture.loadFromImage(image);
->>>>>>> origin/dev_systems_demo_enemy_system
     Sprite enemy_sprite;
     enemy_sprite.setTexture(frames[0]);
     //enemy_sprite.setTextureRect(IntRect(0, 0, 100, 100));
@@ -103,9 +96,6 @@ void Game::run() {
     manager.addEntity(&enemy);
 
 
-<<<<<<< HEAD
-    while (window.isOpen()) {
-=======
 
 
 
@@ -115,7 +105,7 @@ void Game::run() {
 
     while (window.isOpen())
     {
->>>>>>> origin/dev_systems_demo_enemy_system
+        std::cout  << "update " << random() % 10 << std::endl;
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)

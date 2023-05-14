@@ -1,7 +1,7 @@
 #ifndef GAME_MOVEDIRECTIONCOMPONENT_H
 #define GAME_MOVEDIRECTIONCOMPONENT_H
 
-#include "ECS.h"
+#include "../inc/ECS.h"
 
 enum class Direction {
     LEFT = 0,
