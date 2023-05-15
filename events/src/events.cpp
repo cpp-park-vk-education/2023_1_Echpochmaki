@@ -1,17 +1,19 @@
 #include "events.h"
 
 
-// void Events::on(EventType type, EventHandler handler)
-// {
-//     if (events.find(type) == events.end())
-//         events.insert({type, std::vector<EventHandler>()});
+void Events::on(EventType type, EventHandler handler)
+{
+    if (events.find(type) == events.end())
+        events.insert({type, std::vector<EventHandler>()});
     
-//     events[type].push_back(handler);
-// }
+    events[type].push_back(handler);
+}
 
 
-// void Events::fire(EventType type, Event* event)
-// {
-//     for (auto &handler : events[type])
-//         handler(event);
-// }
+void Events::fire(EventType type, Event* event)
+{
+    for (auto &handler : events[type])
+        handler(event);
+}
+
+std::map<Events::EventType, std::vector<Events::EventHandler>> events;
