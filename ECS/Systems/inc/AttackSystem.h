@@ -34,6 +34,8 @@ public:
                             attacker->getComponent<AttackComponent>().attack_started)
                         {
                             goal->getComponent<HealthComponent>().health -= attacker->getComponent<AttackComponent>().damage;
+							if (goal->getComponent<HealthComponent>().health <=0)
+								goal->getComponent<FramesComponent>().dying = true;
                         }
                     }
 

@@ -74,6 +74,7 @@ public:
         for (BaseSystem *system: systems)
             if (system->getSystemID() == keyID)
                 return system;
+		return nullptr;
     }
 
     void update(Game *game) {

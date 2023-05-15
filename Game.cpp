@@ -104,12 +104,14 @@ void Game::run() {
 //    AnimateMovingDirectionSystem animateMovingDirectionSystem;
 //    entityManager.addSystem(&animateMovingDirectionSystem);
 
-    FramesSystem framesSystem;
-//    std::cout << "AddedFrameSystem" << std::endl;
-    entityManager->addSystem(&framesSystem);
+
 
     AttackSystem attackSystem;
     entityManager->addSystem(&attackSystem);
+
+	FramesSystem framesSystem;
+//    std::cout << "AddedFrameSystem" << std::endl;
+	entityManager->addSystem(&framesSystem);
 
     RemoveSystem removeSystem;
     std::cout << "Added removeSystem status: " << entityManager->addSystem(&removeSystem);

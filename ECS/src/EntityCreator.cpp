@@ -63,11 +63,13 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
         std::vector<sf::Texture> moving_frames{frames.begin() + 8, frames.begin() + 17};
         std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
         std::vector<sf::Texture> idling_frames{frames.begin() + 0, frames.begin() + 7};
+	    std::vector<sf::Texture> dying_frames{frames.begin() + 49, frames.begin() + 57};
 
 		std::vector<std::vector<sf::Texture>> all_frames;
 		all_frames.push_back(moving_frames);
 		all_frames.push_back(attack_frames);
         all_frames.push_back(idling_frames);
+	    all_frames.push_back(dying_frames);
 
 		entity->AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
 		sprite.setTexture(frames[0]);

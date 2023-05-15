@@ -23,6 +23,12 @@ public:
 
             if (healthComponent.health <= 0)
             {
+	            entity->getComponent<FramesComponent>().dying = true;
+				while (entity->getComponent<FramesComponent>().dying)
+				{
+					manager->getSystem(FramesSystemID)->update(manager);
+					manager->getSystem(DrawSystemID)->update(manager);
+				}
                 manager->deleteEntity(entity);
             }
 
