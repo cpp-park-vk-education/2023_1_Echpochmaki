@@ -3,6 +3,8 @@
 #include "AnimateDirectionSystem.h"
 #include "AttackAnimationSystem.h"
 #include "ECS/utils/FramesCreator.h"
+#include "AnimationMovingComponent.h"
+#include "AnimateMovingDirectionSystem.h"
 
 void Game::loadMap() {
     // Получение карты, передача Entity Creator
@@ -18,7 +20,7 @@ void Game::load(const char *config) {
 
 void Game::run() {
     // Loop обновление по кадрам всего
-    RenderWindow window(sf::VideoMode(640, 480), "Nss");
+    RenderWindow window(sf::VideoMode(640, 480), "Boys game");
     window.setFramerateLimit(1.0f / DELTA_TIME);
     //Components
     EntityManager manager;
@@ -28,6 +30,11 @@ void Game::run() {
 
     FramesCreator creator{hero_king_texture_path};
     auto frames = creator.GetFrames(9, 10);
+    //auto attack_frames = creator.GetFrames(9, 10);
+
+    std::vector<sf::Texture> moving_frames{frames.begin(), frames.begin() + 17};
+    std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
+
 
 	player.AddComponent<PositionComponent>(200,200);
 	player.AddComponent<VelocityComponent>();
@@ -44,8 +51,8 @@ void Game::run() {
 
 	player.AddComponent<CollisionComponent>(sprite.getTextureRect());
     player.AddComponent<MoveDirectionComponent>();
-    std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
     player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
+    player.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
     manager.addEntity(&player);
 
 
@@ -65,21 +72,34 @@ void Game::run() {
     manager.addSystem(&drawSystem);
 
     PlayerSystem playerSystem;
+    std::cout << "addr of playerSystem " << &playerSystem << std::endl;
     manager.addSystem(&playerSystem);
 
     MoveSystem moveSystem;
+    std::cout << "addr of moveSystem " << &moveSystem << std::endl;
     manager.addSystem(&moveSystem);
 
     EnemySystem enemy_system;
+    std::cout << "addr of enemy_system " << &enemy_system << std::endl;
     manager.addSystem(&enemy_system);
 
     AnimateDirectionSystem animateDirectionSystem;
+    std::cout << "addr of animateDirectionSystem " << &animateDirectionSystem << std::endl;
     manager.addSystem(&animateDirectionSystem);
 
     AttackAnimationSystem attackAnimationSystem;
-    manager.addSystem(&attackAnimationSystem);
+    std::cout << "addr of attackAnimationSystem " << &attackAnimationSystem << std::endl;
+    std::cout << "Added attackAnimationSystem: " << manager.addSystem(&attackAnimationSystem) << std::endl;
+
+    AnimateMovingDirectionSystem animateMovingDirectionSystem;
+    std::cout << "addr of animateMovingDirectionSystem " << &animateMovingDirectionSystem << std::endl;
+    std::cout << "animateMovingDirectionSystem contains: "
+            << (manager.systems.find(&animateMovingDirectionSystem) != manager.systems.end()) << std::endl;
+    auto pair = manager.addSystem2(&animateDirectionSystem);
+    std::cout << "Added animateMovingDirectionSystem: " << pair.second << " " << *pair.first << std::endl;
 
     Entity enemy;
+    //FramesCreator attack_creator{};
     enemy.AddComponent<EnemyComponent>();
     enemy.AddComponent<VelocityComponent>(1, 1);
     enemy.AddComponent<PositionComponent>(350, 350);

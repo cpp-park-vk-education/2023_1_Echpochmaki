@@ -9,6 +9,7 @@
 #include "CollisionComponent.h"
 #include "EnemyComponent.h"
 #include "MoveDirectionComponent.h"
+#include "AnimationMovingComponent.h"
 
 const int MoveSystemID = 2;
 
@@ -35,6 +36,22 @@ public:
                 if ((*it1)->HasComponent<MoveDirectionComponent>()) {
                     auto& dir = (*it1)->getComponent<MoveDirectionComponent>();
                     auto& vel = (*it1)->getComponent<VelocityComponent>();
+
+                    if (vel.velocity.x != 0)
+                    {
+                        if ((*it1)->HasComponent<AnimationMovingComponent>())
+                        {
+                            auto& moving = (*it1)->getComponent<AnimationMovingComponent>();
+                            if (!moving.animation_started)
+                            {
+                                moving.animation_started = true;
+                            }
+
+                            std::cout << "Starting animation" << std::endl;
+
+                        }
+                    }
+
                     if (vel.velocity.x > 0 && dir.dir == Direction::LEFT || vel.velocity.x < 0 && dir.dir == Direction::RIGHT) {
                         //(*it1)->getComponent<MoveDirectionComponent>().has_dir_changed = true;
                         dir.has_dir_changed = true;

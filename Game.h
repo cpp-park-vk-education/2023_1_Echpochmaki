@@ -39,6 +39,7 @@ private:
     std::unique_ptr<EntityManager> entityManager;
     std::unique_ptr<EntityCreator> entityCreator;
     std::unique_ptr<Network> network;
+    sf::Window window;
 };
 
 

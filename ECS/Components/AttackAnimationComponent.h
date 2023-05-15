@@ -7,7 +7,7 @@
 #include "../inc/ECS.h"
 
 struct AttackAnimationComponent : public Component{
-    AttackAnimationComponent(std::vector<sf::Texture>& frames, sf::Texture base_frame) : frames(frames),
+    AttackAnimationComponent(std::vector<sf::Texture>& frames, sf::Texture& base_frame) : frames(frames),
         base_frame(base_frame)
     {
         size = frames.size();
