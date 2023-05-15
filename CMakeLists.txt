@@ -4,7 +4,7 @@ project(Game VERSION 0.1)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
-set(CMAKE_MODULE_PATH /usr/share/SFML/cmake/Modules/)
+#set(CMAKE_MODULE_PATH /usr/share/SFML/cmake/Modules/)
 find_package(SFML COMPONENTS system window graphics network audio REQUIRED)
 
 
