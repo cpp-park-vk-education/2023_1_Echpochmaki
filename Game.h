@@ -17,6 +17,7 @@
 #include "MoveSystem.h"
 #include "PlayerSystem.h"
 #include "HitBoxSystem.h"
+#include "CameraSystem.h"
 
 
 const int DELTA_TIME = 10.0;
