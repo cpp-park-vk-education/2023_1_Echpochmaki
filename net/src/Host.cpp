@@ -1,10 +1,10 @@
 #include "Host.h"
 #include "Packets.h"
 #include "IClient.h"
-#include "Client.h"
+#include "client.h"
 
 
-void Host::handleClient(const sf::IpAddress& addr, sf::Uint16 host) 
+void Host::handleClient(const sf::IpAddress& addr, sf::Uint16 port)
 {
     IClient *client = new Client;
     client->addr = addr;

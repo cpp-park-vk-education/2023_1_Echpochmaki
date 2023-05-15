@@ -5,9 +5,14 @@
 #include <functional>
 
 #include "event.h"
+#include <iostream>
+
+#ifndef INFO
+#define INFO __FILE__ << ":" << __LINE__
+#endif
 
 
-class Events
+class   Events
 {
 public:
     enum class EventType
@@ -45,7 +50,7 @@ public:
     };
 
 
-    using EventHandler = std::function<void(Event*)>;
+    using EventHandler = std::function<void(OurEvent*)>;
 
     static void on(EventType type, EventHandler handler)
     ;
@@ -57,7 +62,7 @@ public:
     // }
 
 
-    static void fire(EventType type, Event* event)
+    static void fire(EventType type, OurEvent* event)
     ;
     // {
     //     for (auto &handler : events[type])
@@ -68,3 +73,44 @@ private:
     static std::map<EventType, std::vector<EventHandler>> events;
 
 };
+
+static inline std::ostream& operator<<(std::ostream& os, Events::EventType type)
+{
+//    using enum Events::EventType;      // using enum только с++20
+    switch (type) {
+        case Events::EventType::MouseInput:
+            os << "MouseInput";
+            break;
+        case Events::EventType::KeyboardInput:
+            os << "KeyboardInput";
+            break;
+        case Events::EventType::NetSend:
+            os << "NetSend";
+            break;
+        case Events::EventType::NetReceive:
+            os << "NetReceive";
+            break;
+        case Events::EventType::GameLoaded:
+            os << "GameLoaded";
+            break;
+        case Events::EventType::MapInfoFromNetReceived:
+            os << "MapInfoFromNetReceived";
+            break;
+        case Events::EventType::NetworkSyncAllFromHostRecieved:
+            os << "NetworkSyncAllFromHostRecieved";
+            break;
+        case Events::EventType::NetworkSyncPlayerFromClientEvent:
+            os << "NetworkSyncPlayerFromClientEvent";
+            break;
+        case Events::EventType::SyncSystemHostToClientSendSync:
+            os << "SyncSystemHostToClientSendSync";
+            break;
+        case Events::EventType::SyncSystemClientToHostSendSync:
+            os << "SyncSystemClientToHostSendSync";
+            break;
+        default:
+            os << "NOT_AN_EVENT_TYPE " << int(type);
+            break;
+    }
+    return os;
+}

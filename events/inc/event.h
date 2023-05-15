@@ -2,32 +2,33 @@
 
 #include <SFML/Network.hpp>
 
-struct Event
+
+struct OurEvent
 {
     void *some_data = nullptr;
-    virtual ~Event() = default;
+    virtual ~OurEvent() = default;
 };
 
-struct SyncSystemSyncEvent : Event
+struct SyncSystemSyncEvent : OurEvent
 {
     sf::Packet *pack;
 };
 
-struct NetworkSyncFromHostEvent : Event
-{
-    sf::Packet *pack;
-    sf::IpAddress sender_addr;
-    sf::Uint16 sender_port;
-};
-
-struct NetworkSyncPlayerFromClientEvent : Event
+struct NetworkSyncFromHostEvent : OurEvent
 {
     sf::Packet *pack;
     sf::IpAddress sender_addr;
     sf::Uint16 sender_port;
 };
 
-struct MapInfoReceivedEvent : Event
+struct NetworkSyncPlayerFromClientEvent : OurEvent
+{
+    sf::Packet *pack;
+    sf::IpAddress sender_addr;
+    sf::Uint16 sender_port;
+};
+
+struct MapInfoReceivedEvent : OurEvent
 {
     sf::Packet *pack;
     sf::IpAddress sender_addr;

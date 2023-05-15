@@ -1,4 +1,4 @@
-#include "Client.h"
+#include "client.h"
 #include "Packets.h"
 
 void Client::disconnect() 

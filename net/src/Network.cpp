@@ -1,10 +1,16 @@
 #include "Network.h"
 #include "Host.h"
-#include "Client.h"
+#include "client.h"
 #include "Packets.h"
-#include "events/inc/events.h"
+#include "events.h"
 #include <iostream>
 
+using std::cout;
+using std::endl;
+
+#ifndef INFO
+#define INFO __FILE__ << ":" << __LINE__
+#endif
 
 bool Network::isHost() const 
 {
@@ -25,39 +31,44 @@ Network::~Network()
 
 Network::Network()
 {
-    Events::on(Events::EventType::SyncSystemClientToHostSendSync, [this](Event *event) 
+
+    Events::on(Events::EventType::SyncSystemClientToHostSendSync, [this](OurEvent *event)
     {
-        SyncSystemSyncEvent *e = dynamic_cast<SyncSystemSyncEvent*>(event);
+        auto *e = dynamic_cast<SyncSystemSyncEvent*>(event);
         if (isClient())
         {
             currentClient->send(*e->pack);
         }
     });
 
-    Events::on(Events::EventType::SyncSystemHostToClientSendSync, [this](Event *event) 
+    Events::on(Events::EventType::SyncSystemHostToClientSendSync, [this](OurEvent *event)
     {
-        SyncSystemSyncEvent *e = dynamic_cast<SyncSystemSyncEvent*>(event);
+        auto *e = dynamic_cast<SyncSystemSyncEvent*>(event);
         if (isHost())
         {
             currentHost->send(*e->pack);
         }
     });
+
+    cout << "[net] " << INFO << " Network object created" << endl;
 };
 
 
-weak_ptr<IHost> Network::runHost() 
+weak_ptr<IHost> Network::runHost()
 {
-    // забиндить порт 
+    // забиндить порт
+    cout << "[net] " << INFO << " call runHost" << endl;
 
     currentHost = std::make_shared<Host>();
 
     if (currentHost->socket.bind(HOST_PORT) != sf::Socket::Done)
     {
-        std::cerr << "[network] error to bind host socket";
+        cout << "  error to bind host socket" << endl;
         currentHost.reset();
     }
     else
     {
+        cout << "  socket successfully binded" << endl;
         currentHost->socket.setBlocking(false);
         currentHost->addr = "localhost";
         currentHost->port = currentHost->socket.getLocalPort();
@@ -66,20 +77,22 @@ weak_ptr<IHost> Network::runHost()
     return weak_ptr<IHost>(currentHost);
 };
 
-bool Network::connectToHost(const sf::IpAddress& addr, sf::Uint32 port) 
+bool Network::connectToHost(const sf::IpAddress& addr, sf::Uint32 port)
 {
+    cout << "[net] " << INFO << " call connectToHost " << addr << ":" << port << endl;
     // послать пакет о подключении, дождаться ответа
 
     currentClient = std::make_shared<Client>();
 
     if (currentClient->socket.bind(CLIENT_PORT) != sf::Socket::Done)
     {
-        std::cerr << "[network] error to bind client socket";
+        std::cout << "  error to bind client socket" << endl;
         currentClient.reset();
         return false;
     }
     else
     {
+        std::cout << "  client socket successfully binded" << endl;
         currentClient->socket.setBlocking(false);
         currentClient->addr = addr;
         currentClient->port = currentClient->socket.getLocalPort();
@@ -90,18 +103,19 @@ bool Network::connectToHost(const sf::IpAddress& addr, sf::Uint32 port)
 
 void Network::closeClient()
 {
+    cout << "[net] " << INFO << " call closeClient isClient()=" << isClient() << endl;
     if (isClient())
     {
-
         currentClient->disconnect();
         currentClient.reset();
     }
 }
 
 
-void Network::closeHost() 
+void Network::closeHost()
 {
     // послать всем пакет о закрытии
+    cout << "[net] " << INFO << " call closeHost isHost()=" << isHost() << endl;
 
     if (isHost())
     {
@@ -113,12 +127,22 @@ void Network::closeHost()
 
 void Network::updateClient()
 {
+//    cout << "[net] " << INFO << " call updateClient" << endl;
+
     sf::Packet pack;
     sf::IpAddress addr;
     sf::Uint16 port;
-    currentClient->socket.receive(pack, addr, port);
+    auto status = currentClient->socket.receive(pack, addr, port);
+
+    if (status != sf::Socket::Done)
+    {
+        if (status != sf::Socket::NotReady)
+            cout << "[net] " << INFO << " packet not received status=" << status;
+        return;
+    }
 
     Packets::PacketType type = Packets::getPacketType(pack);
+    cout << "[net] " << INFO << "   packet received type=" << type << " size=" << pack.getDataSize() << endl;
 
     if (type == Packets::SuccessConnection && currentClient->waiting_connect_answer)
     {
@@ -157,12 +181,22 @@ void Network::updateClient()
 
 void Network::updateHost()
 {
+//    cout << "[net] " << INFO << " call updateHost" << endl;
+
     sf::Packet pack;
     sf::IpAddress addr;
     sf::Uint16 port;
-    currentHost->socket.receive(pack, addr, port);
+    auto status = currentHost->socket.receive(pack, addr, port);
+
+    if (status != sf::Socket::Done)
+    {
+        if (status != sf::Socket::NotReady)
+            cout << "[net] " << INFO <<  "   packet not received status=" << status << endl;
+        return;
+    }
 
     Packets::PacketType type = Packets::getPacketType(pack);
+    cout << "[net] " << INFO <<  "   packet received type=" << type << " size=" << pack.getDataSize() << endl;
 
 
     if (type == Packets::AskConnection)
@@ -176,7 +210,7 @@ void Network::updateHost()
         event.pack = &pack;
         event.sender_addr = addr;
         event.sender_port = port;
-        Events::fire(Events::EventType::NetworkSyncAllFromHostRecieved, &event);
+        Events::fire(Events::EventType::NetworkSyncPlayerFromClientEvent, &event);
     }
 
     if (type == Packets::DisconnectFromClient)

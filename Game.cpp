@@ -6,6 +6,9 @@
 #include "AnimationMovingComponent.h"
 #include "AnimateMovingDirectionSystem.h"
 #include "FramesSystem.h"
+#include "SyncSystem.h"
+
+Game *Game::instance;
 
 void Game::loadMap() {
     // Получение карты, передача Entity Creator
@@ -24,7 +27,8 @@ void Game::load(const char *config) {
 void Game::run() {
     // Loop обновление по кадрам всего
 
-    RenderWindow window(sf::VideoMode(640, 480), "Boys game");
+//    RenderWindow window(sf::VideoMode(640, 480), "Boys game");
+    window.create(sf::VideoMode(640, 480), "Boys game");
     //window.setFramerateLimit(1.0f / DELTA_TIME);
 
     //Components
@@ -104,6 +108,27 @@ void Game::run() {
 //    std::cout << "AddedFrameSystem" << std::endl;
     entityManager->addSystem(&framesSystem);
 
+    SyncSystem syncSystem;
+    std::cout << "add syncSystem success=" << entityManager->addSystem(&syncSystem);
+
+    std::cout << "entities size=" << entityManager->entities.size() << std::endl;
+    int id = 0;
+    for (auto &e : entityManager->entities)
+    {
+        e->id = id++;
+//        std::cout << "e: " << e->id << std::endl;
+    }
+
+
+    char variant;
+    std::cout << "choose 'h' for host and 'c' for client, 's' for single-player: ";
+    std::cin >> variant;
+
+    if (variant == 'h')
+        network->runHost();
+    else if (variant == 'c')
+        network->connectToHost("localhost", Network::HOST_PORT);
+
 
     while (window.isOpen()) {
         //std::cout << "update " << random() % 10 << std::endl;
@@ -115,6 +140,8 @@ void Game::run() {
 
         // TODO: Update frames
         window.clear();
+
+        network->update();
 
         entityManager->update(this);
 
@@ -146,11 +173,11 @@ void Game::run() {
     while (Window.isOpen())
     {
         // Обработка событий в цикле;
-        Event Event;
+        OurEvent OurEvent;
 
-        while (Window.pollEvent(Event))
+        while (Window.pollEvent(OurEvent))
         {
-            if (Event.type == sf::Event::Closed) { Window.close(); };
+            if (OurEvent.type == sf::OurEvent::Closed) { Window.close(); };
         };
 
         // X,Y; Идем вверх;

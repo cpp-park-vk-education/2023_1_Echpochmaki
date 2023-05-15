@@ -82,6 +82,15 @@ static inline std::ostream& operator<<(std::ostream& ss, Packets::PacketType typ
     case Packets::DisconnectFromClient:
         ss << "DisconnectFromClient";
         break;
+    case Packets::MapGenerationInfo:
+        ss << "MapGenerationInfo";
+        break;
+    case Packets::SyncAllEntitiesFromHost:
+        ss << "SyncAllEntitiesFromHost";
+        break;
+    case Packets::SyncPlayerFromClient:
+        ss << "SyncPlayerFromClient";
+        break;
     case Packets::LastType:
         ss << "LastType(utility)";
         break;

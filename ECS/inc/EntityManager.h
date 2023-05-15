@@ -38,14 +38,17 @@ public:
     bool addSystem(BaseSystem *system) // returns isSucceded
     {
         //  std::cout << "System size: " << systems.size() << std::endl;
-        return systems.insert(system).second;
+        auto result = systems.insert(system);
+        if (result.second)
+            system->added();
+        return result.second;
     }
 
-    auto addSystem2(BaseSystem *system) // returns isSucceded
-    {
-//        std::cout << "System size: " << systems.size() << std::endl;
-        return systems.insert(system);
-    }
+//    auto addSystem2(BaseSystem *system) // returns isSucceded
+//    {
+////        std::cout << "System size: " << systems.size() << std::endl;
+//        return systems.insert(system);
+//    }
 
 
     bool hasSystem(BaseSystem *system) // returns isSucceded
