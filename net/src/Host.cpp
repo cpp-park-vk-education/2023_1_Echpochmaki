@@ -1,10 +1,28 @@
 #include "Host.h"
 #include "Packets.h"
 #include "IClient.h"
+#include "Client.h"
 
+
+void Host::handleClient(const sf::IpAddress& addr, sf::Uint16 host) 
+{
+    IClient *client = new Client;
+    client->addr = addr;
+    client->port = port;
+    handleClient(client);
+};
 
 void Host::handleClient(IClient* c) 
 {
+    socket.send(Packets::successConnectionPack, c->addr, c->port);
+
+    sf::Packet pack;
+    // возможно переделать этот момент на ивенты или как то так, просто сейчас не знаю как получать данные о карте
+    pack << Packets::MapGenerationInfo;
+    // типа сид для карты
+    pack << int(0);
+    socket.send(pack, c->addr, c->port);
+
     connected.push_back(unique_ptr<IClient>(c));
 };
 

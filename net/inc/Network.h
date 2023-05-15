@@ -18,20 +18,33 @@ public:
     shared_ptr<IHost> currentHost;
     shared_ptr<IClient> currentClient;
 
+    Network();
+
+    ~Network();
+    // ;
+    // {
+    //     closeHost();
+    //     closeClient();
+    // }
+
 
     bool isHost() const;
     bool isClient() const;
+
+    void closeHost();
+    void closeClient();
 
     weak_ptr<IHost> runHost();
 
     bool connectToHost(const sf::IpAddress& addr, sf::Uint32 port);
 
-    bool closeHost();
-
     void update(); 
 
     bool send(sf::Packet& packet);
 
+
 private:
+    void updateClient();
+    void updateHost();
     
 };

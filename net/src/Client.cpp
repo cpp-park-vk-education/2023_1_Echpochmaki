@@ -3,6 +3,10 @@
 
 void Client::disconnect() 
 {
+    connected = false;
+    map_received = false;
+    waiting_connect_answer = false;
+    
     sf::Packet pack;
     pack << sf::Int32(Packets::PacketType::DisconnectFromClient);
     send(pack);
