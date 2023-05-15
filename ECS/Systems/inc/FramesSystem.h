@@ -10,7 +10,7 @@
 //using TypeId = size_t;
 
 constexpr TypeId FramesSystemID = 13245096;
-constexpr double FrameTimeDelta = 150;
+constexpr double FrameTimeDelta = 1;
 
 
 class FramesSystem : public BaseSystem {
@@ -42,15 +42,17 @@ class FramesSystem : public BaseSystem {
                     framesComponent.animation_started = false;
 	                continue;
                 }
-				framesComponent.passed_time += Timer::getTimer().getElapsedTime().asMicroseconds() *0.01; //TODO::fix const values for frames
+				framesComponent.passed_time += Timer::getTimer().getElapsedTime().asMicroseconds(); //TODO::fix const values for frames
+
 				//std::cout << "passed_time" <<  framesComponent.passed_time << '\n';
 				//Timer::getTimer().restart();
-				if (framesComponent.passed_time > FrameTimeDelta)
+				if (int(framesComponent.passed_time) > FrameTimeDelta)
 				{
 					auto& sprite = entity->getComponent<SpriteComponent>();
 					sprite.sprite.setTexture(
 						framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)][framesComponent.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
-					framesComponent.passed_time -= FrameTimeDelta;
+					framesComponent.passed_time = 0;
+					Timer::getTimer().restart();
 				}
 
             }

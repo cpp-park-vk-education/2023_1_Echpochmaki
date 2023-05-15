@@ -11,22 +11,23 @@
 
 using namespace sf;
 
-struct SpriteComponent : public Component
-{
+struct SpriteComponent : public Component {
 
 
- public:
-	Sprite sprite;
+public:
+    Sprite sprite;
+    int drawingPriority;
 
-	SpriteComponent() = default;
-	SpriteComponent(const Sprite& spriteSrc)
-	{
-		sprite = spriteSrc;
-	}
+    SpriteComponent() = default;
+
+    explicit SpriteComponent(const Sprite &spriteSrc) : sprite(spriteSrc) {
+    }
+
+    SpriteComponent(const Sprite &spriteSrc, int drawingPriority_) : sprite(spriteSrc),
+                                                                     drawingPriority(drawingPriority_) {}
 
 
 };
-
 
 
 #endif //PROJECTS_2023_1_ECHPOCHMAKI_ECS_SPRITECOMPONENT_H_
