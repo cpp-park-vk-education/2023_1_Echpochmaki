@@ -10,6 +10,7 @@
 //using TypeId = size_t;
 
 constexpr TypeId FramesSystemID = 13245096;
+constexpr double FrameTimeDelta = 150;
 
 
 class FramesSystem : public BaseSystem {
@@ -40,26 +41,28 @@ class FramesSystem : public BaseSystem {
                 if (framesComponent.cur_frame >= framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)].size()) {
                     framesComponent.cur_frame = 0;
                     framesComponent.animation_started = false;
+	                continue;
                 }
-				framesComponent.passed_time += Timer::getTimer().getElapsedTime().asMicroseconds() *0.01;
-				std::cout << "passed_time" <<  framesComponent.passed_time << '\n';
+				framesComponent.passed_time += Timer::getTimer().getElapsedTime().asMicroseconds() *0.01; //TODO::fix const values for frames
+				//std::cout << "passed_time" <<  framesComponent.passed_time << '\n';
 				//Timer::getTimer().restart();
-				if (framesComponent.passed_time > 100)
+				if (framesComponent.passed_time > FrameTimeDelta)
 				{
 					auto& sprite = entity->getComponent<SpriteComponent>();
 					sprite.sprite.setTexture(
 						framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)][framesComponent.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
-					framesComponent.passed_time -= 100;
+					framesComponent.passed_time -= FrameTimeDelta;
 				}
 
             }
             else
             {
-
-                auto &sprite = entity->getComponent<SpriteComponent>();
+				framesComponent.cur_frame_set = FrameSet::IDLE;
+	            framesComponent.animation_started = true;
+                /*auto &sprite = entity->getComponent<SpriteComponent>();
                 sprite.sprite.setTexture(framesComponent.base_frame);
 				std::cout<< "time" << Timer::getTimer().getElapsedTime().asMicroseconds()<< '\n';
-                std::cout << "aboba" << std::endl;
+                std::cout << "aboba" << std::endl;*/
             }
         }
     }

@@ -22,7 +22,7 @@ void Game::load(const char *config) {
 void Game::run() {
     // Loop обновление по кадрам всего
     RenderWindow window(sf::VideoMode(640, 480), "Boys game");
-    window.setFramerateLimit(1.0f / DELTA_TIME);
+    //window.setFramerateLimit(1.0f / DELTA_TIME);
     //Components
     EntityManager manager;
     Entity player;
@@ -32,14 +32,15 @@ void Game::run() {
     FramesCreator creator{hero_king_texture_path};
     auto frames = creator.GetFrames(9, 10);
 
-    std::vector<sf::Texture> moving_frames{frames.begin() + 7, frames.begin() + 17};
+    std::vector<sf::Texture> moving_frames{frames.begin() + 8, frames.begin() + 17};
     std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
-	std::vector<sf::Texture> idling_frames{frames.begin() + 18, frames.begin() + 24};
+	std::vector<sf::Texture> idling_frames{frames.begin() + 0, frames.begin() + 7};
 
 
     std::vector<std::vector<sf::Texture>> all_frames;
     all_frames.push_back(moving_frames);
     all_frames.push_back(attack_frames);
+	all_frames.push_back(idling_frames);
 
 
 	player.AddComponent<PositionComponent>(200,200);
