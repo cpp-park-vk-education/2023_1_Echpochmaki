@@ -11,44 +11,48 @@ const int DrawSystemID = 2321;
 #include "BaseSystem.h"
 #include "SpriteComponent.h"
 
-class DrawSystem : public BaseSystem
-{
- public:
+struct EntityCompare {
+    inline bool operator()(const Entity *e1, const Entity *e2) {
+        return (e1->getComponent<SpriteComponent>().drawingPriority <
+                e2->getComponent<SpriteComponent>().drawingPriority);
+    }
+};
 
-	virtual void update(EntityManager* manager)
-	{
-		std::vector<Entity*> entities;
-		manager->selectEntites<SpriteComponent>(entities);
-		for (Entity* e:entities)
-		{
-			auto& sprite = e->getComponent<SpriteComponent>().sprite;//TODO:: might be a wrong place to do this
-            auto& position = e->getComponent<PositionComponent>().position;
+class DrawSystem : public BaseSystem {
+public:
+
+    virtual void update(EntityManager *manager) {
+        std::vector<Entity *> entities;
+        manager->selectEntites<SpriteComponent>(entities);
+
+        std::sort(entities.begin(), entities.end(), EntityCompare());
+
+        for (Entity *e: entities) {
+            auto &sprite = e->getComponent<SpriteComponent>().sprite;//TODO:: might be a wrong place to do this
+            auto &position = e->getComponent<PositionComponent>().position;
             sprite.setPosition(position.x, position.y);
-			//sprite.setTextureRect(sf::IntRect (35, 0, 30, 60));
+            //sprite.setTextureRect(sf::IntRect (35, 0, 30, 60));
             window->draw(e->getComponent<SpriteComponent>().sprite);
-		}
-	}
+        }
+    }
 
-	virtual bool added()
-	{
-		return true;
-	}
+    virtual bool added() {
+        return true;
+    }
 
-	void setRenderWindow(RenderWindow *windowSrc)
-	{
-		window = windowSrc;
-	}
+    void setRenderWindow(RenderWindow *windowSrc) {
+        window = windowSrc;
+    }
 
-	virtual int getSystemID() override
-	{
-		return DrawSystemID;
-	}
+    virtual int getSystemID() override {
+        return DrawSystemID;
+    }
 
-	~DrawSystem() override = default;
+    ~DrawSystem() override = default;
 
- private:
-	static int ID;
-	RenderWindow *window;
+private:
+    static int ID;
+    RenderWindow *window;
 };
 
 
