@@ -9,7 +9,8 @@ enum class FrameSet
 {
     MOVE = 0,
     ATTACK = 1,
-	IDLE = 2
+	IDLE = 2,
+    DIE = 3
 };
 
 struct FramesComponent : public Component {
