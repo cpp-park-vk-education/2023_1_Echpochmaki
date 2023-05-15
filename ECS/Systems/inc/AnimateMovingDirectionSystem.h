@@ -8,7 +8,7 @@
 
 //using TypeId = size_t;
 
-constexpr TypeId MovingID = 8306722;
+constexpr TypeId MovingID = 123456;
 
 
 class AnimateMovingDirectionSystem : public BaseSystem {
@@ -30,21 +30,23 @@ class AnimateMovingDirectionSystem : public BaseSystem {
         for (auto entity: entities)
         {
             auto &move = entity->getComponent<AnimationMovingComponent>();
+            auto &attack = entity->getComponent<AttackAnimationComponent>();
 
             if (move.animation_started)
             {
-                std::cout << "Here we go again" << std::endl;
-                std::cout << "Here we go again" << std::endl;
-                std::cout << "Here we go again" << std::endl;
-                std::cout << "Here we go again" << std::endl;
+                if (!attack.animation_started) {
 
-                auto &sprite = entity->getComponent<SpriteComponent>();
-                sprite.sprite.setTexture(
-                        move.frames[move.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
+                    auto &sprite = entity->getComponent<SpriteComponent>();
+                    sprite.sprite.setTexture(
+                            move.frames[move.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
 
-                if (move.cur_frame >= move.size)
+                    if (move.cur_frame >= move.size) {
+                        move.cur_frame = 0;
+                        move.animation_started = false;
+                    }
+                }
+                else
                 {
-                    move.cur_frame = 0;
                     move.animation_started = false;
                 }
             }

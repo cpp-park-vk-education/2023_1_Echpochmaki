@@ -1,6 +1,6 @@
 add_library(System src/BaseSystem.cpp src/EnemySystem.cpp
         src/HitBoxSystem.cpp src/MoveSystem.cpp
-        src/PlayerSystem.cpp src/SyncSystem.cpp inc/AnimateMovingDirectionSystem.h)
+        src/PlayerSystem.cpp src/SyncSystem.cpp inc/AnimateMovingDirectionSystem.h inc/FramesSystem.h)
 
 include_directories(../inc/)
 target_include_directories(System PUBLIC inc ../inc ../Components)

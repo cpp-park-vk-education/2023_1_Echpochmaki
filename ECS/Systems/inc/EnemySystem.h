@@ -54,15 +54,16 @@ public:
                 }
             }
 
-            auto& attack = enemy->getComponent<AttackAnimationComponent>();
-            if (collided && !attack.animation_started)
+            //auto& attack = enemy->getComponent<AttackAnimationComponent>();
+            auto& framesComponent = enemy->getComponent<FramesComponent>();
+            if (collided && !framesComponent.animation_started)
             {
-                attack.animation_started = true;
+                framesComponent.animation_started = true;
             }
 
             if (!collided)
             {
-                attack.animation_started = false;
+                framesComponent.animation_started = false;
             }
 
 

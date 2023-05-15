@@ -5,6 +5,7 @@
 #include "ECS/utils/FramesCreator.h"
 #include "AnimationMovingComponent.h"
 #include "AnimateMovingDirectionSystem.h"
+#include "FramesSystem.h"
 
 void Game::loadMap() {
     // Получение карты, передача Entity Creator
@@ -30,93 +31,81 @@ void Game::run() {
 
     FramesCreator creator{hero_king_texture_path};
     auto frames = creator.GetFrames(9, 10);
-    //auto attack_frames = creator.GetFrames(9, 10);
 
     std::vector<sf::Texture> moving_frames{frames.begin(), frames.begin() + 17};
     std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
+
+    std::vector<std::vector<sf::Texture>> all_frames;
+//    all_frames.push_back(moving_frames);
+//    all_frames.push_back(attack_frames);
 
 
 	player.AddComponent<PositionComponent>(200,200);
 	player.AddComponent<VelocityComponent>();
 	player.AddComponent<PlayerComponent>();
 
-	//Image image;
-	//image.loadFromFile("../Graphics/textures/HeroKnight.png");
-	//Texture texture;
-	//texture.loadFromImage(image);
 	Sprite sprite;
 	sprite.setTexture(frames[0]);
-	//sprite.setTextureRect(IntRect(0, 0, 100, 100));
-	player.AddComponent<SpriteComponent>(sprite);
 
+	player.AddComponent<SpriteComponent>(sprite);
 	player.AddComponent<CollisionComponent>(sprite.getTextureRect());
     player.AddComponent<MoveDirectionComponent>();
-    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
-    player.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
+//    player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
+//    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
+//    player.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
+
+
     manager.addEntity(&player);
 
 
 	//Collider starts here
 	Sprite collider;
 	collider.setTexture(frames[0]);
-	//collider.setTextureRect(IntRect(100, 100, 200, 200));
 	Entity testCollider;
 	testCollider.AddComponent<PositionComponent>(0, 0);
 	testCollider.AddComponent<CollisionComponent>(collider.getTextureRect());
 	testCollider.AddComponent<SpriteComponent>(collider);
 
     manager.addEntity(&testCollider);
+
     //Systems
     DrawSystem drawSystem;
     drawSystem.setRenderWindow(&window);
     manager.addSystem(&drawSystem);
 
     PlayerSystem playerSystem;
-    std::cout << "addr of playerSystem " << &playerSystem << std::endl;
     manager.addSystem(&playerSystem);
 
     MoveSystem moveSystem;
-    std::cout << "addr of moveSystem " << &moveSystem << std::endl;
     manager.addSystem(&moveSystem);
 
     EnemySystem enemy_system;
-    std::cout << "addr of enemy_system " << &enemy_system << std::endl;
     manager.addSystem(&enemy_system);
 
     AnimateDirectionSystem animateDirectionSystem;
-    std::cout << "addr of animateDirectionSystem " << &animateDirectionSystem << std::endl;
     manager.addSystem(&animateDirectionSystem);
 
-    AttackAnimationSystem attackAnimationSystem;
-    std::cout << "addr of attackAnimationSystem " << &attackAnimationSystem << std::endl;
-    std::cout << "Added attackAnimationSystem: " << manager.addSystem(&attackAnimationSystem) << std::endl;
+//    AttackAnimationSystem attackAnimationSystem;
 
-    AnimateMovingDirectionSystem animateMovingDirectionSystem;
-    std::cout << "addr of animateMovingDirectionSystem " << &animateMovingDirectionSystem << std::endl;
-    std::cout << "animateMovingDirectionSystem contains: "
-            << (manager.systems.find(&animateMovingDirectionSystem) != manager.systems.end()) << std::endl;
-    auto pair = manager.addSystem2(&animateDirectionSystem);
-    std::cout << "Added animateMovingDirectionSystem: " << pair.second << " " << *pair.first << std::endl;
+//    AnimateMovingDirectionSystem animateMovingDirectionSystem;
+//    manager.addSystem(&animateMovingDirectionSystem);
+
+//    FramesSystem framesSystem;
+//    std::cout << "AddedFrameSystem" << std::endl;
+//    manager.addSystem(&framesSystem);
 
     Entity enemy;
-    //FramesCreator attack_creator{};
     enemy.AddComponent<EnemyComponent>();
     enemy.AddComponent<VelocityComponent>(1, 1);
     enemy.AddComponent<PositionComponent>(350, 350);
     enemy.AddComponent<MoveDirectionComponent>();
-    enemy.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
-    //enemy.AddComponent<>();
-    //enemy.AddComponent<CollisionComponent>();
-    //enemy.AddComponent<EnemyComponent>();
+//    enemy.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
+    //enemy.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
+    //enemy.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
 
 
-    //Image enemy_img;
-    //enemy_img.loadFromFile("../Graphics/textures/HeroKnight.png");
-    //Texture enemy_texture;
-    //enemy_texture.loadFromImage(image);
     Sprite enemy_sprite;
     enemy_sprite.setTexture(frames[0]);
-    //enemy_sprite.setTextureRect(IntRect(0, 0, 100, 100));
     enemy.AddComponent<SpriteComponent>(enemy_sprite);
     enemy.AddComponent<CollisionComponent>(enemy_sprite.getTextureRect());
 

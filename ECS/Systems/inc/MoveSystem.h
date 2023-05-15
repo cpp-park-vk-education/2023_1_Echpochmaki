@@ -10,6 +10,7 @@
 #include "EnemyComponent.h"
 #include "MoveDirectionComponent.h"
 #include "AnimationMovingComponent.h"
+#include "FramesComponent.h"
 
 const int MoveSystemID = 2;
 
@@ -37,20 +38,43 @@ public:
                     auto& dir = (*it1)->getComponent<MoveDirectionComponent>();
                     auto& vel = (*it1)->getComponent<VelocityComponent>();
 
-                    if (vel.velocity.x != 0)
+                    if (vel.velocity.x != 0 || vel.velocity.y != 0)
                     {
-                        if ((*it1)->HasComponent<AnimationMovingComponent>())
+//                        if ((*it1)->HasComponent<AnimationMovingComponent>())
+//                        {
+//                            auto& moving = (*it1)->getComponent<AnimationMovingComponent>();
+//                            if (!moving.animation_started)
+//                            {
+//                                moving.animation_started = true;
+//                            }
+//
+//                            std::cout << "Starting animation" << std::endl;
+//
+//                        }
+
+                        if ((*it1)->HasComponent<FramesComponent>())
                         {
-                            auto& moving = (*it1)->getComponent<AnimationMovingComponent>();
-                            if (!moving.animation_started)
-                            {
-                                moving.animation_started = true;
-                            }
+                            auto& framesComponent= (*it1)->getComponent<FramesComponent>();
 
-                            std::cout << "Starting animation" << std::endl;
-
+                            framesComponent.cur_frame_set = FrameSet::MOVE;
+                            framesComponent.animation_started = true;
                         }
+
                     }
+//                    else
+//                    {
+//                        if ((*it1)->HasComponent<AnimationMovingComponent>())
+//                        {
+//                            auto& moving = (*it1)->getComponent<AnimationMovingComponent>();
+//                            if (!moving.animation_started)
+//                            {
+//                                moving.animation_started = false;
+//                            }
+//
+//                            std::cout << "Starting animation" << std::endl;
+//
+//                        }
+//                    }
 
                     if (vel.velocity.x > 0 && dir.dir == Direction::LEFT || vel.velocity.x < 0 && dir.dir == Direction::RIGHT) {
                         //(*it1)->getComponent<MoveDirectionComponent>().has_dir_changed = true;
