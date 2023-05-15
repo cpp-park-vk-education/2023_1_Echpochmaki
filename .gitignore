@@ -9,3 +9,7 @@ Game
 Makefile
 cmake_install.cmake
 *.log
+*.a
+app
+log*.txt
+*.cmake

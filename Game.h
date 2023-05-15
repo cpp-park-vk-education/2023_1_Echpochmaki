@@ -5,7 +5,7 @@
 
 #include "MapGeneration/inc/LevelManager.h"
 #include "ECS/inc/EntityManager.h"
-#include "net/inc/Network.hpp"
+#include "net/inc/Network.h"
 
 #include "PositionComponent.h"
 #include "VelocityComponent.h"
@@ -39,6 +39,7 @@ private:
     std::unique_ptr<EntityManager> entityManager;
     std::unique_ptr<EntityCreator> entityCreator;
     std::unique_ptr<Network> network;
+    sf::Window window;
 };
 
 

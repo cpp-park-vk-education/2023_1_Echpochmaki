@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
 #include <vector>
 
-#inlcude "AttackComponent.h"
-#inlcude "CollisionComponent.h"
-#inlcude "HealthComponent.h"
-#inlcude "PositionComponent.h"
-#inlcude "VelocityComponent.h"
+#include "AttackComponent.h"
+#include "CollisionComponent.h"
+#include "HealthComponent.h"
+#include "PositionComponent.h"
+#include "VelocityComponent.h"
 
-#include "MoveSystem.h"
+#include "../../inc/MoveSystem.h"
 #include "HitBox.h"
 
 #include "EntityManager.h"

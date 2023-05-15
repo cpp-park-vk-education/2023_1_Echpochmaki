@@ -16,16 +16,21 @@ struct VelocityComponent : public Component {
 
 public:
     Vector2<DistanceValueType> velocity;
+    Vector2<DistanceValueType> default_velocity;
 
     VelocityComponent() = default;
 
     VelocityComponent(const Vector2<DistanceValueType> &velocitySrc) {
         velocity = velocitySrc;
+        default_velocity = velocity;
     }
 
     VelocityComponent(DistanceValueType x, DistanceValueType y) {
         velocity.x = x;
+        default_velocity.x = x;
+
         velocity.y = y;
+        default_velocity.y = y;
     }
 
 };

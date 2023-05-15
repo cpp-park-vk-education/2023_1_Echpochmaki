@@ -1,5 +1,11 @@
 #include "Game.h"
 #include "EnemySystem.h"
+#include "AnimateDirectionSystem.h"
+#include "AttackAnimationSystem.h"
+#include "ECS/utils/FramesCreator.h"
+#include "AnimationMovingComponent.h"
+#include "AnimateMovingDirectionSystem.h"
+#include "FramesSystem.h"
 
 void Game::loadMap() {
     // Получение карты, передача Entity Creator
@@ -15,38 +21,53 @@ void Game::load(const char *config) {
 
 void Game::run() {
     // Loop обновление по кадрам всего
-    RenderWindow window(sf::VideoMode(640, 480), "Nss");
+    RenderWindow window(sf::VideoMode(640, 480), "Boys game");
     window.setFramerateLimit(1.0f / DELTA_TIME);
     //Components
     EntityManager manager;
     Entity player;
 
-    player.AddComponent<PositionComponent>(200, 200);
-    player.AddComponent<VelocityComponent>();
-    player.AddComponent<PlayerComponent>();
+    std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
 
-    Image image;
-    image.loadFromFile("../Graphics/textures/HeroKnight.png");
-    Texture texture;
-    texture.loadFromImage(image);
-    Sprite sprite;
-    sprite.setTexture(texture);
-    sprite.setTextureRect(IntRect(0, 0, 100, 100));
-    player.AddComponent<SpriteComponent>(sprite);
+    FramesCreator creator{hero_king_texture_path};
+    auto frames = creator.GetFrames(9, 10);
 
-    player.AddComponent<CollisionComponent>(sprite.getTextureRect());
+    std::vector<sf::Texture> moving_frames{frames.begin(), frames.begin() + 17};
+    std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
+
+    std::vector<std::vector<sf::Texture>> all_frames;
+    all_frames.push_back(moving_frames);
+    all_frames.push_back(attack_frames);
+
+
+	player.AddComponent<PositionComponent>(200,200);
+	player.AddComponent<VelocityComponent>();
+	player.AddComponent<PlayerComponent>();
+
+	Sprite sprite;
+	sprite.setTexture(frames[0]);
+
+	player.AddComponent<SpriteComponent>(sprite);
+	player.AddComponent<CollisionComponent>(sprite.getTextureRect());
+    player.AddComponent<MoveDirectionComponent>();
+    player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
+//    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
+//    player.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
+
 
     manager.addEntity(&player);
-    //Collider starts here
-    Sprite collider;
-    collider.setTexture(texture);
-    collider.setTextureRect(IntRect(100, 100, 200, 200));
-    Entity testCollider;
-    testCollider.AddComponent<PositionComponent>(0, 0);
-    testCollider.AddComponent<CollisionComponent>(collider.getTextureRect());
-    testCollider.AddComponent<SpriteComponent>(collider);
+
+
+	//Collider starts here
+	Sprite collider;
+	collider.setTexture(frames[0]);
+	Entity testCollider;
+	testCollider.AddComponent<PositionComponent>(0, 0);
+	testCollider.AddComponent<CollisionComponent>(collider.getTextureRect());
+	testCollider.AddComponent<SpriteComponent>(collider);
 
     manager.addEntity(&testCollider);
+
     //Systems
     DrawSystem drawSystem;
     drawSystem.setRenderWindow(&window);
@@ -61,25 +82,47 @@ void Game::run() {
     EnemySystem enemy_system;
     manager.addSystem(&enemy_system);
 
+    AnimateDirectionSystem animateDirectionSystem;
+    manager.addSystem(&animateDirectionSystem);
+
+//    AttackAnimationSystem attackAnimationSystem;
+
+//    AnimateMovingDirectionSystem animateMovingDirectionSystem;
+//    manager.addSystem(&animateMovingDirectionSystem);
+
+    FramesSystem framesSystem;
+//    std::cout << "AddedFrameSystem" << std::endl;
+    manager.addSystem(&framesSystem);
+
     Entity enemy;
     enemy.AddComponent<EnemyComponent>();
-    enemy.AddComponent<VelocityComponent>();
-    enemy.AddComponent<PositionComponent>(300, 300);
-    enemy.AddComponent<EnemyComponent>();
+    enemy.AddComponent<VelocityComponent>(1, 1);
+    enemy.AddComponent<PositionComponent>(350, 350);
+    enemy.AddComponent<MoveDirectionComponent>();
+    enemy.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
+    //enemy.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
+    //enemy.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
 
-    Image enemy_img;
-    enemy_img.loadFromFile("../Graphics/textures/HeroKnight.png");
-    Texture enemy_texture;
-    enemy_texture.loadFromImage(image);
+
     Sprite enemy_sprite;
-    enemy_sprite.setTexture(texture);
-    enemy_sprite.setTextureRect(IntRect(0, 0, 100, 100));
+    enemy_sprite.setTexture(frames[0]);
     enemy.AddComponent<SpriteComponent>(enemy_sprite);
+    enemy.AddComponent<CollisionComponent>(enemy_sprite.getTextureRect());
+
 
     manager.addEntity(&enemy);
 
 
-    while (window.isOpen()) {
+
+
+
+
+
+
+
+    while (window.isOpen())
+    {
+        std::cout  << "update " << random() % 10 << std::endl;
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)

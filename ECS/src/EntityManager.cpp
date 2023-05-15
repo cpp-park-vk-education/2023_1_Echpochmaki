@@ -24,6 +24,8 @@ Entity*  EntityManager::getEntity(int keyID)
 	for (Entity* elem : entities)
 		if (elem->id == keyID)
 			return elem;
+	
+	return nullptr;
 }
 
 
@@ -32,6 +34,8 @@ ISystem*  EntityManager::getSystem(int keyID)
 	for (ISystem* system : systems)
 		if (system->id == keyID)
 			return system;
+	
+	return nullptr;
 }
 
 void  EntityManager::update(Game* game)
