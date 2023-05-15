@@ -16,7 +16,7 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
 
     FramesCreator creator;
 
-    sf::Texture texture;
+    sf::Texture *texture = new sf::Texture;
 
     std::string floor_texture_path = "../Graphics/textures/floor.png";
     std::string wall_texture_path = "../Graphics/textures/wall.png";
@@ -26,20 +26,20 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
 
     switch (tile.objectId) {
         case floorTile.objectId:
-            texture.loadFromFile(floor_texture_path);
-            sprite.setTexture(texture);
+            texture->loadFromFile(floor_texture_path);
+            sprite.setTexture(*texture);
             entity->AddComponent<SpriteComponent>(sprite);
             break;
         case wallTile.objectId:
-            texture.loadFromFile(wall_texture_path);
-            sprite.setTexture(texture);
+            texture->loadFromFile(wall_texture_path);
+            sprite.setTexture(*texture);
 
             entity->AddComponent<SpriteComponent>(sprite);
             entity->AddComponent<CollisionComponent>(sprite.getTextureRect());
             break;
         case doorTile.objectId:
-            texture.loadFromFile(door_texture_path);
-            sprite.setTexture(texture);
+            texture->loadFromFile(door_texture_path);
+            sprite.setTexture(*texture);
 
             entity->AddComponent<SpriteComponent>(sprite);
             break;
