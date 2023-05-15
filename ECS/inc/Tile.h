@@ -9,6 +9,9 @@ struct EntityTileBase {
     constexpr explicit EntityTileBase(int id) : objectId(id) {};
 };
 
+inline const int tileWidth = 60;
+inline const int tileHeight = 60;
+
 inline constexpr EntityTileBase floorTile(0);
 inline constexpr EntityTileBase wallTile(1);
 inline constexpr EntityTileBase doorTile(2);

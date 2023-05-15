@@ -74,8 +74,15 @@ std::vector<Entity *> EntityCreator::createEntitiesByMap(const tileMap &tilemap)
 
     for (size_t i = 0; i < tilemap.size(); ++i) {
         for (size_t j = 0; j < tilemap[0].size(); ++j) {
+
+            if (tilemap[i][j].objectId == enemyTile.objectId) {
+                Entity *entity = createEntity(floorTile);
+                entity->AddComponent<PositionComponent>(j * tileWidth, i * tileHeight);
+                entities.push_back(entity);
+            }
+
             Entity *entity = createEntity(tilemap[i][j]);
-            entity->AddComponent<PositionComponent>(j * 60, i * 60);
+            entity->AddComponent<PositionComponent>(j * tileWidth, i * tileHeight);
             entities.push_back(entity);
         }
     }
