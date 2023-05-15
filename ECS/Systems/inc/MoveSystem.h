@@ -40,17 +40,17 @@ public:
 
                     if (vel.velocity.x != 0 || vel.velocity.y != 0)
                     {
-//                        if ((*it1)->HasComponent<AnimationMovingComponent>())
-//                        {
-//                            auto& moving = (*it1)->getComponent<AnimationMovingComponent>();
-//                            if (!moving.animation_started)
-//                            {
-//                                moving.animation_started = true;
-//                            }
-//
-//                            std::cout << "Starting animation" << std::endl;
-//
-//                        }
+                        if ((*it1)->HasComponent<AnimationMovingComponent>())
+                        {
+                            auto& moving = (*it1)->getComponent<AnimationMovingComponent>();
+                            if (!moving.animation_started)
+                            {
+                                moving.animation_started = true;
+                            }
+
+                            std::cout << "Starting animation" << std::endl;
+
+                        }
 
                         if ((*it1)->HasComponent<FramesComponent>())
                         {

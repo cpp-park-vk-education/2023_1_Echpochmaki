@@ -36,8 +36,8 @@ void Game::run() {
     std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
 
     std::vector<std::vector<sf::Texture>> all_frames;
-//    all_frames.push_back(moving_frames);
-//    all_frames.push_back(attack_frames);
+    all_frames.push_back(moving_frames);
+    all_frames.push_back(attack_frames);
 
 
 	player.AddComponent<PositionComponent>(200,200);
@@ -50,7 +50,7 @@ void Game::run() {
 	player.AddComponent<SpriteComponent>(sprite);
 	player.AddComponent<CollisionComponent>(sprite.getTextureRect());
     player.AddComponent<MoveDirectionComponent>();
-//    player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
+    player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
 //    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
 //    player.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
 
@@ -90,16 +90,16 @@ void Game::run() {
 //    AnimateMovingDirectionSystem animateMovingDirectionSystem;
 //    manager.addSystem(&animateMovingDirectionSystem);
 
-//    FramesSystem framesSystem;
+    FramesSystem framesSystem;
 //    std::cout << "AddedFrameSystem" << std::endl;
-//    manager.addSystem(&framesSystem);
+    manager.addSystem(&framesSystem);
 
     Entity enemy;
     enemy.AddComponent<EnemyComponent>();
     enemy.AddComponent<VelocityComponent>(1, 1);
     enemy.AddComponent<PositionComponent>(350, 350);
     enemy.AddComponent<MoveDirectionComponent>();
-//    enemy.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
+    enemy.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
     //enemy.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
     //enemy.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
 

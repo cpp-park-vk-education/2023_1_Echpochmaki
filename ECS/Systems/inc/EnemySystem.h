@@ -55,22 +55,25 @@ public:
             }
 
             //auto& attack = enemy->getComponent<AttackAnimationComponent>();
-            auto& framesComponent = enemy->getComponent<FramesComponent>();
-            if (collided && !framesComponent.animation_started)
+            if (enemy->HasComponent<FramesComponent>())
             {
-                framesComponent.animation_started = true;
+                auto& framesComponent = enemy->getComponent<FramesComponent>();
+                if (collided)
+                {
+                    framesComponent.animation_started = true;
+                }
+
+                if (!collided)
+                {
+                    framesComponent.animation_started = false;
+                }
             }
 
-            if (!collided)
-            {
-                framesComponent.animation_started = false;
-            }
-
-
-            auto velocity_component = enemy->getComponent<VelocityComponent>();
+            auto& velocity_component = enemy->getComponent<VelocityComponent>();
             DistanceValueType len = sqrt(pow(velocity_component.velocity.x, 2) + pow(velocity_component.velocity.y, 2));
             Vector2<DistanceValueType> offset = CalcOffset(enemy, player_selected);
             Vector2<DistanceValueType> velocity_to_set;
+
             if (len != 0)
             {
                 DistanceValueType offset_len = sqrt(pow(offset.x, 2) + pow(offset.y, 2));
@@ -80,20 +83,13 @@ public:
             else
             {
                 DistanceValueType offset_len = sqrt(pow(offset.x, 2) + pow(offset.y, 2));
-                Vector2<DistanceValueType> new_velocity  = offset / offset_len; // придумать как обрабатывать ситуацию клгда лен == 0,
+                Vector2<DistanceValueType> new_velocity = offset / offset_len; // придумать как обрабатывать ситуацию клгда лен == 0,
                 // пока вектор просто нормируется
                 velocity_to_set = new_velocity;
             }
 //            velocity_component.velocity = new_velocity;
-                enemy->getComponent<VelocityComponent>().velocity.x = velocity_to_set.x;
-                enemy->getComponent<VelocityComponent>().velocity.y = velocity_to_set.y;
-//                std::cout << velocity_to_set.x << " " << velocity_to_set.y << std::endl;
-//                std::cout << enemy->getComponent<VelocityComponent>().velocity.x << " "
-//                          << enemy->getComponent<VelocityComponent>().velocity.x << std::endl;
-
-
-
-            //Vector2<DistanceValueType> cur_vel = player_selected->getComponent<>()
+                velocity_component.velocity.x = velocity_to_set.x;
+                velocity_component.velocity.y = velocity_to_set.y;
         }
 
     }

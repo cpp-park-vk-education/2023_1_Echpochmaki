@@ -68,11 +68,12 @@ protected:
                 dir = 0;
             }
 
-            auto& attack = entity->getComponent<AttackAnimationComponent>();
-
-            if (Mouse::isButtonPressed(Mouse::Left) && !attack.animation_started) {
-             attack.animation_started = true;
-             std::cout << "left btn clicked" << std::endl;
+//            auto& attack = entity->getComponent<AttackAnimationComponent>();
+            auto& framesComponent = entity->getComponent<FramesComponent>();
+            if (Mouse::isButtonPressed(Mouse::Left)) {
+                framesComponent.cur_frame_set = FrameSet::ATTACK;
+                framesComponent.animation_started = true;
+                std::cout << "left btn clicked" << std::endl;
             }
 
             Vector2<DistanceValueType> newVelocity = entity->getComponent<VelocityComponent>().velocity;
