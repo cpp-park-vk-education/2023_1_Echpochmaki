@@ -78,7 +78,7 @@ public:
                 velocity_to_set = new_velocity;
             } else {
                 DistanceValueType offset_len = sqrt(pow(offset.x, 2) + pow(offset.y, 2));
-                //Vector2<DistanceValueType> new_velocity = offset / offset_len; // придумать как обрабатывать ситуацию клгда лен == 0,
+                //Vector2<DistanceValueType> new_velocity = offset / offset_len; //TODO:: придумать как обрабатывать ситуацию клгда лен == 0,
                 // пока вектор просто нормируется
                 velocity_to_set = {0, 0};
             }
