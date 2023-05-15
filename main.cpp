@@ -8,7 +8,10 @@
 using namespace sf;
 
 int main() {
-    Game game(std::make_unique<LevelManager>(LevelManager()));
+    Game game(std::make_unique<LevelManager>(LevelManager()), std::make_unique<EntityManager>(EntityManager()));
+
+    game.loadMap();
+
     game.run();
     return 0;
 }

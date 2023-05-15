@@ -7,6 +7,7 @@
 #include "../../inc/EntityManager.h"
 #include "AttackAnimationComponent.h"
 #include "SpriteComponent.h"
+#include "AnimationMovingComponent.h"
 
 
 const int PlayerSystemID = 234;
@@ -26,6 +27,11 @@ public:
         }
     }
 
+    bool isHost() {
+        return is_host;
+    }
+
+
     virtual bool added() override {
         return true; //TODO::find out what to return
     }
@@ -36,22 +42,24 @@ protected:
     void controlEntity(Entity *entity) {
         if (entity->HasComponent<VelocityComponent>()) {
             int dir; //Handling the direction
-            if ((Keyboard::isKeyPressed(Keyboard::Left) || (Keyboard::isKeyPressed(Keyboard::A))))
+            if ((Keyboard::isKeyPressed(Keyboard::Left) || (Keyboard::isKeyPressed(Keyboard::A)))) {
                 dir = -1;
-            else if ((Keyboard::isKeyPressed(Keyboard::Right) || (Keyboard::isKeyPressed(Keyboard::D))))
+            } else if ((Keyboard::isKeyPressed(Keyboard::Right) || (Keyboard::isKeyPressed(Keyboard::D)))) {
                 dir = 1;
-            else if ((Keyboard::isKeyPressed(Keyboard::Up) || (Keyboard::isKeyPressed(Keyboard::W))))
+            } else if ((Keyboard::isKeyPressed(Keyboard::Up) || (Keyboard::isKeyPressed(Keyboard::W)))) {
                 dir = 3;
-            else if ((Keyboard::isKeyPressed(Keyboard::Down) || (Keyboard::isKeyPressed(Keyboard::S))))
+            } else if ((Keyboard::isKeyPressed(Keyboard::Down) || (Keyboard::isKeyPressed(Keyboard::S)))) {
                 dir = 2;
-            else
+            } else {
                 dir = 0;
+            }
 
-            auto& attack = entity->getComponent<AttackAnimationComponent>();
-
-            if (Mouse::isButtonPressed(Mouse::Left) && !attack.animation_started) {
-             attack.animation_started = true;
-             std::cout << "left btn clicked" << std::endl;
+//            auto& attack = entity->getComponent<AttackAnimationComponent>();
+            auto &framesComponent = entity->getComponent<FramesComponent>();
+            if (Mouse::isButtonPressed(Mouse::Left)) {
+                framesComponent.cur_frame_set = FrameSet::ATTACK;
+                framesComponent.animation_started = true;
+                //std::cout << "left btn clicked" << std::endl;
             }
 
             Vector2<DistanceValueType> newVelocity = entity->getComponent<VelocityComponent>().velocity;
@@ -87,6 +95,7 @@ protected:
 
 private:
     static int ID;
+    bool is_host;
 };
 
 #endif //ECS_PLAYERSYSTEM_H
