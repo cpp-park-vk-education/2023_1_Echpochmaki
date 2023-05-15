@@ -69,7 +69,7 @@ Entity* EntityCreator::createEntity(const EntityTileBase& tile)
 		sprite.setTexture(frames[0]);
 
 		entity->AddComponent<SpriteComponent>(sprite);
-		entity->AddComponent<CollisionComponent>(IntRect(0,0,MovableCollideWidth,MovableCollideHeight));
+		entity->AddComponent<CollisionComponent>(IntRect(0,0,MovableCollideWidth,MovableCollideHeight),Vector2<DistanceValueType>(MovableCollideWidth / 2,MovableCollideHeight / 2));
 		break;
 	}
 
