@@ -14,7 +14,7 @@ const int DefaultCollideWidth = 60;
 const int DefaultCollideHeight = 60;
 
 const int MovableCollideWidth = 30;
-const int MovableCollideHeight = 30;
+const int MovableCollideHeight = 40;
 
 
 Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
@@ -67,7 +67,7 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
             sprite.setTexture(frames[0]);
 
             entity->AddComponent<SpriteComponent>(sprite, enemyTile.objectId);
-            entity->AddComponent<CollisionComponent>(IntRect(0, 0, MovableCollideWidth, MovableCollideHeight));
+            entity->AddComponent<CollisionComponent>(IntRect(0, 0, MovableCollideWidth, MovableCollideHeight),Vector2<DistanceValueType>(MovableCollideWidth / 2, MovableCollideHeight / 2));
             break;
     }
 

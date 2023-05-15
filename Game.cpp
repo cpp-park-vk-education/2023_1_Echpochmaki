@@ -54,7 +54,7 @@ void Game::run() {
     sprite.setTexture(frames[0]);
 
     player.AddComponent<SpriteComponent>(sprite, 100);
-    player.AddComponent<CollisionComponent>(IntRect(0, 0, 30, 30));
+    player.AddComponent<CollisionComponent>(IntRect(0,0,30,40),Vector2<DistanceValueType>(30 / 2,40 / 2));
     player.AddComponent<MoveDirectionComponent>();
     player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
 //    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
