@@ -22,20 +22,10 @@ class DrawSystem : public BaseSystem
 
 		for (Entity* e : entities)
 		{
-			auto& sprite = e->getComponent<SpriteComponent>().sprite;//TODO:: might be a wrong place to do this
-			auto& position = e->getComponent<PositionComponent>().position;
-			sprite.setPosition(position.x, position.y);
-			if (e->HasComponent<CollisionComponent>())
-			{
+			e->getComponent<SpriteComponent>().sprite.setPosition(e->getComponent<PositionComponent>().position); //TODO:: might be a wrong place to do this
+			window->draw(e->getComponent<SpriteComponent>().sprite);
 
-				auto& rect = e->getComponent<CollisionComponent>().collisionBox;
 
-				sf::RectangleShape* rect_shape = new RectangleShape;
-				rect_shape->setSize(Vector2f(rect.width, rect.height));
-				rect_shape->move(position.x + rect.width / 2, position.y + rect.height / 2);
-				window->draw(e->getComponent<SpriteComponent>().sprite);
-				window->draw(*rect_shape);
-			}
 		}
 	}
 
