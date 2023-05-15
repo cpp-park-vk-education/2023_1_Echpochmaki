@@ -5,6 +5,7 @@
 #include "AnimationMovingComponent.h"
 #include "SpriteComponent.h"
 #include "BaseSystem.h"
+#include "Timer.h"
 
 //using TypeId = size_t;
 
@@ -35,6 +36,7 @@ class AnimateMovingDirectionSystem : public BaseSystem {
                 if (!attack.animation_started) {
 
                     auto &sprite = entity->getComponent<SpriteComponent>();
+
                     sprite.sprite.setTexture(
                             move.frames[move.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
 
@@ -45,7 +47,11 @@ class AnimateMovingDirectionSystem : public BaseSystem {
                 } else {
                     move.animation_started = false;
                 }
-            } else {
+            }
+            else
+            {
+
+
                 auto &sprite = entity->getComponent<SpriteComponent>();
                 sprite.sprite.setTexture(move.base_frame);
                 // std::cout << "aboba" << std::endl;
