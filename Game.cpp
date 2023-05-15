@@ -23,15 +23,10 @@ void Game::load(const char *config) {
 
 void Game::run() {
     // Loop обновление по кадрам всего
-<<<<<<< HEAD
-    RenderWindow window(sf::VideoMode(1024, 1024), "Boys game");
-    window.setFramerateLimit(1.0f / DELTA_TIME);
 
-
-=======
     RenderWindow window(sf::VideoMode(640, 480), "Boys game");
     //window.setFramerateLimit(1.0f / DELTA_TIME);
->>>>>>> 224c569335abbfcfebd3c90a411c98c6419bd0d5
+
     //Components
     Entity player;
 
@@ -42,13 +37,13 @@ void Game::run() {
 
     std::vector<sf::Texture> moving_frames{frames.begin() + 8, frames.begin() + 17};
     std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
-	std::vector<sf::Texture> idling_frames{frames.begin() + 0, frames.begin() + 7};
+    std::vector<sf::Texture> idling_frames{frames.begin() + 0, frames.begin() + 7};
 
 
     std::vector<std::vector<sf::Texture>> all_frames;
     all_frames.push_back(moving_frames);
     all_frames.push_back(attack_frames);
-	all_frames.push_back(idling_frames);
+    all_frames.push_back(idling_frames);
 
 
     player.AddComponent<PositionComponent>(200, 200);
@@ -96,9 +91,9 @@ void Game::run() {
     AnimateDirectionSystem animateDirectionSystem;
     entityManager->addSystem(&animateDirectionSystem);
 
-	CameraSystem cameraSystem;
-	cameraSystem.setRenderWindow(&window);
-	manager.addSystem(&cameraSystem);
+    CameraSystem cameraSystem;
+    cameraSystem.setRenderWindow(&window);
+    entityManager->addSystem(&cameraSystem);
 
 //    AttackAnimationSystem attackAnimationSystem;
 
@@ -108,24 +103,6 @@ void Game::run() {
     FramesSystem framesSystem;
 //    std::cout << "AddedFrameSystem" << std::endl;
     entityManager->addSystem(&framesSystem);
-
-    Entity enemy;
-    enemy.AddComponent<EnemyComponent>();
-    enemy.AddComponent<VelocityComponent>(1, 1);
-    enemy.AddComponent<PositionComponent>(350, 350);
-    enemy.AddComponent<MoveDirectionComponent>();
-    enemy.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
-    //enemy.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
-    //enemy.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
-
-
-    Sprite enemy_sprite;
-    enemy_sprite.setTexture(frames[0]);
-    enemy.AddComponent<SpriteComponent>(enemy_sprite);
-    enemy.AddComponent<CollisionComponent>(enemy_sprite.getTextureRect());
-
-
-    entityManager->addEntity(&enemy);
 
 
     while (window.isOpen()) {
