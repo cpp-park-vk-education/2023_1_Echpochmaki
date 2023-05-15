@@ -41,16 +41,24 @@ class FramesSystem : public BaseSystem {
                     framesComponent.cur_frame = 0;
                     framesComponent.animation_started = false;
                 }
-
-                auto &sprite = entity->getComponent<SpriteComponent>();
-                sprite.sprite.setTexture(
-                        framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)][framesComponent.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
+				framesComponent.passed_time += Timer::getTimer().getElapsedTime().asMicroseconds() *0.01;
+				std::cout << "passed_time" <<  framesComponent.passed_time << '\n';
+				//Timer::getTimer().restart();
+				if (framesComponent.passed_time > 100)
+				{
+					auto& sprite = entity->getComponent<SpriteComponent>();
+					sprite.sprite.setTexture(
+						framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)][framesComponent.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
+					framesComponent.passed_time -= 100;
+				}
 
             }
             else
             {
+
                 auto &sprite = entity->getComponent<SpriteComponent>();
                 sprite.sprite.setTexture(framesComponent.base_frame);
+				std::cout<< "time" << Timer::getTimer().getElapsedTime().asMicroseconds()<< '\n';
                 std::cout << "aboba" << std::endl;
             }
         }

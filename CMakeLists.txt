@@ -14,9 +14,9 @@ add_subdirectory(events)
 add_subdirectory(net)
 add_subdirectory(ECS)
 
-add_executable(app main.cpp Game.cpp MapGeneration/src/LevelManager.cpp)
+add_executable(app main.cpp Game.cpp MapGeneration/src/LevelManager.cpp Time/Timer.cpp Time/Timer.h) #pls fix this
 
-target_include_directories(app PUBLIC ECS/Systems/inc/ ECS/Components/ MapGeneration/inc/)
+target_include_directories(app PUBLIC ECS/Systems/inc/ ECS/Components/ MapGeneration/inc/ Time)
 target_link_libraries(app sfml-graphics)
 target_link_libraries(app sfml-system)
 target_link_libraries(app sfml-window)

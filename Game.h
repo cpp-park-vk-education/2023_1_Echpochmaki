@@ -19,6 +19,8 @@
 #include "HitBoxSystem.h"
 #include "CameraSystem.h"
 
+#include "Timer.h"
+
 
 const int DELTA_TIME = 10.0;
 

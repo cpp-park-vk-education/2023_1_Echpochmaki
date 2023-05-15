@@ -32,8 +32,10 @@ void Game::run() {
     FramesCreator creator{hero_king_texture_path};
     auto frames = creator.GetFrames(9, 10);
 
-    std::vector<sf::Texture> moving_frames{frames.begin(), frames.begin() + 17};
+    std::vector<sf::Texture> moving_frames{frames.begin() + 7, frames.begin() + 17};
     std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
+	std::vector<sf::Texture> idling_frames{frames.begin() + 18, frames.begin() + 24};
+
 
     std::vector<std::vector<sf::Texture>> all_frames;
     all_frames.push_back(moving_frames);
@@ -117,7 +119,7 @@ void Game::run() {
     manager.addEntity(&enemy);
 
 
-
+	sf::Time timer;
 
 
 
@@ -126,6 +128,8 @@ void Game::run() {
 
     while (window.isOpen())
     {
+	    Timer::getTimer().restart();
+
         std::cout  << "update " << random() % 10 << std::endl;
         sf::Event event;
         while (window.pollEvent(event)) {
