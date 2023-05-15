@@ -7,19 +7,20 @@
 
 #include <iostream>
 #include <vector>
-#include "../ECS/Tile.h"
+#include "../../ECS/inc/Tile.h"
 
 // Все спрайты энтити
 // Возвращаю матрицу тайлов на всю карту
 
-struct RoomDescriptionBase{
+struct RoomDescriptionBase {
     int width;
     int height;
 };
 
-class IRoomGenerator{
+class IRoomGenerator {
 public:
     virtual tileMap generateRoom(const RoomDescriptionBase &parameters) = 0;
+
     virtual ~IRoomGenerator() = default;
 };
 

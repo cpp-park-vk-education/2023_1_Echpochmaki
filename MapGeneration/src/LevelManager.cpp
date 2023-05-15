@@ -1,4 +1,4 @@
-#include "LevelManager.h"
+#include "../inc/LevelManager.h"
 
 tileMap RoomGenerator::generateRoom(const RoomDescriptionBase &parameters) {
     // Принимает размер области для комнаты, вписывает комнату и заполняет ее тайлами

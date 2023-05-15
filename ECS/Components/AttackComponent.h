@@ -5,27 +5,23 @@
 #ifndef ECS_2023_1_ECHPOCHMAKI_ECS_COMPONENTS_ATTACKCOMPONENT_H_
 #define ECS_2023_1_ECHPOCHMAKI_ECS_COMPONENTS_ATTACKCOMPONENT_H_
 
-#include "ECS.h"
+#include "../inc/ECS.h"
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
 
 using DamageValueType = int;
 
-struct AttackComponent : public Component
-{
-	DamageValueType damage;
+struct AttackComponent : public Component {
+    DamageValueType damage;
 
-	AttackComponent() = default;
+    AttackComponent() = default;
 
-	AttackComponent(DamageValueType damageSrc)
-	{
-		damage = damageSrc;
-	}
+    AttackComponent(DamageValueType damageSrc) {
+        damage = damageSrc;
+    }
 
 };
-
-
 
 
 #endif //ECS_2023_1_ECHPOCHMAKI_ECS_COMPONENTS_ATTACKCOMPONENT_H_

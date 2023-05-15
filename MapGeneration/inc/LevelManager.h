@@ -3,17 +3,19 @@
 
 #include "IMapGenerator.h"
 #include "IRoomGenerator.h"
+#include "../../ECS/inc/Tile.h"
 
 #include <memory>
 
-class RoomGenerator : public IRoomGenerator{
+class RoomGenerator : public IRoomGenerator {
 public:
     tileMap generateRoom(const RoomDescriptionBase &parameters) override;
 };
 
-class MapGenerator : public IMapGenerator{
+class MapGenerator : public IMapGenerator {
 public:
-    tileMap generateMap(const MapDescriptionBase& parameters) override;
+    tileMap generateMap(const MapDescriptionBase &parameters) override;
+
     void setRoomGenerator(std::unique_ptr<IRoomGenerator> generator) override;
 
 private:
@@ -21,11 +23,14 @@ private:
 };
 
 
-class LevelManager{
+class LevelManager {
 public:
     LevelManager();
+
     tileMap createMap();
+
     int getSeed();
+
 private:
     std::unique_ptr<IMapGenerator> mapGenerator;
     int seed;

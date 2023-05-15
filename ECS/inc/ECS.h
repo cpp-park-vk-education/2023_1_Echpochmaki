@@ -12,8 +12,9 @@
 #include <bitset>
 #include <array>
 
-#include "../map_generation/IRoomGenerator.h"
+
 #include "Tile.h"
+#include <stdexcept>
 
 class Component;
 class Entity;
@@ -23,7 +24,7 @@ using TimeValueType = double;
 
 class EntityCreator {
 public:
-    std::vector<Entity*> createEntitiesByMap(const tileMap& tilemap){}
+    std::vector<Entity*> createEntitiesByMap(const tileMap& tilemap){return std::vector<Entity*>();}
 };
 
 
@@ -87,7 +88,7 @@ class Entity
 	template<typename T>
 	bool HasComponent() const
 	{
-		return componentBitSet[getComponentTypeID<T>()];//TODO::make several contents choice
+		return componentBitSet[getComponentTypeID<T>()];
 	}
 
 
@@ -107,9 +108,15 @@ class Entity
 	}
 
 	template<typename T>
-	T& GetComponent() const
+	T& getComponent() const
 	{
 		auto ptr(componentArray[getComponentTypeID<T>()]);
+        if (ptr == nullptr)
+        {
+            throw std::runtime_error(std::string{"Has no component: "} + typeid(T).name());
+        }
+
+
 		return *static_cast<T*>(ptr);
 	}
 
@@ -117,11 +124,12 @@ class Entity
 	bool HasComponents() const
 	{
 		//set<>
-		std::vector<bool> componentIsContained{ HasComponent<TArgs>()...};
+		/*std::vector<bool> componentIsContained{ HasComponent<TArgs>()...};
 		for (bool contains : componentIsContained)
 			if (!contains)
 				return false;
-		return true;
+		return true;*/
+		return (componentBitSet[getComponentTypeID<TArgs>()] && ...); //TODO::make several contents choice
 	}
 
 	template<typename T>
