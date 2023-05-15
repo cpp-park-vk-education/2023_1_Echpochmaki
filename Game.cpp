@@ -54,7 +54,7 @@ void Game::run() {
     sprite.setTexture(frames[0]);
 
     player.AddComponent<SpriteComponent>(sprite);
-    player.AddComponent<CollisionComponent>(sprite.getTextureRect());
+    player.AddComponent<CollisionComponent>(IntRect(0,0,30,30));
     player.AddComponent<MoveDirectionComponent>();
     player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
 //    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
@@ -69,7 +69,7 @@ void Game::run() {
     collider.setTexture(frames[0]);
     Entity testCollider;
     testCollider.AddComponent<PositionComponent>(0, 0);
-    testCollider.AddComponent<CollisionComponent>(collider.getTextureRect());
+    testCollider.AddComponent<CollisionComponent>(IntRect(0,0,60,60));
     testCollider.AddComponent<SpriteComponent>(collider);
 
     entityManager->addEntity(&testCollider);

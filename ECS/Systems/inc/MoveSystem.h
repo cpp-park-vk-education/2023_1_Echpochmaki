@@ -106,10 +106,10 @@ public:
                     {
                         if (it1 != it2 && (*it2)->HasComponent<CollisionComponent>())
                         {
-                            (*it1)->getComponent<CollisionComponent>().collisionBox.left = (*it1)->getComponent<PositionComponent>().position.x;
-                            (*it1)->getComponent<CollisionComponent>().collisionBox.top = (*it1)->getComponent<PositionComponent>().position.y;
-                            (*it2)->getComponent<CollisionComponent>().collisionBox.left = (*it2)->getComponent<PositionComponent>().position.x;
-                            (*it2)->getComponent<CollisionComponent>().collisionBox.top = (*it2)->getComponent<PositionComponent>().position.y;
+                            (*it1)->getComponent<CollisionComponent>().collisionBox.left = (*it1)->getComponent<PositionComponent>().position.x+(*it1)->getComponent<CollisionComponent>().collisionBox.width / 2;
+                            (*it1)->getComponent<CollisionComponent>().collisionBox.top = (*it1)->getComponent<PositionComponent>().position.y+(*it1)->getComponent<CollisionComponent>().collisionBox.height / 2;
+                            (*it2)->getComponent<CollisionComponent>().collisionBox.left = (*it2)->getComponent<PositionComponent>().position.x+(*it1)->getComponent<CollisionComponent>().collisionBox.width / 2;;
+                            (*it2)->getComponent<CollisionComponent>().collisionBox.top = (*it2)->getComponent<PositionComponent>().position.y+(*it1)->getComponent<CollisionComponent>().collisionBox.height / 2;
                             IntRect rect1 = (*it1)->getComponent<CollisionComponent>().collisionBox; //TODO::Might be costly
                             IntRect rect2 = (*it2)->getComponent<CollisionComponent>().collisionBox;
 
