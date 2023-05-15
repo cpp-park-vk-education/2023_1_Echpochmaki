@@ -33,7 +33,7 @@ void Game::run() {
     std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
 
     FramesCreator creator{hero_king_texture_path};
-    auto frames = creator.GetFrames(9, 10);
+    auto frames = creator.GetFrames(9, 10, 14,40 , 0, 0);
 
     std::vector<sf::Texture> moving_frames{frames.begin() + 8, frames.begin() + 17};
     std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
