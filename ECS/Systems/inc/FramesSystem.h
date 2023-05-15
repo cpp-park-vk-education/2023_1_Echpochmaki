@@ -38,9 +38,9 @@ class FramesSystem : public BaseSystem {
             if (framesComponent.animation_started) {
                 if (framesComponent.cur_frame >=
                     framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)].size()) {
-                    framesComponent.cur_frame = 0;
-                    framesComponent.animation_started = false;
-	                continue;
+                        framesComponent.cur_frame = 0;
+                        framesComponent.animation_started = false;
+                        continue;
                 }
 				framesComponent.passed_time += Timer::getTimer().getElapsedTime().asMicroseconds(); //TODO::fix const values for frames
 

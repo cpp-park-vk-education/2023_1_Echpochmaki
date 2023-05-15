@@ -6,6 +6,8 @@
 #include "AnimationMovingComponent.h"
 #include "AnimateMovingDirectionSystem.h"
 #include "FramesSystem.h"
+#include "AttackSystem.h"
+#include "RemoveEntitySystem.h"
 
 void Game::loadMap() {
     // Получение карты, передача Entity Creator
@@ -38,6 +40,7 @@ void Game::run() {
     std::vector<sf::Texture> moving_frames{frames.begin() + 8, frames.begin() + 17};
     std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
     std::vector<sf::Texture> idling_frames{frames.begin() + 0, frames.begin() + 7};
+    std::vector<sf::Texture> die_frames{frames.begin() + 49, frames.begin() + 57};
 
 
     std::vector<std::vector<sf::Texture>> all_frames;
@@ -49,6 +52,7 @@ void Game::run() {
     player.AddComponent<PositionComponent>(200, 200);
     player.AddComponent<VelocityComponent>();
     player.AddComponent<PlayerComponent>();
+    player.AddComponent<AttackComponent>(2);
 
     Sprite sprite;
     sprite.setTexture(frames[0]);
@@ -103,6 +107,12 @@ void Game::run() {
     FramesSystem framesSystem;
 //    std::cout << "AddedFrameSystem" << std::endl;
     entityManager->addSystem(&framesSystem);
+
+    AttackSystem attackSystem;
+    entityManager->addSystem(&attackSystem);
+
+    RemoveSystem removeSystem;
+    std::cout << "Added removeSystem status: " << entityManager->addSystem(&removeSystem);
 
 
     while (window.isOpen()) {

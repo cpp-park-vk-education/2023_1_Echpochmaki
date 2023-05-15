@@ -8,6 +8,7 @@
 #include "AttackAnimationComponent.h"
 #include "SpriteComponent.h"
 #include "AnimationMovingComponent.h"
+#include "AttackComponent.h"
 
 
 const int PlayerSystemID = 234;
@@ -56,10 +57,17 @@ protected:
 
 //            auto& attack = entity->getComponent<AttackAnimationComponent>();
             auto &framesComponent = entity->getComponent<FramesComponent>();
+            auto &attackComponent = entity->getComponent<AttackComponent>();
             if (Mouse::isButtonPressed(Mouse::Left)) {
                 framesComponent.cur_frame_set = FrameSet::ATTACK;
                 framesComponent.animation_started = true;
+                attackComponent.attack_started = true;
+
                 //std::cout << "left btn clicked" << std::endl;
+            }
+            else
+            {
+                attackComponent.attack_started = false;
             }
 
             Vector2<DistanceValueType> newVelocity = entity->getComponent<VelocityComponent>().velocity;
