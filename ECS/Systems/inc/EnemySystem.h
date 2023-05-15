@@ -36,8 +36,8 @@ public:
             DistanceValueType min_distance = CalcDistance(enemy, players.front());
             bool collided = false;
 
-            auto enemy_rect = enemy->getComponent<CollisionComponent>().collisionBox;
-            for (auto player: players)
+            const auto& enemy_rect = enemy->getComponent<CollisionComponent>().collisionBox;
+            for (const auto& player: players)
             {
                 if (player->getComponent<CollisionComponent>().collisionBox.intersects(enemy_rect))
                 {
@@ -61,16 +61,18 @@ public:
                 if (collided)
                 {
                     framesComponent.animation_started = true;
+                    framesComponent.cur_frame_set = FrameSet::ATTACK;
                 }
 
-                if (!collided)
-                {
-                    framesComponent.animation_started = false;
-                }
+//                if (!collided)
+//                {
+//                    framesComponent.animation_started = false;
+//                }
             }
 
             auto& velocity_component = enemy->getComponent<VelocityComponent>();
-            DistanceValueType len = sqrt(pow(velocity_component.velocity.x, 2) + pow(velocity_component.velocity.y, 2));
+//            std::cout << "default velocity: " << velocity_component.default_velocity.x << velocity_component.default_velocity.y << std::endl;
+            DistanceValueType len = sqrt(pow(velocity_component.default_velocity.x, 2) + pow(velocity_component.default_velocity.y, 2));
             Vector2<DistanceValueType> offset = CalcOffset(enemy, player_selected);
             Vector2<DistanceValueType> velocity_to_set;
 
@@ -83,9 +85,9 @@ public:
             else
             {
                 DistanceValueType offset_len = sqrt(pow(offset.x, 2) + pow(offset.y, 2));
-                Vector2<DistanceValueType> new_velocity = offset / offset_len; // придумать как обрабатывать ситуацию клгда лен == 0,
+                //Vector2<DistanceValueType> new_velocity = offset / offset_len; // придумать как обрабатывать ситуацию клгда лен == 0,
                 // пока вектор просто нормируется
-                velocity_to_set = new_velocity;
+                velocity_to_set = {0, 0};
             }
 //            velocity_component.velocity = new_velocity;
                 velocity_component.velocity.x = velocity_to_set.x;

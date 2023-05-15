@@ -27,7 +27,10 @@ public:
 
     VelocityComponent(DistanceValueType x, DistanceValueType y) {
         velocity.x = x;
+        default_velocity.x = x;
+
         velocity.y = y;
+        default_velocity.y = y;
     }
 
 };
