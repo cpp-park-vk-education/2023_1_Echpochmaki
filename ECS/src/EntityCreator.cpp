@@ -10,11 +10,16 @@
 #include "MoveDirectionComponent.h"
 #include "FramesComponent.h"
 
+const int DefaultCollideWidth = 60;
+const int DefaultCollideHeight = 60;
+
+const int MovableCollideWidth = 30;
+const int MovableCollideHeight = 30;
+
+
 Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
     Entity *entity = new Entity;
     Sprite sprite;
-
-    FramesCreator creator;
 
     sf::Texture *texture = new sf::Texture;
 
@@ -23,33 +28,33 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
     std::string door_texture_path = "../Graphics/textures/door.png";
     std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
 
+    FramesCreator creator(hero_king_texture_path);
 
     switch (tile.objectId) {
         case floorTile.objectId:
             texture->loadFromFile(floor_texture_path);
             sprite.setTexture(*texture);
-            entity->AddComponent<SpriteComponent>(sprite);
+            entity->AddComponent<SpriteComponent>(sprite, floorTile.objectId);
             break;
         case wallTile.objectId:
             texture->loadFromFile(wall_texture_path);
             sprite.setTexture(*texture);
 
-            entity->AddComponent<SpriteComponent>(sprite);
-            entity->AddComponent<CollisionComponent>(sprite.getTextureRect());
+            entity->AddComponent<SpriteComponent>(sprite, wallTile.objectId);
+            entity->AddComponent<CollisionComponent>(IntRect(0, 0, DefaultCollideWidth, DefaultCollideHeight));
             break;
         case doorTile.objectId:
             texture->loadFromFile(door_texture_path);
             sprite.setTexture(*texture);
 
-            entity->AddComponent<SpriteComponent>(sprite);
+            entity->AddComponent<SpriteComponent>(sprite, doorTile.objectId);
             break;
         case enemyTile.objectId:
             entity->AddComponent<EnemyComponent>();
             entity->AddComponent<VelocityComponent>(1, 1);
             entity->AddComponent<MoveDirectionComponent>();
 
-            creator.setFilePath(hero_king_texture_path);
-            auto frames = creator.GetFrames(9, 10);
+            auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
 
             std::vector<sf::Texture> moving_frames{frames.begin(), frames.begin() + 17};
             std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
@@ -61,8 +66,8 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
             entity->AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
             sprite.setTexture(frames[0]);
 
-            entity->AddComponent<SpriteComponent>(sprite);
-            entity->AddComponent<CollisionComponent>(sprite.getTextureRect());
+            entity->AddComponent<SpriteComponent>(sprite, enemyTile.objectId);
+            entity->AddComponent<CollisionComponent>(IntRect(0, 0, MovableCollideWidth, MovableCollideHeight));
             break;
     }
 

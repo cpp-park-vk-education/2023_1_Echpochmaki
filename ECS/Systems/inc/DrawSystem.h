@@ -11,41 +11,48 @@ const int DrawSystemID = 2321;
 #include "BaseSystem.h"
 #include "SpriteComponent.h"
 
-class DrawSystem : public BaseSystem
-{
- public:
+struct EntityCompare {
+    inline bool operator()(const Entity *e1, const Entity *e2) {
+        return (e1->getComponent<SpriteComponent>().drawingPriority <
+                e2->getComponent<SpriteComponent>().drawingPriority);
+    }
+};
 
-	virtual void update(EntityManager* manager)
-	{
-		std::vector<Entity*> entities;
-		manager->selectEntites<SpriteComponent>(entities);
-		for (Entity* e:entities)
-		{
-			e->getComponent<SpriteComponent>().sprite.setPosition(e->getComponent<PositionComponent>().position); //TODO:: might be a wrong place to do this
-			window->draw(e->getComponent<SpriteComponent>().sprite);
-		}
-	}
+class DrawSystem : public BaseSystem {
+public:
 
-	virtual bool added()
-	{
-		return true;
-	}
+    virtual void update(EntityManager *manager) {
+        std::vector<Entity *> entities;
+        manager->selectEntites<SpriteComponent>(entities);
 
-	void setRenderWindow(RenderWindow *windowSrc)
-	{
-		window = windowSrc;
-	}
+        std::sort(entities.begin(), entities.end(), EntityCompare());
 
-	virtual int getSystemID() override
-	{
-		return DrawSystemID;
-	}
+        for (Entity *e: entities) {
+            auto &sprite = e->getComponent<SpriteComponent>().sprite;//TODO:: might be a wrong place to do this
+            auto &position = e->getComponent<PositionComponent>().position;
+            sprite.setPosition(position.x, position.y);
+            //sprite.setTextureRect(sf::IntRect (35, 0, 30, 60));
+            window->draw(e->getComponent<SpriteComponent>().sprite);
+        }
+    }
 
-	~DrawSystem() override = default;
+    virtual bool added() {
+        return true;
+    }
 
- private:
-	static int ID;
-	RenderWindow *window;
+    void setRenderWindow(RenderWindow *windowSrc) {
+        window = windowSrc;
+    }
+
+    virtual int getSystemID() override {
+        return DrawSystemID;
+    }
+
+    ~DrawSystem() override = default;
+
+private:
+    static int ID;
+    RenderWindow *window;
 };
 
 

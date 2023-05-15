@@ -33,7 +33,7 @@ void Game::run() {
     std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
 
     FramesCreator creator{hero_king_texture_path};
-    auto frames = creator.GetFrames(9, 10);
+    auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
 
     std::vector<sf::Texture> moving_frames{frames.begin() + 8, frames.begin() + 17};
     std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
@@ -53,8 +53,8 @@ void Game::run() {
     Sprite sprite;
     sprite.setTexture(frames[0]);
 
-    player.AddComponent<SpriteComponent>(sprite);
-    player.AddComponent<CollisionComponent>(sprite.getTextureRect());
+    player.AddComponent<SpriteComponent>(sprite, 100);
+    player.AddComponent<CollisionComponent>(IntRect(0, 0, 30, 30));
     player.AddComponent<MoveDirectionComponent>();
     player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
 //    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
@@ -69,7 +69,7 @@ void Game::run() {
     collider.setTexture(frames[0]);
     Entity testCollider;
     testCollider.AddComponent<PositionComponent>(0, 0);
-    testCollider.AddComponent<CollisionComponent>(collider.getTextureRect());
+    testCollider.AddComponent<CollisionComponent>(IntRect(0, 0, 60, 60));
     testCollider.AddComponent<SpriteComponent>(collider);
 
     entityManager->addEntity(&testCollider);
