@@ -14,7 +14,7 @@ add_subdirectory(events)
 add_subdirectory(net)
 add_subdirectory(ECS)
 
-add_executable(app main.cpp Game.cpp MapGeneration/src/LevelManager.cpp)
+add_executable(app main.cpp Game.cpp MapGeneration/src/LevelManager.cpp ECS/src/EntityCreator.cpp)
 
 target_include_directories(app PUBLIC ECS/Systems/inc/ ECS/Components/ MapGeneration/inc/)
 target_link_libraries(app sfml-graphics)

@@ -8,47 +8,37 @@
 constexpr TypeId AttackID = 383962;
 
 
-
-
-class AttackAnimationSystem : public BaseSystem
-{
-    int getSystemID() override
-    {
+class AttackAnimationSystem : public BaseSystem {
+    int getSystemID() override {
         return AttackID;
     }
 
-    void update(EntityManager* manager) override
-    {
-        std::vector<Entity*> entities;
+    void update(EntityManager *manager) override {
+        std::vector<Entity *> entities;
 
         manager->selectEntites<AttackAnimationComponent>(entities);
 
-        for (auto entity: entities)
-        {
-            auto& attack = entity->getComponent<AttackAnimationComponent>();
+        for (auto entity: entities) {
+            auto &attack = entity->getComponent<AttackAnimationComponent>();
 
-            if (attack.animation_started)
-            {
-                auto& sprite = entity->getComponent<SpriteComponent>();
-                sprite.sprite.setTexture(attack.frames[attack.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
+            if (attack.animation_started) {
+                auto &sprite = entity->getComponent<SpriteComponent>();
+                sprite.sprite.setTexture(
+                        attack.frames[attack.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
 
-                if (attack.cur_frame >= attack.size)
-                {
+                if (attack.cur_frame >= attack.size) {
                     attack.cur_frame = 0;
                     attack.animation_started = false;
                 }
-            }
-            else
-            {
-                auto& sprite = entity->getComponent<SpriteComponent>();
+            } else {
+                auto &sprite = entity->getComponent<SpriteComponent>();
                 sprite.sprite.setTexture(attack.base_frame);
-                std::cout << "aboba" << std::endl;
+                //std::cout << "aboba" << std::endl;
             }
         }
     }
 
-    bool added() override
-    {
+    bool added() override {
         return true;
     }//TODO::find out what to return
 

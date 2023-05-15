@@ -18,7 +18,7 @@ class FramesSystem : public BaseSystem {
     }
 
     void update(EntityManager *manager) override {
-        std::vector<Entity*> entities;
+        std::vector<Entity *> entities;
 
         manager->selectEntites<FramesComponent>(entities);
 
@@ -28,16 +28,15 @@ class FramesSystem : public BaseSystem {
 //        std::cout << "FRAMES: " << entities.size() << std::endl;
 //        std::cout << "FRAMES: " << entities.size() << std::endl;
 
-        for (auto entity: entities)
-        {
-            auto& framesComponent = entity->getComponent<FramesComponent>();
-            std::cout << "Frame System cycle started" << std::endl;
+        for (auto entity: entities) {
+            auto &framesComponent = entity->getComponent<FramesComponent>();
+            // std::cout << "Frame System cycle started" << std::endl;
             //auto &move = entity->getComponent<AnimationMovingComponent>();
             //auto &attack = entity->getComponent<AttackAnimationComponent>();
 
-            if (framesComponent.animation_started)
-            {
-                if (framesComponent.cur_frame >= framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)].size()) {
+            if (framesComponent.animation_started) {
+                if (framesComponent.cur_frame >=
+                    framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)].size()) {
                     framesComponent.cur_frame = 0;
                     framesComponent.animation_started = false;
                 }
@@ -46,18 +45,15 @@ class FramesSystem : public BaseSystem {
                 sprite.sprite.setTexture(
                         framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)][framesComponent.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
 
-            }
-            else
-            {
+            } else {
                 auto &sprite = entity->getComponent<SpriteComponent>();
                 sprite.sprite.setTexture(framesComponent.base_frame);
-                std::cout << "aboba" << std::endl;
+                //std::cout << "aboba" << std::endl;
             }
         }
     }
 
-    bool added() override
-    {
+    bool added() override {
         return true;
     }//TODO::find out what to return
 };

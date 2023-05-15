@@ -12,7 +12,9 @@ void Game::loadMap() {
     // map -> EntityCreator -> (vector <Entity>) -> EntityManager
     auto map = level->createMap();
     auto entities = entityCreator->createEntitiesByMap(map);
-    entityManager->setEntities(std::move(entities));
+    for (auto entity: entities) {
+        entityManager->addEntity(entity);
+    }
 }
 
 void Game::load(const char *config) {
@@ -21,10 +23,11 @@ void Game::load(const char *config) {
 
 void Game::run() {
     // Loop обновление по кадрам всего
-    RenderWindow window(sf::VideoMode(640, 480), "Boys game");
+    RenderWindow window(sf::VideoMode(1024, 1024), "Boys game");
     window.setFramerateLimit(1.0f / DELTA_TIME);
+
+
     //Components
-    EntityManager manager;
     Entity player;
 
     std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
@@ -40,59 +43,59 @@ void Game::run() {
     all_frames.push_back(attack_frames);
 
 
-	player.AddComponent<PositionComponent>(200,200);
-	player.AddComponent<VelocityComponent>();
-	player.AddComponent<PlayerComponent>();
+    player.AddComponent<PositionComponent>(200, 200);
+    player.AddComponent<VelocityComponent>();
+    player.AddComponent<PlayerComponent>();
 
-	Sprite sprite;
-	sprite.setTexture(frames[0]);
+    Sprite sprite;
+    sprite.setTexture(frames[0]);
 
-	player.AddComponent<SpriteComponent>(sprite);
-	player.AddComponent<CollisionComponent>(sprite.getTextureRect());
+    player.AddComponent<SpriteComponent>(sprite);
+    player.AddComponent<CollisionComponent>(sprite.getTextureRect());
     player.AddComponent<MoveDirectionComponent>();
     player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
 //    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
 //    player.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
 
 
-    manager.addEntity(&player);
+    entityManager->addEntity(&player);
 
 
-	//Collider starts here
-	Sprite collider;
-	collider.setTexture(frames[0]);
-	Entity testCollider;
-	testCollider.AddComponent<PositionComponent>(0, 0);
-	testCollider.AddComponent<CollisionComponent>(collider.getTextureRect());
-	testCollider.AddComponent<SpriteComponent>(collider);
+    //Collider starts here
+    Sprite collider;
+    collider.setTexture(frames[0]);
+    Entity testCollider;
+    testCollider.AddComponent<PositionComponent>(0, 0);
+    testCollider.AddComponent<CollisionComponent>(collider.getTextureRect());
+    testCollider.AddComponent<SpriteComponent>(collider);
 
-    manager.addEntity(&testCollider);
+    entityManager->addEntity(&testCollider);
 
     //Systems
     DrawSystem drawSystem;
     drawSystem.setRenderWindow(&window);
-    manager.addSystem(&drawSystem);
+    entityManager->addSystem(&drawSystem);
 
     PlayerSystem playerSystem;
-    manager.addSystem(&playerSystem);
+    entityManager->addSystem(&playerSystem);
 
     MoveSystem moveSystem;
-    manager.addSystem(&moveSystem);
+    entityManager->addSystem(&moveSystem);
 
     EnemySystem enemy_system;
-    manager.addSystem(&enemy_system);
+    entityManager->addSystem(&enemy_system);
 
     AnimateDirectionSystem animateDirectionSystem;
-    manager.addSystem(&animateDirectionSystem);
+    entityManager->addSystem(&animateDirectionSystem);
 
 //    AttackAnimationSystem attackAnimationSystem;
 
 //    AnimateMovingDirectionSystem animateMovingDirectionSystem;
-//    manager.addSystem(&animateMovingDirectionSystem);
+//    entityManager.addSystem(&animateMovingDirectionSystem);
 
     FramesSystem framesSystem;
 //    std::cout << "AddedFrameSystem" << std::endl;
-    manager.addSystem(&framesSystem);
+    entityManager->addSystem(&framesSystem);
 
     Entity enemy;
     enemy.AddComponent<EnemyComponent>();
@@ -110,19 +113,11 @@ void Game::run() {
     enemy.AddComponent<CollisionComponent>(enemy_sprite.getTextureRect());
 
 
-    manager.addEntity(&enemy);
+    entityManager->addEntity(&enemy);
 
 
-
-
-
-
-
-
-
-    while (window.isOpen())
-    {
-        std::cout  << "update " << random() % 10 << std::endl;
+    while (window.isOpen()) {
+        //std::cout << "update " << random() % 10 << std::endl;
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
@@ -132,7 +127,7 @@ void Game::run() {
         // TODO: Update frames
         window.clear();
 
-        manager.update(this);
+        entityManager->update(this);
 
         window.display();
     }

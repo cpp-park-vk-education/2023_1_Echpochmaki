@@ -5,13 +5,15 @@
 
 struct EntityTileBase {
     int objectId;
+
+    constexpr explicit EntityTileBase(int id) : objectId(id) {};
 };
 
-inline const EntityTileBase floorTile = {0};
-inline const EntityTileBase wallTile = {1};
-inline const EntityTileBase doorTile = {2};
+inline constexpr EntityTileBase floorTile(0);
+inline constexpr EntityTileBase wallTile(1);
+inline constexpr EntityTileBase doorTile(2);
 
-inline const EntityTileBase enemyTile = {3};
+inline constexpr EntityTileBase enemyTile(3);
 
 using tileMap = std::vector<std::vector<EntityTileBase>>;
 
