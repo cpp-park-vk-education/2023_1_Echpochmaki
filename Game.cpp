@@ -85,6 +85,10 @@ void Game::run() {
     AnimateDirectionSystem animateDirectionSystem;
     manager.addSystem(&animateDirectionSystem);
 
+	CameraSystem cameraSystem;
+	cameraSystem.setRenderWindow(&window);
+	manager.addSystem(&cameraSystem);
+
 //    AttackAnimationSystem attackAnimationSystem;
 
 //    AnimateMovingDirectionSystem animateMovingDirectionSystem;
