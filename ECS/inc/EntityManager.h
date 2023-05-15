@@ -18,11 +18,8 @@ class Game; // Fake game for compiling
 using namespace sf;
 
 
-
-
 class EntityManager {
-    static const constexpr auto BaseSystemPtrComparator = [](BaseSystem *a, BaseSystem *b)
-    {
+    static const constexpr auto BaseSystemPtrComparator = [](BaseSystem *a, BaseSystem *b) {
         return a->getSystemID() < b->getSystemID();
     };
 public:
@@ -40,7 +37,7 @@ public:
 
     bool addSystem(BaseSystem *system) // returns isSucceded
     {
-        std::cout << "System size: " << systems.size() << std::endl;
+        //  std::cout << "System size: " << systems.size() << std::endl;
         return systems.insert(system).second;
     }
 
@@ -49,7 +46,6 @@ public:
 //        std::cout << "System size: " << systems.size() << std::endl;
         return systems.insert(system);
     }
-
 
 
     bool hasSystem(BaseSystem *system) // returns isSucceded

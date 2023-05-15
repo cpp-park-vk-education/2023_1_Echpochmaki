@@ -5,6 +5,7 @@
 #include "AnimationMovingComponent.h"
 #include "SpriteComponent.h"
 #include "BaseSystem.h"
+#include "Timer.h"
 
 //using TypeId = size_t;
 
@@ -17,26 +18,25 @@ class AnimateMovingDirectionSystem : public BaseSystem {
     }
 
     void update(EntityManager *manager) override {
-        std::vector<Entity*> entities;
+        std::vector<Entity *> entities;
 
         manager->selectEntites<AnimationMovingComponent>(entities);
 
+        /*std::cout << "ANIME: " << entities.size() << std::endl;
         std::cout << "ANIME: " << entities.size() << std::endl;
         std::cout << "ANIME: " << entities.size() << std::endl;
         std::cout << "ANIME: " << entities.size() << std::endl;
-        std::cout << "ANIME: " << entities.size() << std::endl;
-        std::cout << "ANIME: " << entities.size() << std::endl;
+        std::cout << "ANIME: " << entities.size() << std::endl;*/
 
-        for (auto entity: entities)
-        {
+        for (auto entity: entities) {
             auto &move = entity->getComponent<AnimationMovingComponent>();
             auto &attack = entity->getComponent<AttackAnimationComponent>();
 
-            if (move.animation_started)
-            {
+            if (move.animation_started) {
                 if (!attack.animation_started) {
 
                     auto &sprite = entity->getComponent<SpriteComponent>();
+
                     sprite.sprite.setTexture(
                             move.frames[move.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
 
@@ -44,23 +44,22 @@ class AnimateMovingDirectionSystem : public BaseSystem {
                         move.cur_frame = 0;
                         move.animation_started = false;
                     }
-                }
-                else
-                {
+                } else {
                     move.animation_started = false;
                 }
             }
             else
             {
+
+
                 auto &sprite = entity->getComponent<SpriteComponent>();
                 sprite.sprite.setTexture(move.base_frame);
-                std::cout << "aboba" << std::endl;
+                // std::cout << "aboba" << std::endl;
             }
         }
     }
 
-    bool added() override
-    {
+    bool added() override {
         return true;
     }//TODO::find out what to return
 };

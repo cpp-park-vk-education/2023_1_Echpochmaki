@@ -5,6 +5,8 @@
 
 #include "MapGeneration/inc/LevelManager.h"
 #include "ECS/inc/EntityManager.h"
+#include "ECS/inc/EntityCreator.h"
+
 #include "net/inc/Network.h"
 
 #include "PositionComponent.h"
@@ -17,6 +19,9 @@
 #include "MoveSystem.h"
 #include "PlayerSystem.h"
 #include "HitBoxSystem.h"
+#include "CameraSystem.h"
+
+#include "Timer.h"
 
 
 const int DELTA_TIME = 10.0;
@@ -29,8 +34,9 @@ public:
 
     void load(const char *config);
 
-    explicit Game(std::unique_ptr<LevelManager> levelMgr) {
+    explicit Game(std::unique_ptr<LevelManager> levelMgr, std::unique_ptr<EntityManager> entityMgr) {
         level.swap(levelMgr);
+        entityManager.swap(entityMgr);
     }
 
 private:
