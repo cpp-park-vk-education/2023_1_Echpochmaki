@@ -29,6 +29,8 @@ struct FramesComponent : public Component {
     FrameSet cur_frame_set;
 	double passed_time;
     bool animation_started;
+    bool died = false;
+    bool dying = false;
 };
 
 #endif //GAME_FRAMESCOMPONENT_H

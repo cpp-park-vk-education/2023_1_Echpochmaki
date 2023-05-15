@@ -58,8 +58,15 @@ class FramesSystem : public BaseSystem {
             }
             else
             {
-				framesComponent.cur_frame_set = FrameSet::IDLE;
-	            framesComponent.animation_started = true;
+                //if (framesComponent.cur_frame_set != FrameSet::DIE)
+                //{
+                    framesComponent.cur_frame_set = FrameSet::IDLE;
+                    framesComponent.animation_started = true;
+                //}
+                //else
+                //{
+                //    framesComponent.died = true;
+                //}
                 /*auto &sprite = entity->getComponent<SpriteComponent>();
                 sprite.sprite.setTexture(framesComponent.base_frame);
 				std::cout<< "time" << Timer::getTimer().getElapsedTime().asMicroseconds()<< '\n';

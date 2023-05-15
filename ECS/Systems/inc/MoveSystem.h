@@ -62,8 +62,11 @@ public:
                         {
                             auto& framesComponent= (*it1)->getComponent<FramesComponent>();
 
-                            framesComponent.cur_frame_set = FrameSet::MOVE;
-                            framesComponent.animation_started = true;
+                            //if (!framesComponent.dying)
+                            //{
+                                framesComponent.cur_frame_set = FrameSet::MOVE;
+                                framesComponent.animation_started = true;
+                            //}
                         }
 
                     }
