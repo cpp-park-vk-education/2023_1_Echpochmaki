@@ -10,6 +10,8 @@
 #include "MoveDirectionComponent.h"
 #include "FramesComponent.h"
 
+// TODO: Draw by priority
+
 Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
     Entity *entity = new Entity;
     Sprite sprite;
