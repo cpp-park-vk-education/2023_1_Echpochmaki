@@ -34,8 +34,16 @@ public:
                             attacker->getComponent<AttackComponent>().attack_started)
                         {
                             goal->getComponent<HealthComponent>().health -= attacker->getComponent<AttackComponent>().damage;
-							if (goal->getComponent<HealthComponent>().health <=0)
-								goal->getComponent<FramesComponent>().dying = true;
+							if (goal->getComponent<HealthComponent>().health <=0) {
+
+
+                                goal->getComponent<FramesComponent>().dying = true;
+
+                                if (attacker->HasComponent<PlayerComponent>()) {
+                                    auto &playerComponent = attacker->getComponent<PlayerComponent>();
+                                    playerComponent.kills += 1;
+                                }
+                            }
                         }
                     }
 

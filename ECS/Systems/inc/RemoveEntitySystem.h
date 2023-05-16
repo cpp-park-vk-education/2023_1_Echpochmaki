@@ -4,6 +4,8 @@
 #include "BaseSystem.h"
 #include "../../inc/EntityManager.h"
 #include "HealthComponent.h"
+#include "PlayerComponent.h"
+#include "PositionComponent.h"
 #include "events.h"
 #include <iostream>
 #include "Game.h"
@@ -44,14 +46,35 @@ public:
 	            entity->getComponent<FramesComponent>().dying = true;
 				if (entity->getComponent<FramesComponent>().died)
                 {
-                    ++amount_deleted;
-                    pack << sf::Int32(entity->id);
-                    cout << "   packed id=" << sf::Int32(entity->id) << endl;
+                    if (entity->HasComponent<PlayerComponent>())
+                    {
+                        sf::Font default_font;
+                        default_font.loadFromFile("../Graphics/fonts/main_font.ttf");
+                        sf::Text info;
+                        std::string msg = "You died";
+                        info.setString(msg);
+                        info.setFont(default_font);
+                        info.setCharacterSize(30);
 
-                    manager->deleteEntity(entity);
+                        Vector2f position = entity->getComponent<PositionComponent>().position;
+                        //auto& view = window->getView();
+                        info.setPosition(position.x, position.y);
 
-
+                        entity->getComponent<PositionComponent>().position = {100, 100};
+                        entity->getComponent<HealthComponent>().health = 100;
+                        entity->getComponent<PlayerComponent>().deaths += 1;
+                    }
+                    else {
+                        ++amount_deleted;
+                        pack << sf::Int32(entity->id);
+                        cout << "   packed id=" << sf::Int32(entity->id) << endl;
+                        manager->deleteEntity(entity);
+                    }
                 }
+
+
+
+
             }
 
         }

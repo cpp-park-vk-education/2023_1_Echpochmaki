@@ -9,6 +9,7 @@
 #include "AttackSystem.h"
 #include "RemoveEntitySystem.h"
 #include "SinkableComponent.h"
+#include "RenderInfoSystem.h"
 #include "SyncSystem.h"
 
 Game *Game::instance;
@@ -30,19 +31,22 @@ void Game::load(const char *config) {
 void Game::run() {
     // Loop обновление по кадрам всего
 
-//    RenderWindow window(sf::VideoMode(640, 480), "Boys game");
+//    RenderWindow window(sf::VideoMode(1280, 1024), "Boys game");
     window.create(sf::VideoMode(640, 480), "Boys game");
-    //window.setFramerateLimit(1.0f / DELTA_TIME);
+    //window.setFramerateLimit(60);
+
+//	window.setVerticalSyncEnabled(true);
 
     //Components
     Entity player;
 
     std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
+    std::string path_to_main_font = "../Graphics/fonts/main_font.ttf";
 
     FramesCreator creator{hero_king_texture_path};
     auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
 
-    std::vector<sf::Texture> moving_frames{frames.begin() + 8, frames.begin() + 17};
+    std::vector<sf::Texture> moving_frames{frames.begin() + 7, frames.begin() + 17};
     std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
     std::vector<sf::Texture> idling_frames{frames.begin() + 0, frames.begin() + 7};
     std::vector<sf::Texture> die_frames{frames.begin() + 49, frames.begin() + 57};
@@ -52,6 +56,23 @@ void Game::run() {
     all_frames.push_back(moving_frames);
     all_frames.push_back(attack_frames);
     all_frames.push_back(idling_frames);
+	all_frames.push_back(die_frames);
+
+
+	std::vector<float> moving_frames_durations(moving_frames.size(),2);
+	std::vector<float> attack_frames_durations(attack_frames.size(),2);
+	std::vector<float> idling_frames_durations(idling_frames.size(),4);
+	std::vector<float> die_frames_durations(die_frames.size(),3);
+
+	std::vector<std::vector<float>> all_animation_durations;
+	all_animation_durations.push_back(moving_frames_durations);
+	all_animation_durations.push_back(attack_frames_durations);
+	all_animation_durations.push_back(idling_frames_durations);
+	all_animation_durations.push_back(die_frames_durations);
+
+
+
+
 
 
     player.AddComponent<PositionComponent>(200, 200);
@@ -65,8 +86,9 @@ void Game::run() {
     player.AddComponent<SpriteComponent>(sprite, 100);
     player.AddComponent<CollisionComponent>(IntRect(0,0,30,40),Vector2<DistanceValueType>(30 / 2,40 / 2));
     player.AddComponent<MoveDirectionComponent>();
-    player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
+    player.AddComponent<FramesComponent>(all_frames, all_frames[0][0],all_animation_durations);
     player.AddComponent<SinkableComponent>(random());
+    player.AddComponent<HealthComponent>(100);
 //    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
 //    player.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
 
@@ -102,26 +124,31 @@ void Game::run() {
     AnimateDirectionSystem animateDirectionSystem;
     entityManager->addSystem(&animateDirectionSystem);
 
-    CameraSystem cameraSystem;
-    cameraSystem.setRenderWindow(&window);
-    entityManager->addSystem(&cameraSystem);
+
+
+
+
+	CameraSystem cameraSystem;
+	cameraSystem.setRenderWindow(&window);
+	entityManager->addSystem(&cameraSystem);
+
+	RenderInfoSystem renderInfoSystem{&window, path_to_main_font};
+	entityManager->addSystem(&renderInfoSystem);
+
 
 //    AttackAnimationSystem attackAnimationSystem;
 
 //    AnimateMovingDirectionSystem animateMovingDirectionSystem;
 //    entityManager.addSystem(&animateMovingDirectionSystem);
 
-
+    RemoveSystem removeSystem;
+    entityManager->addSystem(&removeSystem);
 
     AttackSystem attackSystem;
     entityManager->addSystem(&attackSystem);
 
-	FramesSystem framesSystem;
-//    std::cout << "AddedFrameSystem" << std::endl;
-	entityManager->addSystem(&framesSystem);
-
-    RemoveSystem removeSystem;
-    std::cout << "Added removeSystem status: " << entityManager->addSystem(&removeSystem);
+    FramesSystem framesSystem;
+    entityManager->addSystem(&framesSystem);
 
     SyncSystem syncSystem;
     std::cout << "add syncSystem success=" << entityManager->addSystem(&syncSystem);
@@ -145,12 +172,19 @@ void Game::run() {
         network->connectToHost("localhost", Network::HOST_PORT);
 
 
+
     while (window.isOpen()) {
         //std::cout << "update " << random() % 10 << std::endl;
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
+	        if (event.type == sf::Event::Resized)
+	        {
+		        // update the view to the new size of the window
+		        sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+		        window.setView(sf::View(visibleArea));
+	        }
         }
 
         // TODO: Update frames

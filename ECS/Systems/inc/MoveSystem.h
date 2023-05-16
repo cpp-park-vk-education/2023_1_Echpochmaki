@@ -13,6 +13,7 @@
 #include "MoveDirectionComponent.h"
 #include "AnimationMovingComponent.h"
 #include "FramesComponent.h"
+#include "AttackSystem.h"
 
 
 

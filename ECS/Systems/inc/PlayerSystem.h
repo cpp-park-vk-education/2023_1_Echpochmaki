@@ -8,7 +8,11 @@
 #include "AttackAnimationComponent.h"
 #include "SpriteComponent.h"
 #include "AnimationMovingComponent.h"
+
+#include "Game.h"
+
 #include "AttackComponent.h"
+
 
 
 const int PlayerSystemID = 234;

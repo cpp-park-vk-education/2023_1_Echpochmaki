@@ -52,15 +52,16 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
 
             entity->AddComponent<SpriteComponent>(sprite, doorTile.objectId);
             break;
-        case enemyTile.objectId:
-            entity->AddComponent<EnemyComponent>();
-            entity->AddComponent<VelocityComponent>(1, 1);
-            entity->AddComponent<MoveDirectionComponent>();
-            entity->AddComponent<HealthComponent>(1);
-            entity->AddComponent<SinkableComponent>(random()); // подумать как сделать уникальный
+	case enemyTile.objectId:
+		entity->AddComponent<EnemyComponent>();
+		entity->AddComponent<VelocityComponent>(1, 1);
+		entity->AddComponent<MoveDirectionComponent>();
+        entity->AddComponent<HealthComponent>(1);
+	    entity->AddComponent<AttackComponent>(1);
+        entity->AddComponent<SinkableComponent>(random()); // подумать как сделать уникальный
 
 
-                auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
+		auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
 
             std::vector<sf::Texture> moving_frames{frames.begin() + 8, frames.begin() + 17};
             std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
@@ -73,8 +74,20 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
             all_frames.push_back(idling_frames);
             all_frames.push_back(dying_frames);
 
-            entity->AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
-            sprite.setTexture(frames[0]);
+
+	    std::vector<float> moving_frames_durations(moving_frames.size(),1);
+	    std::vector<float> attack_frames_durations(attack_frames.size(),1);
+	    std::vector<float> idling_frames_durations(idling_frames.size(),2);
+	    std::vector<float> die_frames_durations(dying_frames.size(),3);
+
+	    std::vector<std::vector<float>> all_animation_durations;
+	    all_animation_durations.push_back(moving_frames_durations);
+	    all_animation_durations.push_back(attack_frames_durations);
+	    all_animation_durations.push_back(idling_frames_durations);
+	    all_animation_durations.push_back(die_frames_durations);
+
+		entity->AddComponent<FramesComponent>(all_frames, all_frames[0][0],all_animation_durations);
+		sprite.setTexture(frames[0]);
 
             entity->AddComponent<SpriteComponent>(sprite, enemyTile.objectId);
             entity->AddComponent<CollisionComponent>(IntRect(0, 0, MovableCollideWidth, MovableCollideHeight),Vector2<DistanceValueType>(MovableCollideWidth / 2, MovableCollideHeight / 2));

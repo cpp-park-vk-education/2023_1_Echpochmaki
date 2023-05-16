@@ -15,7 +15,7 @@ using HealthValueType = int;
 struct HealthComponent : public Component {
     HealthValueType health;
 
-    HealthComponent() = default;
+    HealthComponent() : health(100) {}
 
     HealthComponent(HealthValueType healthSrc) {
         health = healthSrc;

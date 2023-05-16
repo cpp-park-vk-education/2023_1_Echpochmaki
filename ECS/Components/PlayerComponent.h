@@ -14,16 +14,23 @@ using TypeId = int;
 
 using DistanceValueType = float;
 
-const float defaultSpeed = 2;
+const float defaultSpeed = 5;
 
 
 struct PlayerComponent : public Component {
     TypeId Id;
     DistanceValueType speed;
+    size_t kills = 0;
+    size_t deaths = 0;
 
     PlayerComponent() {
         speed = defaultSpeed;
         Id = 0;
+    }
+
+    explicit PlayerComponent(TypeId id) : PlayerComponent()
+    {
+        Id = id;
     }
 
 
