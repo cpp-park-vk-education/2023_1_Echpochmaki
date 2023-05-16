@@ -16,7 +16,7 @@
 #include "AttackAnimationComponent.h"
 #include "CollisionComponent.h"
 
-const int EnemyId = 3456;
+const int EnemyId = 34356;
 const int PixelsBorderSize = 5;
 
 class EnemySystem : public BaseSystem
