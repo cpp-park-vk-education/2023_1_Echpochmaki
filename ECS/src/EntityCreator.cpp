@@ -74,10 +74,10 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
 	    all_frames.push_back(dying_frames);
 
 
-	    std::vector<float> moving_frames_durations(moving_frames.size(),5);
-	    std::vector<float> attack_frames_durations(attack_frames.size(),4);
-	    std::vector<float> idling_frames_durations(idling_frames.size(),4);
-	    std::vector<float> die_frames_durations(dying_frames.size(),8);
+	    std::vector<float> moving_frames_durations(moving_frames.size(),1);
+	    std::vector<float> attack_frames_durations(attack_frames.size(),1);
+	    std::vector<float> idling_frames_durations(idling_frames.size(),2);
+	    std::vector<float> die_frames_durations(dying_frames.size(),3);
 
 	    std::vector<std::vector<float>> all_animation_durations;
 	    all_animation_durations.push_back(moving_frames_durations);

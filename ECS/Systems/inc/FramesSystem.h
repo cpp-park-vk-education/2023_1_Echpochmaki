@@ -30,6 +30,7 @@ class FramesSystem : public BaseSystem {
 //        std::cout << "FRAMES: " << entities.size() << std::endl;
 
         for (auto entity: entities) {
+
             auto &framesComponent = entity->getComponent<FramesComponent>();
             // std::cout << "Frame System cycle started" << std::endl;
             //auto &move = entity->getComponent<AnimationMovingComponent>();
@@ -59,7 +60,7 @@ class FramesSystem : public BaseSystem {
 					auto& sprite = entity->getComponent<SpriteComponent>();
 					sprite.sprite.setTexture(
 						framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)][framesComponent.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
-					framesComponent.passed_time  -= cur_frame_duration;
+					framesComponent.passed_time  = 0;
 					Timer::getTimer().restart();
 				}
 

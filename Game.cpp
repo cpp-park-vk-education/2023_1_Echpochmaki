@@ -28,8 +28,9 @@ void Game::load(const char *config) {
 void Game::run() {
     // Loop обновление по кадрам всего
 
-    RenderWindow window(sf::VideoMode(640, 480), "Boys game");
-    window.setFramerateLimit(60);
+    RenderWindow window(sf::VideoMode(1280, 1024), "Boys game");
+    //window.setFramerateLimit(60);
+
 
     //Components
     Entity player;
@@ -40,7 +41,7 @@ void Game::run() {
     FramesCreator creator{hero_king_texture_path};
     auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
 
-    std::vector<sf::Texture> moving_frames{frames.begin() + 8, frames.begin() + 17};
+    std::vector<sf::Texture> moving_frames{frames.begin() + 7, frames.begin() + 17};
     std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
     std::vector<sf::Texture> idling_frames{frames.begin() + 0, frames.begin() + 7};
     std::vector<sf::Texture> die_frames{frames.begin() + 49, frames.begin() + 57};
@@ -52,10 +53,10 @@ void Game::run() {
     all_frames.push_back(idling_frames);
 
 
-	std::vector<float> moving_frames_durations(moving_frames.size(),5);
-	std::vector<float> attack_frames_durations(attack_frames.size(),4);
+	std::vector<float> moving_frames_durations(moving_frames.size(),2);
+	std::vector<float> attack_frames_durations(attack_frames.size(),2);
 	std::vector<float> idling_frames_durations(idling_frames.size(),4);
-	std::vector<float> die_frames_durations(die_frames.size(),3);
+	std::vector<float> die_frames_durations(die_frames.size(),6);
 
 	std::vector<std::vector<float>> all_animation_durations;
 	all_animation_durations.push_back(moving_frames_durations);
