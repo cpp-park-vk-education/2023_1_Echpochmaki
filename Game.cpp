@@ -58,7 +58,7 @@ void Game::run() {
 	std::vector<float> moving_frames_durations(moving_frames.size(),2);
 	std::vector<float> attack_frames_durations(attack_frames.size(),2);
 	std::vector<float> idling_frames_durations(idling_frames.size(),4);
-	std::vector<float> die_frames_durations(die_frames.size(),6);
+	std::vector<float> die_frames_durations(die_frames.size(),3);
 
 	std::vector<std::vector<float>> all_animation_durations;
 	all_animation_durations.push_back(moving_frames_durations);
@@ -151,6 +151,12 @@ void Game::run() {
         //std::cout << "update " << random() % 10 << std::endl;
         sf::Event event;
         while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Resized)
+            {
+                // update the view to the new size of the window
+                sf::FloatRect visibleArea(0.f, 0.f, event.size.width, event.size.height);
+                window.setView(sf::View(visibleArea));
+            }
             if (event.type == sf::Event::Closed)
                 window.close();
 	        if (event.type == sf::Event::Resized)

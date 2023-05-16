@@ -21,6 +21,7 @@ struct PlayerComponent : public Component {
     TypeId Id;
     DistanceValueType speed;
     size_t kills = 0;
+    size_t deaths = 0;
 
     PlayerComponent() {
         speed = defaultSpeed;

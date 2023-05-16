@@ -4,6 +4,8 @@
 #include "BaseSystem.h"
 #include "../../inc/EntityManager.h"
 #include "HealthComponent.h"
+#include "PlayerComponent.h"
+#include "PositionComponent.h"
 
 const int RemoveSystemId = 32342521;
 
@@ -25,7 +27,30 @@ public:
             {
 	            entity->getComponent<FramesComponent>().dying = true;
 				if (entity->getComponent<FramesComponent>().died)
-                    manager->deleteEntity(entity);
+                {
+                    if (entity->HasComponent<PlayerComponent>())
+                    {
+                        sf::Font default_font;
+                        default_font.loadFromFile("../Graphics/fonts/main_font.ttf");
+                        sf::Text info;
+                        std::string msg = "You died";
+                        info.setString(msg);
+                        info.setFont(default_font);
+                        info.setCharacterSize(30);
+
+                        Vector2f position = entity->getComponent<PositionComponent>().position;
+                        //auto& view = window->getView();
+                        info.setPosition(position.x, position.y);
+
+                        entity->getComponent<PositionComponent>().position = {100, 100};
+                        entity->getComponent<HealthComponent>().health = 100;
+                        entity->getComponent<PlayerComponent>().deaths += 1;
+                    }
+                    else {
+                        manager->deleteEntity(entity);
+                    }
+                }
+
             }
 
         }
