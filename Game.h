@@ -50,10 +50,11 @@ public:
         return Game::instance;
     }
 
+	std::unique_ptr<EntityManager> entityManager;
 public:
 
     std::unique_ptr<LevelManager> level;
-    std::unique_ptr<EntityManager> entityManager;
+
     std::unique_ptr<EntityCreator> entityCreator;
     std::unique_ptr<Network> network;
     sf::RenderWindow window;

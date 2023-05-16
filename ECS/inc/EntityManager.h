@@ -23,10 +23,12 @@ class EntityManager {
         return a->getSystemID() < b->getSystemID();
     };
 private:
-    std::vector<Entity*> entities;
+
     std::set<BaseSystem *, decltype(BaseSystemPtrComparator)> systems{BaseSystemPtrComparator};
 
 public:
+	std::vector<Entity*> entities;
+
     void addEntity(Entity *entity) {
         entities.push_back(entity);
     }
