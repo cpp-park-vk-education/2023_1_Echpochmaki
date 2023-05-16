@@ -1,8 +1,12 @@
-#include "Client.h"
+#include "client.h"
 #include "Packets.h"
 
 void Client::disconnect() 
 {
+    connected = false;
+    map_received = false;
+    waiting_connect_answer = false;
+    
     sf::Packet pack;
     pack << sf::Int32(Packets::PacketType::DisconnectFromClient);
     send(pack);

@@ -10,6 +10,9 @@
 #include "RemoveEntitySystem.h"
 #include "SinkableComponent.h"
 #include "RenderInfoSystem.h"
+#include "SyncSystem.h"
+
+Game *Game::instance;
 
 void Game::loadMap() {
     // Получение карты, передача Entity Creator
@@ -28,7 +31,8 @@ void Game::load(const char *config) {
 void Game::run() {
     // Loop обновление по кадрам всего
 
-    RenderWindow window(sf::VideoMode(1280, 1024), "Boys game");
+//    RenderWindow window(sf::VideoMode(1280, 1024), "Boys game");
+    window.create(sf::VideoMode(640, 480), "Boys game");
     //window.setFramerateLimit(60);
 
 	window.setVerticalSyncEnabled(true);
@@ -145,6 +149,27 @@ void Game::run() {
     FramesSystem framesSystem;
     entityManager->addSystem(&framesSystem);
 
+    SyncSystem syncSystem;
+    std::cout << "add syncSystem success=" << entityManager->addSystem(&syncSystem);
+
+    std::cout << "entities size=" << entityManager->entities.size() << std::endl;
+    int id = 0;
+    for (auto &e : entityManager->entities)
+    {
+        e->id = id++;
+//        std::cout << "e: " << e->id << std::endl;
+    }
+
+
+    char variant;
+    std::cout << "choose 'h' for host and 'c' for client, 's' for single-player: ";
+    std::cin >> variant;
+
+    if (variant == 'h')
+        network->runHost();
+    else if (variant == 'c')
+        network->connectToHost("localhost", Network::HOST_PORT);
+
 
 
     while (window.isOpen()) {
@@ -164,10 +189,8 @@ void Game::run() {
         // TODO: Update frames
         window.clear();
 
-        if (window.hasFocus())
-        {
+        network->update();
 
-        }
         entityManager->update(this);
 
         window.display();
@@ -198,11 +221,11 @@ void Game::run() {
     while (Window.isOpen())
     {
         // Обработка событий в цикле;
-        Event Event;
+        OurEvent OurEvent;
 
-        while (Window.pollEvent(Event))
+        while (Window.pollEvent(OurEvent))
         {
-            if (Event.type == sf::Event::Closed) { Window.close(); };
+            if (OurEvent.type == sf::OurEvent::Closed) { Window.close(); };
         };
 
         // X,Y; Идем вверх;
