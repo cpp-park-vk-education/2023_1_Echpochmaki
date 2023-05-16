@@ -8,53 +8,54 @@
 #include "PositionComponent.h"
 
 const int RenderInfoSystemID = 32523501;
-class  RenderInfoSystem : public BaseSystem
+class RenderInfoSystem : public BaseSystem
 {
-public:
+ public:
 
-    RenderInfoSystem(RenderWindow *windowSrc, std::string& filepath) : window(windowSrc), font_filepath(filepath) {}
+	RenderInfoSystem(RenderWindow* windowSrc, std::string& filepath) : window(windowSrc), font_filepath(filepath)
+	{
+	}
 
-    virtual void update(EntityManager* manager)
-    {
-        std::cout << "Render info started" << std::endl;
-        std::vector<Entity*> players;
-        manager->selectEntites<PlayerComponent>(players);
+	virtual void update(EntityManager* manager)
+	{
+		std::cout << "Render info started" << std::endl;
+		std::vector<Entity*> players;
+		manager->selectEntites<PlayerComponent>(players);
 
-        size_t kills = players.front()->getComponent<PlayerComponent>().kills;
-        size_t health = players.front()->getComponent<HealthComponent>().health;
+		size_t kills = players.front()->getComponent<PlayerComponent>().kills;
+		size_t health = players.front()->getComponent<HealthComponent>().health;
 
-        sf::Font default_font;
-        default_font.loadFromFile(font_filepath);
-        sf::Text info;
-        std::string msg = "POINTS: " + std::to_string(kills) + " " + "HEALTH: " + std::to_string(health);
-        info.setString(msg);
-        info.setFont(default_font);
-        info.setCharacterSize(30);
+		sf::Font default_font;
+		default_font.loadFromFile(font_filepath);
+		sf::Text info;
+		std::string msg = "POINTS: " + std::to_string(kills) + " " + "HEALTH: " + std::to_string(health);
+		info.setString(msg);
+		info.setFont(default_font);
+		info.setCharacterSize(30);
 
-        Vector2f position = players.front()->getComponent<PositionComponent>().position;
-        info.setPosition(position.x + 110, position.y - 180);
+		Vector2f position = players.front()->getComponent<PositionComponent>().position;
+		auto view = window->getView();
+		info.setPosition(-position.x  +view.getSize().x / 2 , -position.y + view.getSize().y / 2);
 
-        window->draw(info);
-    }
+		window->draw(info);
+	}
 
-    virtual bool added()
-    {
-        return true;
-    }
+	virtual bool added()
+	{
+		return true;
+	}
 
+	virtual int getSystemID() override
+	{
+		return RenderInfoSystemID;
+	}
 
-    virtual int getSystemID() override
-    {
-        return RenderInfoSystemID;
-    }
+	~RenderInfoSystem() override = default;
 
-    ~RenderInfoSystem() override = default;
-
-private:
-    static int ID;
-    RenderWindow *window;
-    std::string font_filepath;
+ private:
+	static int ID;
+	RenderWindow* window;
+	std::string font_filepath;
 };
-
 
 #endif //GAME_RENDERINFOSYSTEM_H

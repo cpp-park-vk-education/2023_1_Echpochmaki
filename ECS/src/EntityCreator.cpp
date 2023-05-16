@@ -57,10 +57,11 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
 		entity->AddComponent<VelocityComponent>(1, 1);
 		entity->AddComponent<MoveDirectionComponent>();
         entity->AddComponent<HealthComponent>(1);
+	    entity->AddComponent<AttackComponent>(1);
         entity->AddComponent<SinkableComponent>(random()); // подумать как сделать уникальный
 
 
-            auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
+		auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
 
         std::vector<sf::Texture> moving_frames{frames.begin() + 8, frames.begin() + 17};
         std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};

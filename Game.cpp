@@ -31,6 +31,7 @@ void Game::run() {
     RenderWindow window(sf::VideoMode(1280, 1024), "Boys game");
     //window.setFramerateLimit(60);
 
+	window.setVerticalSyncEnabled(true);
 
     //Components
     Entity player;
@@ -51,6 +52,7 @@ void Game::run() {
     all_frames.push_back(moving_frames);
     all_frames.push_back(attack_frames);
     all_frames.push_back(idling_frames);
+	all_frames.push_back(die_frames);
 
 
 	std::vector<float> moving_frames_durations(moving_frames.size(),2);
@@ -117,12 +119,16 @@ void Game::run() {
     AnimateDirectionSystem animateDirectionSystem;
     entityManager->addSystem(&animateDirectionSystem);
 
-    CameraSystem cameraSystem;
-    cameraSystem.setRenderWindow(&window);
-    entityManager->addSystem(&cameraSystem);
 
-    RenderInfoSystem renderInfoSystem{&window, path_to_main_font};
-    entityManager->addSystem(&renderInfoSystem);
+
+
+
+	CameraSystem cameraSystem;
+	cameraSystem.setRenderWindow(&window);
+	entityManager->addSystem(&cameraSystem);
+
+	RenderInfoSystem renderInfoSystem{&window, path_to_main_font};
+	entityManager->addSystem(&renderInfoSystem);
 
 
 //    AttackAnimationSystem attackAnimationSystem;
@@ -147,6 +153,12 @@ void Game::run() {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
+	        if (event.type == sf::Event::Resized)
+	        {
+		        // update the view to the new size of the window
+		        sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+		        window.setView(sf::View(visibleArea));
+	        }
         }
 
         // TODO: Update frames

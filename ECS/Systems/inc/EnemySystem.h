@@ -79,6 +79,10 @@ class EnemySystem : public BaseSystem
 //                    framesComponent.animation_started = false;
 //                }
 			}
+			if (collided)
+				enemy->getComponent<AttackComponent>().attack_started = true;
+			else
+				enemy->getComponent<AttackComponent>().attack_started = false;
 
 			auto& velocity_component = enemy->getComponent<VelocityComponent>();
 //            std::cout << "default velocity: " << velocity_component.default_velocity.x << velocity_component.default_velocity.y << std::endl;
@@ -92,6 +96,7 @@ class EnemySystem : public BaseSystem
 				DistanceValueType offset_len = sqrt(pow(offset.x, 2) + pow(offset.y, 2));
 				Vector2<DistanceValueType> new_velocity = offset / offset_len * len;
 				velocity_to_set = new_velocity;
+
 			}
 			else
 			{
@@ -99,6 +104,7 @@ class EnemySystem : public BaseSystem
 				//Vector2<DistanceValueType> new_velocity = offset / offset_len; //TODO:: придумать как обрабатывать ситуацию клгда лен == 0,
 				// пока вектор просто нормируется
 				velocity_to_set = { 0, 0 };
+				
 			}
 //            velocity_component.velocity = new_velocity;
 			velocity_component.velocity.x = velocity_to_set.x;
