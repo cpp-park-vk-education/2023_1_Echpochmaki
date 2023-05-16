@@ -35,44 +35,17 @@ class FramesSystem : public BaseSystem {
             //auto &move = entity->getComponent<AnimationMovingComponent>();
             //auto &attack = entity->getComponent<AttackAnimationComponent>();
 			if (framesComponent.dying)
-			{
-				std::cout<< "dying"<< '\n';
 				framesComponent.cur_frame_set = FrameSet::DIE;
-				framesComponent.died = false;
-				framesComponent.dying = true;
-				framesComponent.cur_frame  = 0;
-				while (framesComponent.animation_started)
-				{
-					if (framesComponent.cur_frame >=
-						framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)].size())
-					{
-						framesComponent.cur_frame = 0;
-						framesComponent.animation_started = false;
-					}
-					framesComponent.passed_time +=
-						Timer::getTimer().getElapsedTime().asMicroseconds(); //TODO::fix const values for frames
-
-					//std::cout << "passed_time" <<  framesComponent.passed_time << '\n';
-					//Timer::getTimer().restart();
-					if (int(framesComponent.passed_time) > FrameTimeDelta)
-					{
-						auto& sprite = entity->getComponent<SpriteComponent>();
-						sprite.sprite.setTexture(
-							framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)][framesComponent.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
-						framesComponent.passed_time = 0;
-						Timer::getTimer().restart();
-					}
-				}
-				framesComponent.died = true;
-				framesComponent.dying = false;
-				continue;
-			}
             if (framesComponent.animation_started) {
                 if (framesComponent.cur_frame >=
                     framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)].size()) {
                         framesComponent.cur_frame = 0;
                         framesComponent.animation_started = false;
-                        continue;
+						if (framesComponent.dying)
+						{
+							framesComponent.dying = false;
+							framesComponent.died = true;
+						}
                 }
 				framesComponent.passed_time += Timer::getTimer().getElapsedTime().asMicroseconds(); //TODO::fix const values for frames
 
