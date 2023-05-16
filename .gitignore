@@ -1,0 +1,15 @@
+.idea
+.vscode
+cmake-build-*
+*.o
+*.exe
+CMakeCache.txt
+CMakeFiles
+Game
+Makefile
+cmake_install.cmake
+*.log
+*.a
+app
+log*.txt
+*.cmake
