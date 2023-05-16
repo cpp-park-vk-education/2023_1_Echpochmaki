@@ -20,10 +20,16 @@ const float defaultSpeed = 2;
 struct PlayerComponent : public Component {
     TypeId Id;
     DistanceValueType speed;
+    size_t kills = 0;
 
     PlayerComponent() {
         speed = defaultSpeed;
         Id = 0;
+    }
+
+    explicit PlayerComponent(TypeId id) : PlayerComponent()
+    {
+        Id = id;
     }
 
 

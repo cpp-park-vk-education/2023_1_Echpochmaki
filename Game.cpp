@@ -9,6 +9,7 @@
 #include "AttackSystem.h"
 #include "RemoveEntitySystem.h"
 #include "SinkableComponent.h"
+#include "RenderInfoSystem.h"
 
 void Game::loadMap() {
     // Получение карты, передача Entity Creator
@@ -34,6 +35,7 @@ void Game::run() {
     Entity player;
 
     std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
+    std::string path_to_main_font = "../Graphics/fonts/main_font.ttf";
 
     FramesCreator creator{hero_king_texture_path};
     auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
@@ -79,6 +81,7 @@ void Game::run() {
     player.AddComponent<MoveDirectionComponent>();
     player.AddComponent<FramesComponent>(all_frames, all_frames[0][0],all_animation_durations);
     player.AddComponent<SinkableComponent>(random());
+    player.AddComponent<HealthComponent>(100);
 //    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
 //    player.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
 
@@ -117,22 +120,24 @@ void Game::run() {
     cameraSystem.setRenderWindow(&window);
     entityManager->addSystem(&cameraSystem);
 
+    RenderInfoSystem renderInfoSystem{&window, path_to_main_font};
+    entityManager->addSystem(&renderInfoSystem);
+
+
 //    AttackAnimationSystem attackAnimationSystem;
 
 //    AnimateMovingDirectionSystem animateMovingDirectionSystem;
 //    entityManager.addSystem(&animateMovingDirectionSystem);
 
-
+    RemoveSystem removeSystem;
+    entityManager->addSystem(&removeSystem);
 
     AttackSystem attackSystem;
     entityManager->addSystem(&attackSystem);
 
-	FramesSystem framesSystem;
-//    std::cout << "AddedFrameSystem" << std::endl;
-	entityManager->addSystem(&framesSystem);
+    FramesSystem framesSystem;
+    entityManager->addSystem(&framesSystem);
 
-    RemoveSystem removeSystem;
-    std::cout << "Added removeSystem status: " << entityManager->addSystem(&removeSystem);
 
 
     while (window.isOpen()) {
@@ -146,6 +151,10 @@ void Game::run() {
         // TODO: Update frames
         window.clear();
 
+        if (window.hasFocus())
+        {
+
+        }
         entityManager->update(this);
 
         window.display();
