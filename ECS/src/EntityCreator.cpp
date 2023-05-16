@@ -71,7 +71,19 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
         all_frames.push_back(idling_frames);
 	    all_frames.push_back(dying_frames);
 
-		entity->AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
+
+	    std::vector<float> moving_frames_durations(moving_frames.size(),3);
+	    std::vector<float> attack_frames_durations(attack_frames.size(),3);
+	    std::vector<float> idling_frames_durations(idling_frames.size(),3);
+	    std::vector<float> die_frames_durations(dying_frames.size(),3);
+
+	    std::vector<std::vector<float>> all_animation_durations;
+	    all_animation_durations.push_back(moving_frames_durations);
+	    all_animation_durations.push_back(attack_frames_durations);
+	    all_animation_durations.push_back(idling_frames_durations);
+	    all_animation_durations.push_back(die_frames_durations);
+
+		entity->AddComponent<FramesComponent>(all_frames, all_frames[0][0],all_animation_durations);
 		sprite.setTexture(frames[0]);
 
             entity->AddComponent<SpriteComponent>(sprite, enemyTile.objectId);

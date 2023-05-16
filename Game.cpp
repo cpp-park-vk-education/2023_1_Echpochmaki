@@ -27,7 +27,7 @@ void Game::run() {
     // Loop обновление по кадрам всего
 
     RenderWindow window(sf::VideoMode(640, 480), "Boys game");
-    //window.setFramerateLimit(1.0f / DELTA_TIME);
+    window.setFramerateLimit(60);
 
     //Components
     Entity player;
@@ -49,6 +49,22 @@ void Game::run() {
     all_frames.push_back(idling_frames);
 
 
+	std::vector<float> moving_frames_durations(moving_frames.size(),1.7);
+	std::vector<float> attack_frames_durations(attack_frames.size(),1.5);
+	std::vector<float> idling_frames_durations(idling_frames.size(),1);
+	std::vector<float> die_frames_durations(die_frames.size(),3);
+
+	std::vector<std::vector<float>> all_animation_durations;
+	all_animation_durations.push_back(moving_frames_durations);
+	all_animation_durations.push_back(attack_frames_durations);
+	all_animation_durations.push_back(idling_frames_durations);
+	all_animation_durations.push_back(die_frames_durations);
+
+
+
+
+
+
     player.AddComponent<PositionComponent>(200, 200);
     player.AddComponent<VelocityComponent>();
     player.AddComponent<PlayerComponent>();
@@ -60,7 +76,7 @@ void Game::run() {
     player.AddComponent<SpriteComponent>(sprite, 100);
     player.AddComponent<CollisionComponent>(IntRect(0,0,30,40),Vector2<DistanceValueType>(30 / 2,40 / 2));
     player.AddComponent<MoveDirectionComponent>();
-    player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
+    player.AddComponent<FramesComponent>(all_frames, all_frames[0][0],all_animation_durations);
 //    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
 //    player.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
 
