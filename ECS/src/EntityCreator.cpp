@@ -11,6 +11,7 @@
 #include "FramesComponent.h"
 #include "HealthComponent.h"
 #include "AttackComponent.h"
+#include "SinkableComponent.h"
 
 const int DefaultCollideWidth = 60;
 const int DefaultCollideHeight = 60;
@@ -56,6 +57,7 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
 		entity->AddComponent<VelocityComponent>(1, 1);
 		entity->AddComponent<MoveDirectionComponent>();
         entity->AddComponent<HealthComponent>(1);
+        entity->AddComponent<SinkableComponent>(random()); // подумать как сделать уникальный
 
 
             auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
