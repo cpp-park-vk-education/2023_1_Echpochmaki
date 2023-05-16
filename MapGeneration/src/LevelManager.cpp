@@ -1,35 +1,6 @@
 #include "../inc/LevelManager.h"
 #include "BSPTree.h"
 
-using leaf = class Leaf;
-
-
-bool Leaf::split() {
-    if (leftChild || rightChild)
-        return false;
-
-    bool splitH = (((double) rand() / (RAND_MAX)) > 0.5);
-
-    if (width > height && (double) width / height >= 1.25)
-        splitH = false;
-    else if (height > width && (double) height / width >= 1.25)
-        splitH = true;
-
-    int maxSize = (splitH ? height : width) - minLeafSize;
-
-    if (maxSize <= minLeafSize)
-        return false;
-
-    int split = minLeafSize + rand() % (maxSize - minLeafSize + 1);
-    if (splitH) {
-        leftChild = std::make_shared<leaf>(Leaf(x, y, width, split));
-        rightChild = std::make_shared<leaf>(Leaf(x, y + split, width, height - split));
-    } else {
-        leftChild = std::make_shared<leaf>(Leaf(x, y, split, height));
-        rightChild = std::make_shared<leaf>(Leaf(x + split, y, width - split, height));
-    }
-    return true;
-};
 
 tileMap RoomGenerator::generateRoom(const RoomDescriptionBase &parameters) {
     // Принимает размер области для комнаты, вписывает комнату и заполняет ее тайлами
@@ -113,52 +84,58 @@ void MapGenerator::setRoomGenerator(std::unique_ptr<IRoomGenerator> generator) {
     roomGenerator.swap(generator);
 }
 
-std::vector<std::shared_ptr<class Leaf>> MapGeneratorBSP::getLeafs(const MapDescriptionBase &parameters) {
-    std::vector<std::shared_ptr<leaf>> leafs;
-    auto root = std::make_shared<leaf>(0, 0, parameters.width, parameters.height);
-    leafs.push_back(root);
-
-    bool did_split = true;
-
-    while (did_split) {
-        did_split = false;
-        for (auto l: leafs) {
-            if (!l)
-                continue;
-
-            if (l->width > maxLeafSize || l->height > maxLeafSize || ((double) rand() / (RAND_MAX)) > 0.25) {
-                if (l->split()) {
-                    leafs.push_back(l->rightChild);
-                    leafs.push_back(l->leftChild);
-                    did_split = true;
-                }
-            }
-        }
-    }
-
-    return leafs;
-}
-
 
 tileMap MapGeneratorBSP::generateMap(const MapDescriptionBase &parameters) {
     // Cоздание карты, внутри вызов roomGenerator
+
+    Tree t;
+    t.getLeafs(parameters);
+
     tileMap map(parameters.height, std::vector<EntityTileBase>(parameters.width, floorTile));
 
-    auto leafs = getLeafs(parameters);
-
-    for (auto l: leafs) {
-        if (l) {
-            for (int i = l->x; i < l->width; ++i) {
-                map[0][i] = wallTile;
+    for (auto l: t.leafs) {
+        if (l && !(l->rightChild || l->leftChild)) {
+            for (int i = l->x; i < l->x + l->width; ++i) {
+                map[l->y][i] = wallTile;
                 map[l->y + l->height - 1][i] = wallTile;
             }
 
-            for (int j = l->y; j < l->height; ++j) {
-                map[j][0] = wallTile;
+            for (int j = l->y; j < l->y + l->height; ++j) {
+                map[j][l->x] = wallTile;
                 map[j][l->x + l->width - 1] = wallTile;
             }
+
+        }
+
+        /*if (l->x != 0) {
+            map[l->y + l->height / 2][l->x] = doorTile;
+        }
+
+        if (l->y != 0) {
+            map[l->y][l->x + l->width / 2] = doorTile;
+        }*/
+
+    }
+
+    /*for (int i = 1; i < parameters.height - 1; ++i) {
+        for (int j = 1; j < parameters.width - 2; j++) {
+            if (map[i][j].objectId == map[i][j + 2].objectId && map[i][j].objectId == wallTile.objectId)
+                continue;
+
+            if (map[i][j].objectId == map[i][j + 1].objectId && map[i][j].objectId == wallTile.objectId)
+                map[i][j] = floorTile;
         }
     }
+
+    for (int i = 1; i < parameters.height - 2; ++i) {
+        for (int j = 1; j < parameters.width - 1; j++) {
+            if (map[i][j].objectId == map[i + 2][j].objectId && map[i][j].objectId == wallTile.objectId)
+                continue;
+
+            if (map[i][j].objectId == map[i + 1][j].objectId && map[i][j].objectId == wallTile.objectId)
+                map[i][j] = floorTile;
+        }
+    }*/
 
     return map;
 }
@@ -177,7 +154,7 @@ LevelManager::LevelManager() {
     mapGenerator = std::make_unique<MapGeneratorBSP>(MapGeneratorBSP());
     mapGenerator->setRoomGenerator(std::move(roomGen));
 
-    seed = rand();
+    seed = 42;
 }
 
 tileMap LevelManager::createMap() {
@@ -188,7 +165,16 @@ tileMap LevelManager::createMap() {
 
     MapDescriptionBase map = {30, 30};
 
-    return mapGenerator->generateMap(map);
+    auto m = mapGenerator->generateMap(map);
+
+    for (int i = 0; i < m.size(); ++i) {
+        for (int j = 0; j < m[0].size(); ++j) {
+            std::cout << m[i][j].objectId << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    return m;
 }
 
 int LevelManager::getSeed() {

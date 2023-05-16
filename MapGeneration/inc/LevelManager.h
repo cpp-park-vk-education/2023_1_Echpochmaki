@@ -27,8 +27,6 @@ class MapGeneratorBSP : public IMapGenerator {
 public:
     tileMap generateMap(const MapDescriptionBase &parameters) override;
 
-    std::vector<std::shared_ptr<class Leaf>> getLeafs(const MapDescriptionBase &parameters);
-    
     void setRoomGenerator(std::unique_ptr<IRoomGenerator> generator) override;
 
 private:
