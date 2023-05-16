@@ -40,8 +40,6 @@ public:
         entityManager.swap(entityMgr);
         network = std::make_unique<Network>();
 
-        if (instance != nullptr)
-            delete instance;
         instance = this;
     }
 

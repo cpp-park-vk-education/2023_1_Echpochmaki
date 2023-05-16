@@ -22,11 +22,22 @@ class EntityManager {
     static const constexpr auto BaseSystemPtrComparator = [](BaseSystem *a, BaseSystem *b) {
         return a->getSystemID() < b->getSystemID();
     };
-private:
+public:
     std::vector<Entity*> entities;
     std::set<BaseSystem *, decltype(BaseSystemPtrComparator)> systems{BaseSystemPtrComparator};
 
 public:
+    ~EntityManager()
+    {
+//        for (auto e : entities)
+//            delete e;
+//        entities.clear();
+//
+//        for (auto s : systems)
+//            delete s;
+//        systems.clear();
+    }
+
     void addEntity(Entity *entity) {
         entities.push_back(entity);
     }

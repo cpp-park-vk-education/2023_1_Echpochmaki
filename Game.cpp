@@ -127,7 +127,7 @@ void Game::run() {
     int id = 0;
     for (auto &e : entityManager->entities)
     {
-        e->id = id++;
+        e->id = Entity::nextId();
 //        std::cout << "e: " << e->id << std::endl;
     }
 
