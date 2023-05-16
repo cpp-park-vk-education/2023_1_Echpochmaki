@@ -22,8 +22,8 @@ class EntityManager {
     static const constexpr auto BaseSystemPtrComparator = [](BaseSystem *a, BaseSystem *b) {
         return a->getSystemID() < b->getSystemID();
     };
-public:
-    std::vector<Entity *> entities;
+private:
+    std::vector<Entity*> entities;
     std::set<BaseSystem *, decltype(BaseSystemPtrComparator)> systems{BaseSystemPtrComparator};
 
 public:
@@ -77,6 +77,7 @@ public:
         for (BaseSystem *system: systems)
             if (system->getSystemID() == keyID)
                 return system;
+		return nullptr;
     }
 
     void update(Game *game) {
@@ -86,7 +87,12 @@ public:
         //TODO::Make Implementation
     }
 
-
+    void deleteEntity(Entity* entity)
+    {
+//        auto it = std::find(entities.begin(), entities.end(), entity);
+        std::remove(entities.begin(), entities.end(), entity);
+        delete entity; //боже царя храни
+    }
 };
 
 

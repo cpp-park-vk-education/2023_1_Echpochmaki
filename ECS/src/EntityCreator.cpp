@@ -9,12 +9,14 @@
 #include "VelocityComponent.h"
 #include "MoveDirectionComponent.h"
 #include "FramesComponent.h"
+#include "HealthComponent.h"
+#include "AttackComponent.h"
 
 const int DefaultCollideWidth = 60;
 const int DefaultCollideHeight = 60;
 
 const int MovableCollideWidth = 30;
-const int MovableCollideHeight = 30;
+const int MovableCollideHeight = 40;
 
 
 Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
@@ -49,25 +51,31 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
 
             entity->AddComponent<SpriteComponent>(sprite, doorTile.objectId);
             break;
-        case enemyTile.objectId:
-            entity->AddComponent<EnemyComponent>();
-            entity->AddComponent<VelocityComponent>(1, 1);
-            entity->AddComponent<MoveDirectionComponent>();
+	case enemyTile.objectId:
+		entity->AddComponent<EnemyComponent>();
+		entity->AddComponent<VelocityComponent>(1, 1);
+		entity->AddComponent<MoveDirectionComponent>();
+        entity->AddComponent<HealthComponent>(1);
+
 
             auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
 
-            std::vector<sf::Texture> moving_frames{frames.begin(), frames.begin() + 17};
-            std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
+        std::vector<sf::Texture> moving_frames{frames.begin() + 8, frames.begin() + 17};
+        std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
+        std::vector<sf::Texture> idling_frames{frames.begin() + 0, frames.begin() + 7};
+	    std::vector<sf::Texture> dying_frames{frames.begin() + 49, frames.begin() + 57};
 
-            std::vector<std::vector<sf::Texture>> all_frames;
-            all_frames.push_back(moving_frames);
-            all_frames.push_back(attack_frames);
+		std::vector<std::vector<sf::Texture>> all_frames;
+		all_frames.push_back(moving_frames);
+		all_frames.push_back(attack_frames);
+        all_frames.push_back(idling_frames);
+	    all_frames.push_back(dying_frames);
 
-            entity->AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
-            sprite.setTexture(frames[0]);
+		entity->AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
+		sprite.setTexture(frames[0]);
 
             entity->AddComponent<SpriteComponent>(sprite, enemyTile.objectId);
-            entity->AddComponent<CollisionComponent>(IntRect(0, 0, MovableCollideWidth, MovableCollideHeight));
+            entity->AddComponent<CollisionComponent>(IntRect(0, 0, MovableCollideWidth, MovableCollideHeight),Vector2<DistanceValueType>(MovableCollideWidth / 2, MovableCollideHeight / 2));
             break;
     }
 

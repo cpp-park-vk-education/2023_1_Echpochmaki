@@ -1,6 +1,8 @@
 #ifndef ECS_MOVESYSTEM_H
 #define ECS_MOVESYSTEM_H
 
+#include <cmath>
+
 #include "BaseSystem.h"
 #include "../../inc/EntityManager.h"
 #include "../../inc/ECS.h"
@@ -11,6 +13,10 @@
 #include "MoveDirectionComponent.h"
 #include "AnimationMovingComponent.h"
 #include "FramesComponent.h"
+
+
+
+
 
 const int MoveSystemID = 2;
 
@@ -56,8 +62,11 @@ public:
                         {
                             auto& framesComponent= (*it1)->getComponent<FramesComponent>();
 
-                            framesComponent.cur_frame_set = FrameSet::MOVE;
-                            framesComponent.animation_started = true;
+                            //if (!framesComponent.dying)
+                            //{
+                                framesComponent.cur_frame_set = FrameSet::MOVE;
+                                framesComponent.animation_started = true;
+                            //}
                         }
 
                     }
@@ -106,14 +115,15 @@ public:
                     {
                         if (it1 != it2 && (*it2)->HasComponent<CollisionComponent>())
                         {
-                            (*it1)->getComponent<CollisionComponent>().collisionBox.left = (*it1)->getComponent<PositionComponent>().position.x+(*it1)->getComponent<CollisionComponent>().collisionBox.width / 2;
-                            (*it1)->getComponent<CollisionComponent>().collisionBox.top = (*it1)->getComponent<PositionComponent>().position.y+(*it1)->getComponent<CollisionComponent>().collisionBox.height / 2;
-                            (*it2)->getComponent<CollisionComponent>().collisionBox.left = (*it2)->getComponent<PositionComponent>().position.x+(*it1)->getComponent<CollisionComponent>().collisionBox.width / 2;;
-                            (*it2)->getComponent<CollisionComponent>().collisionBox.top = (*it2)->getComponent<PositionComponent>().position.y+(*it1)->getComponent<CollisionComponent>().collisionBox.height / 2;
+
+                            (*it1)->getComponent<CollisionComponent>().collisionBox.left = (*it1)->getComponent<PositionComponent>().position.x + (*it1)->getComponent<CollisionComponent>().offset.x;
+                            (*it1)->getComponent<CollisionComponent>().collisionBox.top = (*it1)->getComponent<PositionComponent>().position.y +  (*it1)->getComponent<CollisionComponent>().offset.y;
+                            (*it2)->getComponent<CollisionComponent>().collisionBox.left = (*it2)->getComponent<PositionComponent>().position.x + (*it2)->getComponent<CollisionComponent>().offset.x;
+                            (*it2)->getComponent<CollisionComponent>().collisionBox.top = (*it2)->getComponent<PositionComponent>().position.y  +  (*it2)->getComponent<CollisionComponent>().offset.y;
                             IntRect rect1 = (*it1)->getComponent<CollisionComponent>().collisionBox; //TODO::Might be costly
                             IntRect rect2 = (*it2)->getComponent<CollisionComponent>().collisionBox;
 
-                            if (rect2.intersects(rect1)) {
+                            if (rect1.intersects(rect2)) {
                                 (*it1)->getComponent<PositionComponent>().position = oldPosition;
                                 (*it1)->getComponent<VelocityComponent>().velocity = {0, 0};
                                 break;
@@ -132,8 +142,16 @@ public:
     }
 
     ~MoveSystem() override = default;
+ protected:
+	bool testCollision(const IntRect &a,const IntRect &b)
+	{
+		float t;
+		if (abs(a.left - b.left) > (a.width + b.width)) return false;
+		if (abs(a.top - b.top) > (a.height + b.height)) return false;
+		return true;
+	}
 
-private:
+ private:
     static int ID;
 };
 

@@ -6,6 +6,8 @@
 #include "AnimationMovingComponent.h"
 #include "AnimateMovingDirectionSystem.h"
 #include "FramesSystem.h"
+#include "AttackSystem.h"
+#include "RemoveEntitySystem.h"
 #include "SyncSystem.h"
 
 Game *Game::instance;
@@ -42,6 +44,7 @@ void Game::run() {
     std::vector<sf::Texture> moving_frames{frames.begin() + 8, frames.begin() + 17};
     std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
     std::vector<sf::Texture> idling_frames{frames.begin() + 0, frames.begin() + 7};
+    std::vector<sf::Texture> die_frames{frames.begin() + 49, frames.begin() + 57};
 
 
     std::vector<std::vector<sf::Texture>> all_frames;
@@ -53,12 +56,13 @@ void Game::run() {
     player.AddComponent<PositionComponent>(200, 200);
     player.AddComponent<VelocityComponent>();
     player.AddComponent<PlayerComponent>();
+    player.AddComponent<AttackComponent>(2);
 
     Sprite sprite;
     sprite.setTexture(frames[0]);
 
     player.AddComponent<SpriteComponent>(sprite, 100);
-    player.AddComponent<CollisionComponent>(IntRect(0, 0, 30, 30));
+    player.AddComponent<CollisionComponent>(IntRect(0,0,30,40),Vector2<DistanceValueType>(30 / 2,40 / 2));
     player.AddComponent<MoveDirectionComponent>();
     player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
 //    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
@@ -104,9 +108,17 @@ void Game::run() {
 //    AnimateMovingDirectionSystem animateMovingDirectionSystem;
 //    entityManager.addSystem(&animateMovingDirectionSystem);
 
-    FramesSystem framesSystem;
+
+
+    AttackSystem attackSystem;
+    entityManager->addSystem(&attackSystem);
+
+	FramesSystem framesSystem;
 //    std::cout << "AddedFrameSystem" << std::endl;
-    entityManager->addSystem(&framesSystem);
+	entityManager->addSystem(&framesSystem);
+
+    RemoveSystem removeSystem;
+    std::cout << "Added removeSystem status: " << entityManager->addSystem(&removeSystem);
 
     SyncSystem syncSystem;
     std::cout << "add syncSystem success=" << entityManager->addSystem(&syncSystem);
@@ -173,11 +185,11 @@ void Game::run() {
     while (Window.isOpen())
     {
         // Обработка событий в цикле;
-        OurEvent OurEvent;
+        Event Event;
 
-        while (Window.pollEvent(OurEvent))
+        while (Window.pollEvent(Event))
         {
-            if (OurEvent.type == sf::OurEvent::Closed) { Window.close(); };
+            if (Event.type == sf::Event::Closed) { Window.close(); };
         };
 
         // X,Y; Идем вверх;

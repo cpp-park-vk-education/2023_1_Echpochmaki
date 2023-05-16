@@ -9,13 +9,13 @@
 
 //using TypeId = size_t;
 
-constexpr TypeId FramesSystemID = 13245096;
+constexpr TypeId FramesSystemID = 132409;
 constexpr double FrameTimeDelta = 1;
 
 
 class FramesSystem : public BaseSystem {
     int getSystemID() override {
-        return MovingID;
+        return FramesSystemID;
     }
 
     void update(EntityManager *manager) override {
@@ -34,13 +34,18 @@ class FramesSystem : public BaseSystem {
             // std::cout << "Frame System cycle started" << std::endl;
             //auto &move = entity->getComponent<AnimationMovingComponent>();
             //auto &attack = entity->getComponent<AttackAnimationComponent>();
-
+			if (framesComponent.dying)
+				framesComponent.cur_frame_set = FrameSet::DIE;
             if (framesComponent.animation_started) {
                 if (framesComponent.cur_frame >=
                     framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)].size()) {
-                    framesComponent.cur_frame = 0;
-                    framesComponent.animation_started = false;
-	                continue;
+                        framesComponent.cur_frame = 0;
+                        framesComponent.animation_started = false;
+						if (framesComponent.dying)
+						{
+							framesComponent.dying = false;
+							framesComponent.died = true;
+						}
                 }
 				framesComponent.passed_time += Timer::getTimer().getElapsedTime().asMicroseconds(); //TODO::fix const values for frames
 
@@ -58,8 +63,15 @@ class FramesSystem : public BaseSystem {
             }
             else
             {
-				framesComponent.cur_frame_set = FrameSet::IDLE;
-	            framesComponent.animation_started = true;
+                //if (framesComponent.cur_frame_set != FrameSet::DIE)
+                //{
+                    framesComponent.cur_frame_set = FrameSet::IDLE;
+                    framesComponent.animation_started = true;
+                //}
+                //else
+                //{
+                //    framesComponent.died = true;
+                //}
                 /*auto &sprite = entity->getComponent<SpriteComponent>();
                 sprite.sprite.setTexture(framesComponent.base_frame);
 				std::cout<< "time" << Timer::getTimer().getElapsedTime().asMicroseconds()<< '\n';

@@ -21,6 +21,8 @@ struct AttackComponent : public Component {
         damage = damageSrc;
     }
 
+
+    bool attack_started;
 };
 
 

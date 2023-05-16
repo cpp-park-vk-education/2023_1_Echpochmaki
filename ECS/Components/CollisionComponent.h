@@ -10,13 +10,18 @@
 
 using namespace sf;
 
+using DistanceValueType = float;
+
 struct CollisionComponent : public Component {
     IntRect collisionBox;
+	Vector2<DistanceValueType> offset;
 
     CollisionComponent() = default;
 
-    CollisionComponent(const IntRect &collisionBoxSrc) {
+    CollisionComponent(const IntRect &collisionBoxSrc,const Vector2<DistanceValueType> & offsetSrc = {0,0}) {
         collisionBox = collisionBoxSrc;
+		offset = offsetSrc;
+
     }
 
 
