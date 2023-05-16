@@ -3,7 +3,7 @@
 
 #include "../inc/ECS.h"
 
-using TypeId = size_t;
+//using TypeId = size_t;
 
 struct  SinkableComponent : public Component {
 
@@ -12,7 +12,7 @@ public:
 
     SinkableComponent(TypeId id) : id(id)
     {
-            
+
     }
 
 };

@@ -9,6 +9,7 @@
 #include "AttackSystem.h"
 #include "RemoveEntitySystem.h"
 #include "SinkableComponent.h"
+#include "RenderInfoSystem.h"
 
 void Game::loadMap() {
     // Получение карты, передача Entity Creator
@@ -34,6 +35,7 @@ void Game::run() {
     Entity player;
 
     std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
+    std::string path_to_main_font = "../Graphics/fonts/main_font.ttf";
 
     FramesCreator creator{hero_king_texture_path};
     auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
@@ -63,6 +65,7 @@ void Game::run() {
     player.AddComponent<MoveDirectionComponent>();
     player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
     player.AddComponent<SinkableComponent>(random());
+    player.AddComponent<HealthComponent>(100);
 //    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
 //    player.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
 
@@ -100,6 +103,10 @@ void Game::run() {
     CameraSystem cameraSystem;
     cameraSystem.setRenderWindow(&window);
     entityManager->addSystem(&cameraSystem);
+
+    RenderInfoSystem renderInfoSystem{&window, path_to_main_font};
+    entityManager->addSystem(&renderInfoSystem);
+
 
 //    AttackAnimationSystem attackAnimationSystem;
 
