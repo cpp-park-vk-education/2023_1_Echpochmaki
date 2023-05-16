@@ -8,6 +8,8 @@ struct Host : public IHost {
     // virtual sf::UdpSocket getSocket() = 0;
 
     virtual void handleClient(IClient* c) override;
+    virtual void handleClient(const sf::IpAddress& addr, sf::Uint16 port) override;
+
 
     virtual void disconnectClient(int id) override;
     virtual void disconnectClient(const sf::IpAddress& addr) override;

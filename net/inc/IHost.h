@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <memory>
+#include <SFML/Network.hpp>
+
 
 using std::vector;
 using std::unique_ptr;
@@ -19,6 +21,7 @@ public:
     virtual ~IHost() = default;
 
     virtual void handleClient(IClient* c) = 0;
+    virtual void handleClient(const sf::IpAddress& addr, sf::Uint16 port) = 0;
 
     virtual void disconnectClient(int id) = 0;
     virtual void disconnectClient(const sf::IpAddress& addr) = 0;
