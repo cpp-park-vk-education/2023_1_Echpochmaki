@@ -113,17 +113,15 @@ void Game::run() {
 //    AnimateMovingDirectionSystem animateMovingDirectionSystem;
 //    entityManager.addSystem(&animateMovingDirectionSystem);
 
-
+    RemoveSystem removeSystem;
+    entityManager->addSystem(&removeSystem);
 
     AttackSystem attackSystem;
     entityManager->addSystem(&attackSystem);
 
-	FramesSystem framesSystem;
-//    std::cout << "AddedFrameSystem" << std::endl;
-	entityManager->addSystem(&framesSystem);
+    FramesSystem framesSystem;
+    entityManager->addSystem(&framesSystem);
 
-    RemoveSystem removeSystem;
-    std::cout << "Added removeSystem status: " << entityManager->addSystem(&removeSystem);
 
 
     while (window.isOpen()) {
@@ -137,6 +135,10 @@ void Game::run() {
         // TODO: Update frames
         window.clear();
 
+        if (window.hasFocus())
+        {
+
+        }
         entityManager->update(this);
 
         window.display();

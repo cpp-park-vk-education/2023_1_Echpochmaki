@@ -26,7 +26,7 @@ public:
         sf::Font default_font;
         default_font.loadFromFile(font_filepath);
         sf::Text info;
-        std::string msg = "KILLS: " + std::to_string(kills) + " " + "HEALTH: " + std::to_string(health);
+        std::string msg = "POINTS: " + std::to_string(kills) + " " + "HEALTH: " + std::to_string(health);
         info.setString(msg);
         info.setFont(default_font);
         info.setCharacterSize(30);
