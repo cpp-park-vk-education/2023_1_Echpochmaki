@@ -8,6 +8,7 @@
 #include "FramesSystem.h"
 #include "AttackSystem.h"
 #include "RemoveEntitySystem.h"
+#include "SinkableComponent.h"
 #include "SyncSystem.h"
 
 Game *Game::instance;
@@ -65,6 +66,7 @@ void Game::run() {
     player.AddComponent<CollisionComponent>(IntRect(0,0,30,40),Vector2<DistanceValueType>(30 / 2,40 / 2));
     player.AddComponent<MoveDirectionComponent>();
     player.AddComponent<FramesComponent>(all_frames, all_frames[0][0]);
+    player.AddComponent<SinkableComponent>(random());
 //    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
 //    player.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
 
