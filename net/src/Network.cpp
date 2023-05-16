@@ -50,6 +50,12 @@ Network::Network()
         }
     });
 
+    Events::on(Events::EventType::NetworkDeleteEntitiesByIdsSend, [this](OurEvent *event)
+    {
+        auto *e = dynamic_cast<NetworkDeleteEntitiesByIdsSendEvent*>(event);
+        send(*e->pack);
+    });
+
     cout << "[net] " << INFO << " Network object created" << endl;
 };
 
@@ -95,7 +101,7 @@ bool Network::connectToHost(const sf::IpAddress& addr, sf::Uint32 port)
         std::cout << "  client socket successfully binded" << endl;
         currentClient->socket.setBlocking(false);
         currentClient->addr = addr;
-        currentClient->port = currentClient->socket.getLocalPort();
+        currentClient->port = HOST_PORT;
     }
 
     return currentClient->connectToHost(addr, port);
@@ -132,49 +138,56 @@ void Network::updateClient()
     sf::Packet pack;
     sf::IpAddress addr;
     sf::Uint16 port;
-    auto status = currentClient->socket.receive(pack, addr, port);
+    sf::Socket::Status status = sf::Socket::Done;
 
-    if (status != sf::Socket::Done)
+    while (status == sf::Socket::Done)
     {
-        if (status != sf::Socket::NotReady)
-            cout << "[net] " << INFO << " packet not received status=" << status;
-        return;
+        status = currentClient->socket.receive(pack, addr, port);
+
+        if (status != sf::Socket::Done)
+        {
+            if (status != sf::Socket::NotReady)
+                cout << "[net] " << INFO << " packet not received status=" << status;
+            return;
+        }
+
+        Packets::PacketType type = Packets::getPacketType(pack);
+        cout << "[net] " << INFO << "   packet received type=" << type << " size=" << pack.getDataSize() << endl;
+
+        if (type == Packets::SuccessConnection && currentClient->waiting_connect_answer)
+        {
+            // events fire connected to host
+            currentClient->waiting_connect_answer = false;
+            currentClient->connected = true;
+        }
+
+        if (type == Packets::MapGenerationInfo && currentClient->connected)
+        {
+            currentClient->map_received = true;
+            MapInfoReceivedEvent event;
+            event.pack = &pack;
+            event.sender_addr = addr;
+            event.sender_port = port;
+            Events::fire(Events::EventType::MapInfoFromNetReceived, &event);
+        }
+
+        if (type == Packets::SyncAllEntitiesFromHost && currentClient->connected && currentClient->map_received)
+        {
+            NetworkSyncFromHostEvent event;
+            event.pack = &pack;
+            event.sender_addr = addr;
+            event.sender_port = port;
+            Events::fire(Events::EventType::NetworkSyncAllFromHostRecieved, &event);
+        }
+
+        if (type == Packets::DisconnectFromHost && currentClient->connected)
+        {
+            closeClient();
+            return;
+        }
     }
 
-    Packets::PacketType type = Packets::getPacketType(pack);
-    cout << "[net] " << INFO << "   packet received type=" << type << " size=" << pack.getDataSize() << endl;
 
-    if (type == Packets::SuccessConnection && currentClient->waiting_connect_answer)
-    {
-        // events fire connected to host
-        currentClient->waiting_connect_answer = false;
-        currentClient->connected = true;
-    }
-
-    if (type == Packets::MapGenerationInfo && currentClient->connected)
-    {
-        currentClient->map_received = true;
-        MapInfoReceivedEvent event;
-        event.pack = &pack;
-        event.sender_addr = addr;
-        event.sender_port = port;
-        Events::fire(Events::EventType::MapInfoFromNetReceived, &event);
-    }
-
-    if (type == Packets::SyncAllEntitiesFromHost && currentClient->connected && currentClient->map_received)
-    {
-        NetworkSyncFromHostEvent event;
-        event.pack = &pack;
-        event.sender_addr = addr;
-        event.sender_port = port;
-        Events::fire(Events::EventType::NetworkSyncAllFromHostRecieved, &event);
-    }
-
-    if (type == Packets::DisconnectFromHost && currentClient->connected)
-    {
-        closeClient();
-        return;
-    }
 
 
 };
@@ -186,38 +199,46 @@ void Network::updateHost()
     sf::Packet pack;
     sf::IpAddress addr;
     sf::Uint16 port;
-    auto status = currentHost->socket.receive(pack, addr, port);
+    sf::Socket::Status status = sf::Socket::Done;
 
-    if (status != sf::Socket::Done)
-    {
-        if (status != sf::Socket::NotReady)
-            cout << "[net] " << INFO <<  "   packet not received status=" << status << endl;
-        return;
+    while (status == sf::Socket::Done) {
+        status = currentHost->socket.receive(pack, addr, port);
+
+        if (status != sf::Socket::Done) {
+            if (status != sf::Socket::NotReady)
+                cout << "[net] " << INFO << "   packet not received status=" << status << endl;
+            return;
+        }
+
+        Packets::PacketType type = Packets::getPacketType(pack);
+        cout << "[net] " << INFO << "   packet received type=" << type << " size=" << pack.getDataSize() << endl;
+
+
+        if (type == Packets::AskConnection) {
+            currentHost->handleClient(addr, port);
+        }
+
+        if (type == Packets::SyncPlayerFromClient) {
+            NetworkSyncPlayerFromClientEvent event;
+            event.pack = &pack;
+            event.sender_addr = addr;
+            event.sender_port = port;
+            Events::fire(Events::EventType::NetworkSyncPlayerFromClientEvent, &event);
+        }
+
+        if (type == Packets::DisconnectFromClient) {
+            currentHost->disconnectClient(addr);
+        }
+
+        if (type == Packets::DeleteEntitiesByIds) {
+            NetworkDeleteEntitiesByIdsReceivedEvent event;
+            event.pack = &pack;
+            event.sender_addr = addr;
+            event.sender_port = port;
+            Events::fire(Events::EventType::NetworkDeleteEntitiesByIds, &event);
+        }
     }
 
-    Packets::PacketType type = Packets::getPacketType(pack);
-    cout << "[net] " << INFO <<  "   packet received type=" << type << " size=" << pack.getDataSize() << endl;
-
-
-    if (type == Packets::AskConnection)
-    {
-        currentHost->handleClient(addr, port);
-    }
-
-    if (type == Packets::SyncPlayerFromClient)
-    {
-        NetworkSyncPlayerFromClientEvent event;
-        event.pack = &pack;
-        event.sender_addr = addr;
-        event.sender_port = port;
-        Events::fire(Events::EventType::NetworkSyncPlayerFromClientEvent, &event);
-    }
-
-    if (type == Packets::DisconnectFromClient)
-    {
-        currentHost->disconnectClient(addr);
-    }
-        
 };
 
 

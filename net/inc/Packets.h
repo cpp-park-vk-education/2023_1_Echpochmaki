@@ -43,7 +43,7 @@ public:
         SyncPlayerFromClient,
 
         // означает пакет с набором айдишников, котрые надо удалить, может быть отправлен как с хоста так и с клиента
-        DeleteEntityByIds,
+        DeleteEntitiesByIds,
 
 //        AddEntitiesByTypeId
 
@@ -95,6 +95,9 @@ static inline std::ostream& operator<<(std::ostream& ss, Packets::PacketType typ
         break;
     case Packets::SyncPlayerFromClient:
         ss << "SyncPlayerFromClient";
+        break;
+    case Packets::DeleteEntitiesByIds:
+        ss << "DeleteEntityByIds";
         break;
     case Packets::LastType:
         ss << "LastType(utility)";

@@ -47,6 +47,12 @@ public:
         // ивент триггерится внутри sync системы когда ты клиент и хочешь отправить данные для синхронизации(в основном данные о локальном игроке) на хост
         SyncSystemClientToHostSendSync,
 
+        // триггерится когда пришел пакет с набором сущностей, которые надо удалить
+        NetworkDeleteEntitiesByIds,
+
+        // триггерится чтобы отправить пакет с сущностями, которые надо удалить
+        NetworkDeleteEntitiesByIdsSend,
+
     };
 
 
@@ -107,6 +113,12 @@ static inline std::ostream& operator<<(std::ostream& os, Events::EventType type)
             break;
         case Events::EventType::SyncSystemClientToHostSendSync:
             os << "SyncSystemClientToHostSendSync";
+            break;
+        case Events::EventType::NetworkDeleteEntitiesByIds:
+            os << "NetworkDeleteEntitiesByIds";
+            break;
+        case Events::EventType::NetworkDeleteEntitiesByIdsSend:
+            os << "NetworkDeleteEntitiesByIdsSend";
             break;
         default:
             os << "NOT_AN_EVENT_TYPE " << int(type);

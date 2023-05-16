@@ -65,6 +65,11 @@ class Entity {
 public:
     int id;
 
+    Entity()
+    {
+        id = nextId();
+    }
+
     static inline int nextId()
     {
         static int global_id = 0;

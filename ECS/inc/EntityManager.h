@@ -104,6 +104,21 @@ public:
         std::remove(entities.begin(), entities.end(), entity);
         delete entity; //боже царя храни
     }
+
+    bool deleteEntityById(int id)
+    {
+        for (auto it = entities.begin(); it != entities.end(); ++it)
+        {
+            if (id == (*it)->id)
+            {
+                delete *it;
+                entities.erase(it);
+                return true;
+            }
+        }
+
+        return false;
+    }
 };
 
 

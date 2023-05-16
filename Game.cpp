@@ -90,6 +90,7 @@ void Game::run() {
     entityManager->addSystem(&drawSystem);
 
     PlayerSystem playerSystem;
+    playerSystem.setWindow(&window);
     entityManager->addSystem(&playerSystem);
 
     MoveSystem moveSystem;
@@ -129,7 +130,7 @@ void Game::run() {
     int id = 0;
     for (auto &e : entityManager->entities)
     {
-        e->id = Entity::nextId();
+//        e->id = Entity::nextId();
 //        std::cout << "e: " << e->id << std::endl;
     }
 

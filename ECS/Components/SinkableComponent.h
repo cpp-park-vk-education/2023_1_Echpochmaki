@@ -3,14 +3,13 @@
 
 #include "../inc/ECS.h"
 
-using TypeId = size_t;
 
-struct  SinkableComponent : public Component {
+struct SinkableComponent : public Component {
 
 public:
-    TypeId id;
+    int id;
 
-    SinkableComponent(TypeId id) : id(id)
+    SinkableComponent(int id) : id(id)
     {
             
     }

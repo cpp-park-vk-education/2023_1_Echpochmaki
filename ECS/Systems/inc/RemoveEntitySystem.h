@@ -4,18 +4,36 @@
 #include "BaseSystem.h"
 #include "../../inc/EntityManager.h"
 #include "HealthComponent.h"
+#include "events.h"
+#include <iostream>
+#include "Game.h"
+#include "Packets.h"
+
+using std::cout;
+using std::endl;
+
+#ifndef INFO
+#define INFO __FILE__ << ":" << __LINE__
+#endif
+
 
 const int RemoveSystemId = 32342521;
 
 class RemoveSystem : public BaseSystem {
 public:
-    RemoveSystem() : ID(RemoveSystemId) {}
+    RemoveSystem() : ID(RemoveSystemId) {
+
+    }
 
     virtual void update(EntityManager *manager)
     {
-        std::cout << "Die die die my darling" << std::endl;
+//        std::cout << "Die die die my darling" << std::endl;
         std::vector<Entity*> entities;
         manager->selectEntites<HealthComponent>(entities);
+
+        sf::Packet pack;
+        pack << Packets::DeleteEntitiesByIds;
+        int amount_deleted = 0;
 
         for (auto entity: entities)
         {
@@ -25,9 +43,25 @@ public:
             {
 	            entity->getComponent<FramesComponent>().dying = true;
 				if (entity->getComponent<FramesComponent>().died)
+                {
+                    ++amount_deleted;
+                    pack << sf::Int32(entity->id);
+                    cout << "   packed id=" << sf::Int32(entity->id) << endl;
+
                     manager->deleteEntity(entity);
+
+
+                }
             }
 
+        }
+
+        cout << "[removesys] " << INFO << " update amount_deleted=" << amount_deleted << endl;
+        if (amount_deleted > 0)
+        {
+            NetworkDeleteEntitiesByIdsSendEvent event;
+            event.pack = &pack;
+            Events::fire(Events::EventType::NetworkDeleteEntitiesByIdsSend, &event);
         }
 
     }
@@ -38,6 +72,21 @@ public:
 
 
     virtual bool added() {
+
+        Events::on(Events::EventType::NetworkDeleteEntitiesByIds, [this](OurEvent *event){
+            auto *e = dynamic_cast<NetworkDeleteEntitiesByIdsReceivedEvent*>(event);
+            sf::Packet& pack = *e->pack;
+            cout << "[removesys] " << INFO << " NetworkDeleteEntityByIds event process packet.size=" << pack.getDataSize() << endl;
+
+            sf::Int32 id;
+            while (pack >> id)
+            {
+                bool deleted = Game::instance->entityManager->deleteEntityById(id);
+                cout << "   entity id=" << id << " was deleted=" << deleted << endl;
+            }
+
+        });
+
         ID = RemoveSystemId; //TODO::find out what to return
         return true;
     }
