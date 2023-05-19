@@ -4,11 +4,15 @@
 
 #include "BSPTree.h"
 
+double getRand(double a = 0, double b = 1) {
+    return a + ((double) rand() / (RAND_MAX)) * (b - a);
+}
+
 bool Tree::Leaf::split() {
     if (leftChild || rightChild)
         return false;
 
-    bool splitH = (((double) rand() / (RAND_MAX)) > 0.5);
+    bool splitH = (getRand() > 0.5);
 
     if (width > height && (double) width / height >= 1.25)
         splitH = false;
@@ -20,7 +24,7 @@ bool Tree::Leaf::split() {
     if (maxSize <= minLeafSize)
         return false;
 
-    int split = minLeafSize + rand() % (maxSize - minLeafSize + 1);
+    int split = getRand(minLeafSize, maxSize);
     if (splitH) {
         leftChild = std::make_shared<leaf>(Leaf(x, y, width, split));
         rightChild = std::make_shared<leaf>(Leaf(x, y + split, width, height - split));
@@ -31,7 +35,7 @@ bool Tree::Leaf::split() {
     return true;
 };
 
-void Tree::Leaf::createRooms() {
+/*void Tree::Leaf::createRooms() {
     if (leftChild || rightChild) {
         if (leftChild) {
             leftChild->createRooms();
@@ -48,10 +52,12 @@ void Tree::Leaf::createRooms() {
         room->x = 1 + rand() % (width - room->width + 1);
         room->y = 1 + rand() % (height - room->height + 1);
     }
-}
+}*/
 
-void Tree::getLeafs(const MapDescriptionBase &parameters) {
-    auto root = std::make_shared<leaf>(0, 0, parameters.width, parameters.height);
+std::vector<std::shared_ptr<Tree::leaf>> Tree::getLeafs(int width, int height) {
+    auto root = std::make_shared<leaf>(0, 0, width, height);
+
+    std::vector<std::shared_ptr<leaf>> leafs;
     leafs.push_back(root);
 
     bool did_split = true;
@@ -62,7 +68,7 @@ void Tree::getLeafs(const MapDescriptionBase &parameters) {
             if (!l)
                 continue;
 
-            if (l->width > maxLeafSize || l->height > maxLeafSize || ((double) rand() / (RAND_MAX)) > 0.25) {
+            if (l->width > maxLeafSize || l->height > maxLeafSize || getRand() > 0.25) {
                 if (l->split()) {
                     leafs.push_back(l->rightChild);
                     leafs.push_back(l->leftChild);
@@ -73,4 +79,6 @@ void Tree::getLeafs(const MapDescriptionBase &parameters) {
     }
 
     // root->createRooms();
+
+    return leafs;
 }

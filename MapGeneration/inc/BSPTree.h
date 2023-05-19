@@ -14,9 +14,14 @@ struct RoomDescription : RoomDescriptionBase {
     int y;
 };
 
+struct Hall {
+    int x;
+};
+
 class Tree {
 private:
-    struct Leaf {
+    class Leaf {
+    public:
         Leaf(int x_, int y_, int width_, int height_) : x(x_), y(y_), width(width_), height(height_) {};
 
         Leaf() = default;
@@ -25,7 +30,9 @@ private:
 
         void createRooms();
 
-        std::unique_ptr<RoomDescription> room;
+
+
+//    std::unique_ptr<RoomDescription> room;
 
         int x;
         int y;
@@ -33,17 +40,18 @@ private:
         int width;
         int height;
 
+        RoomDescription room;
+        std::vector<Hall> halls;
+
         std::shared_ptr<class Leaf> leftChild;
         std::shared_ptr<class Leaf> rightChild;
     };
 
-    using leaf = struct Leaf;
-    
+
 public:
-    void getLeafs(const MapDescriptionBase &parameters);
+    using leaf = class Leaf;
 
-    std::vector<std::shared_ptr<leaf>> leafs;
+    std::vector<std::shared_ptr<leaf>> getLeafs(int width, int height);
 };
-
 
 #endif //GAME_BSPTREE_H

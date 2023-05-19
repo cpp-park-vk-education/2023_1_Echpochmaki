@@ -89,22 +89,17 @@ tileMap MapGeneratorBSP::generateMap(const MapDescriptionBase &parameters) {
     // Cоздание карты, внутри вызов roomGenerator
 
     Tree t;
-    t.getLeafs(parameters);
+    auto leafs = t.getLeafs(parameters.width - 1, parameters.height - 1);
 
-    tileMap map(parameters.height, std::vector<EntityTileBase>(parameters.width, floorTile));
+    tileMap map(parameters.height, std::vector<EntityTileBase>(parameters.width, wallTile));
 
-    for (auto l: t.leafs) {
-        if (l && !(l->rightChild || l->leftChild)) {
-            for (int i = l->x; i < l->x + l->width; ++i) {
-                map[l->y][i] = wallTile;
-                map[l->y + l->height - 1][i] = wallTile;
+    for (auto l: leafs) {
+        if (!l->rightChild && !l->leftChild) {
+            for (int i = l->y + 1; i < l->height + l->y; ++i) {
+                for (int j = l->x + 1; j < l->width + l->x; ++j) {
+                    map[i][j] = floorTile;
+                }
             }
-
-            for (int j = l->y; j < l->y + l->height; ++j) {
-                map[j][l->x] = wallTile;
-                map[j][l->x + l->width - 1] = wallTile;
-            }
-
         }
     }
 
@@ -122,7 +117,7 @@ LevelManager::LevelManager() {
     // Генерация сида
 
     auto roomGen = std::unique_ptr<IRoomGenerator>(new RoomGenerator());
-    mapGenerator = std::make_unique<MapGenerator>(MapGenerator());
+    mapGenerator = std::unique_ptr<IMapGenerator>(new MapGeneratorBSP());
     mapGenerator->setRoomGenerator(std::move(roomGen));
 
     seed = 42;
@@ -137,6 +132,13 @@ tileMap LevelManager::createMap() {
     MapDescriptionBase map = {30, 30};
 
     auto m = mapGenerator->generateMap(map);
+
+    for (int i = 0; i < m.size(); ++i) {
+        for (int j = 0; j < m[0].size(); ++j) {
+            std::cout << m[i][j].objectId << " ";
+        }
+        std::cout << std::endl;
+    }
 
     return m;
 }
