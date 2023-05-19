@@ -10,12 +10,14 @@ class IHost;
 
 class IClient {
 public:
-    std::unique_ptr<IHost> host;
+    // std::unique_ptr<IHost> host;
     int id;
     sf::UdpSocket socket;
     sf::IpAddress addr;
     sf::Uint16 port;
     bool waiting_connect_answer = false;
+    bool connected = false;
+    bool map_received = false;
 
     virtual void disconnect() = 0;
 

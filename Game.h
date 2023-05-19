@@ -28,6 +28,7 @@ const int DELTA_TIME = 10.0;
 
 class Game {
 public:
+
     void loadMap();
 
     void run();
@@ -37,15 +38,27 @@ public:
     explicit Game(std::unique_ptr<LevelManager> levelMgr, std::unique_ptr<EntityManager> entityMgr) {
         level.swap(levelMgr);
         entityManager.swap(entityMgr);
+        network = std::make_unique<Network>();
+
+        instance = this;
     }
 
-private:
+    static Game *GetInstance()
+    {
+        return Game::instance;
+    }
+
+	std::unique_ptr<EntityManager> entityManager;
+public:
 
     std::unique_ptr<LevelManager> level;
-    std::unique_ptr<EntityManager> entityManager;
+
     std::unique_ptr<EntityCreator> entityCreator;
     std::unique_ptr<Network> network;
-    sf::Window window;
+    sf::RenderWindow window;
+
+    static Game *instance;
+
 };
 
 

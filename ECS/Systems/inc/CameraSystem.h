@@ -13,7 +13,7 @@
 
 const int defaultCameraDelta = 50;
 
-const int CameraSystemID = 5;
+const int CameraSystemID = 132;
 class  CameraSystem : public BaseSystem
 {
  public:
@@ -39,6 +39,11 @@ class  CameraSystem : public BaseSystem
 	{
 		window = windowSrc;
 		cameraView.reset(FloatRect(window->getViewport(window->getView())));
+	}
+
+	View& getView()
+	{
+		return cameraView;
 	}
 
 	virtual int getSystemID() override

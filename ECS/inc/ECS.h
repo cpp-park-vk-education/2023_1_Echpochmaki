@@ -65,6 +65,17 @@ class Entity {
 public:
     int id;
 
+    Entity()
+    {
+        id = nextId();
+    }
+
+    static inline int nextId()
+    {
+        static int global_id = 0;
+        return global_id++;
+    }
+
     bool IsActive() const {
         return active;
     }

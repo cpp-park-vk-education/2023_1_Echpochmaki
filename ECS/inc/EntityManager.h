@@ -23,10 +23,21 @@ class EntityManager {
         return a->getSystemID() < b->getSystemID();
     };
 public:
-    std::vector<Entity *> entities;
+    std::vector<Entity*> entities;
     std::set<BaseSystem *, decltype(BaseSystemPtrComparator)> systems{BaseSystemPtrComparator};
 
 public:
+    ~EntityManager()
+    {
+//        for (auto e : entities)
+//            delete e;
+//        entities.clear();
+//
+//        for (auto s : systems)
+//            delete s;
+//        systems.clear();
+    }
+
     void addEntity(Entity *entity) {
         entities.push_back(entity);
     }
@@ -38,14 +49,17 @@ public:
     bool addSystem(BaseSystem *system) // returns isSucceded
     {
         //  std::cout << "System size: " << systems.size() << std::endl;
-        return systems.insert(system).second;
+        auto result = systems.insert(system);
+        if (result.second)
+            system->added();
+        return result.second;
     }
 
-    auto addSystem2(BaseSystem *system) // returns isSucceded
-    {
-//        std::cout << "System size: " << systems.size() << std::endl;
-        return systems.insert(system);
-    }
+//    auto addSystem2(BaseSystem *system) // returns isSucceded
+//    {
+////        std::cout << "System size: " << systems.size() << std::endl;
+//        return systems.insert(system);
+//    }
 
 
     bool hasSystem(BaseSystem *system) // returns isSucceded
@@ -74,6 +88,7 @@ public:
         for (BaseSystem *system: systems)
             if (system->getSystemID() == keyID)
                 return system;
+		return nullptr;
     }
 
     void update(Game *game) {
@@ -83,7 +98,27 @@ public:
         //TODO::Make Implementation
     }
 
+    void deleteEntity(Entity* entity)
+    {
+//        auto it = std::find(entities.begin(), entities.end(), entity);
+        std::remove(entities.begin(), entities.end(), entity);
+        delete entity; //боже царя храни
+    }
 
+    bool deleteEntityById(int id)
+    {
+        for (auto it = entities.begin(); it != entities.end(); ++it)
+        {
+            if (id == (*it)->id)
+            {
+                delete *it;
+                entities.erase(it);
+                return true;
+            }
+        }
+
+        return false;
+    }
 };
 
 
