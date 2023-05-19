@@ -35,6 +35,11 @@ private:
     std::unique_ptr<IRoomGenerator> roomGenerator;
 };
 
+class RoomGeneratorBSP : public IRoomGenerator {
+public:
+    tileMap generateRoom(const RoomDescriptionBase &parameters) override;
+};
+
 
 class LevelManager {
 public:

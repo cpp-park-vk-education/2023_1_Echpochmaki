@@ -15,6 +15,10 @@
 struct RoomDescriptionBase {
     int width;
     int height;
+
+    RoomDescriptionBase(int width_, int height_) : width(width_), height(height_) {}
+
+    RoomDescriptionBase() = default;
 };
 
 class IRoomGenerator {

@@ -94,14 +94,28 @@ tileMap MapGeneratorBSP::generateMap(const MapDescriptionBase &parameters) {
     tileMap map(parameters.height, std::vector<EntityTileBase>(parameters.width, fakeTile));
 
     for (auto l: leafs) {
-        if (!l->rightChild && !l->leftChild) {
-            for (int i = l->room->y; i < l->room->height + l->room->y; ++i) {
-                for (int j = l->room->x; j < l->room->width + l->room->x; ++j) {
-                    map[i][j] = floorTile;
+        if (l->room) {
+
+            tileMap roomTile = roomGenerator->generateRoom(*l->room);
+
+            for (int i = l->room->y; i < roomTile.size() + l->room->y; ++i) {
+                for (int j = l->room->x; j < roomTile[0].size() + l->room->x; ++j) {
+                    map[i][j] = roomTile[i - l->room->y][j - l->room->x];
+                }
+            }
+        }
+
+        if (!l->halls.empty()) {
+            for (auto hall: l->halls) {
+                for (int i = hall->y; i < hall->height + hall->y; ++i) {
+                    for (int j = hall->x; j < hall->width + hall->x; ++j) {
+                        map[i][j] = floorTile;
+                    }
                 }
             }
         }
     }
+
 
     drawWalls(map);
 
@@ -114,7 +128,7 @@ void MapGeneratorBSP::drawWalls(tileMap &map) {
             if (map[i][j].objectId == floorTile.objectId) {
                 if (map[i][j - 1].objectId == fakeTile.objectId)
                     map[i][j - 1] = wallTile;
-                
+
                 if (map[i - 1][j - 1].objectId == fakeTile.objectId)
                     map[i - 1][j - 1] = wallTile;
 
@@ -145,12 +159,20 @@ void MapGeneratorBSP::setRoomGenerator(std::unique_ptr<IRoomGenerator> generator
     roomGenerator.swap(generator);
 }
 
+tileMap RoomGeneratorBSP::generateRoom(const RoomDescriptionBase &parameters) {
+    tileMap map(parameters.height, std::vector<EntityTileBase>(parameters.width, floorTile));
+
+    map[parameters.height / 2][parameters.width / 2] = enemyTile;
+
+    return map;
+}
+
 
 LevelManager::LevelManager() {
     // Создает конкретный MapGenerator и помещает в него конкретный RoomGenerator
     // Генерация сида
 
-    auto roomGen = std::unique_ptr<IRoomGenerator>(new RoomGenerator());
+    auto roomGen = std::unique_ptr<IRoomGenerator>(new RoomGeneratorBSP());
     mapGenerator = std::unique_ptr<IMapGenerator>(new MapGeneratorBSP());
     mapGenerator->setRoomGenerator(std::move(roomGen));
 

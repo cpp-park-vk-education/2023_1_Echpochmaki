@@ -14,10 +14,17 @@ inline const int minRoomSize = 6;
 struct RoomDescription : RoomDescriptionBase {
     int x;
     int y;
+
+    RoomDescription(int x_, int y_, int width_, int height_) : x(x_), y(y_), RoomDescriptionBase(width_, height_) {};
+
+    RoomDescription() = default;
 };
 
-struct Hall {
-    std::vector<std::pair<int, int>> points;
+struct Point {
+    int x;
+    int y;
+
+    Point(int x_, int y_) : x(x_), y(y_) {};
 };
 
 class Tree {
@@ -32,7 +39,9 @@ private:
 
         void createRooms();
 
+        void createHall(std::shared_ptr<RoomDescription> l, std::shared_ptr<RoomDescription> r);
 
+        std::shared_ptr<RoomDescription> getRoom();
 
 //    std::unique_ptr<RoomDescription> room;
 
@@ -42,8 +51,8 @@ private:
         int width;
         int height;
 
-        std::unique_ptr<RoomDescription> room;
-        std::vector<Hall> halls;
+        std::shared_ptr<RoomDescription> room;
+        std::vector<std::shared_ptr<RoomDescription>> halls;
 
         std::shared_ptr<class Leaf> leftChild;
         std::shared_ptr<class Leaf> rightChild;

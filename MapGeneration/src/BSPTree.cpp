@@ -43,6 +43,11 @@ void Tree::Leaf::createRooms() {
         if (rightChild) {
             rightChild->createRooms();
         }
+
+        if (leftChild && rightChild) {
+            createHall(leftChild->getRoom(), rightChild->getRoom());
+        }
+
     } else {
         room = std::unique_ptr<RoomDescription>(new RoomDescription);
 
@@ -81,4 +86,90 @@ std::vector<std::shared_ptr<Tree::leaf>> Tree::getLeafs(int width, int height) {
     root->createRooms();
 
     return leafs;
+}
+
+void Tree::Leaf::createHall(std::shared_ptr<RoomDescription> l, std::shared_ptr<RoomDescription> r) {
+
+    Point point1 = Point(getRand(l->x + 1, l->x + l->width - 2), getRand(l->y + 1, l->y + l->height - 2));
+    Point point2 = Point(getRand(r->x + 1, r->x + r->width - 2), getRand(r->y + 1, r->y + r->height - 2));
+
+    int w = point2.x - point1.x;
+    int h = point2.y - point1.y;
+
+    if (w < 0) {
+
+        if (h < 0) {
+
+            if (getRand() < 0.5) {
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point2.x, point1.y, std::abs(w), 1)));
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point2.x, point2.y, 1, std::abs(h))));
+            } else {
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point2.x, point2.y, std::abs(w), 1)));
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point1.x, point2.y, 1, std::abs(h))));
+            }
+        } else if (h > 0) {
+            if (getRand() < 0.5) {
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point2.x, point1.y, std::abs(w), 1)));
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point2.x, point1.y, 1, std::abs(h))));
+            } else {
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point2.x, point2.y, std::abs(w), 1)));
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point1.x, point1.y, 1, std::abs(h))));
+            }
+        } else {
+            halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point2.x, point2.y, std::abs(w), 1)));
+        }
+    } else if (w > 0) {
+        if (h < 0) {
+            if (getRand() < 0.5) {
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point1.x, point2.y, std::abs(w), 1)));
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point1.x, point2.y, 1, std::abs(h))));
+            } else {
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point1.x, point1.y, std::abs(w), 1)));
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point2.x, point2.y, 1, std::abs(h))));
+            }
+        } else if (h > 0) {
+            if (getRand() < 0.5) {
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point1.x, point1.y, std::abs(w), 1)));
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point2.x, point1.y, 1, std::abs(h))));
+            } else {
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point1.x, point2.y, std::abs(w), 1)));
+                halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point1.x, point1.y, 1, std::abs(h))));
+            }
+        } else {
+            halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point1.x, point1.y, std::abs(w), 1)));
+        }
+    } else {
+        if (h < 0) {
+            halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point2.x, point2.y, 1, std::abs(h))));
+        } else if (h > 0) {
+            halls.push_back(std::make_shared<RoomDescription>(RoomDescription(point1.x, point1.y, 1, std::abs(h))));
+        }
+    }
+}
+
+
+std::shared_ptr<RoomDescription> Tree::Leaf::getRoom() {
+
+    if (room)
+        return room;
+    else {
+        auto lRoom = std::make_shared<RoomDescription>(RoomDescription());
+        auto rRoom = std::make_shared<RoomDescription>(RoomDescription());
+        if (leftChild) {
+            lRoom = leftChild->getRoom();
+        }
+        if (rightChild) {
+            rRoom = rightChild->getRoom();
+        }
+        if (!lRoom && !rRoom)
+            return nullptr;
+        else if (!rRoom)
+            return lRoom;
+        else if (!lRoom)
+            return rRoom;
+        else if (getRand() > 0.5)
+            return lRoom;
+        else
+            return rRoom;
+    }
 }
