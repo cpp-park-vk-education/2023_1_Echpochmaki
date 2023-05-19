@@ -6,10 +6,10 @@
 
 #include <memory>
 
-inline const int minLeafSize = 12;
+inline const int minLeafSize = 6;
 inline const int maxLeafSize = 20;
 
-inline const int minRoomSize = 6;
+inline const int minRoomSize = 3;
 
 struct RoomDescription : RoomDescriptionBase {
     int x;
