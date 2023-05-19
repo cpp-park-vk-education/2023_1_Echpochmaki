@@ -176,7 +176,7 @@ LevelManager::LevelManager() {
     mapGenerator = std::unique_ptr<IMapGenerator>(new MapGeneratorBSP());
     mapGenerator->setRoomGenerator(std::move(roomGen));
 
-    seed = 42;
+    seed = time(NULL);
 }
 
 tileMap LevelManager::createMap() {
