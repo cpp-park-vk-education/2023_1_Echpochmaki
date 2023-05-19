@@ -35,7 +35,7 @@ bool Tree::Leaf::split() {
     return true;
 };
 
-/*void Tree::Leaf::createRooms() {
+void Tree::Leaf::createRooms() {
     if (leftChild || rightChild) {
         if (leftChild) {
             leftChild->createRooms();
@@ -46,13 +46,13 @@ bool Tree::Leaf::split() {
     } else {
         room = std::unique_ptr<RoomDescription>(new RoomDescription);
 
-        room->width = 1 + rand() % (width - 2);
-        room->height = 1 + rand() % (height - 2);
+        room->width = getRand(minRoomSize, width - 2);
+        room->height = getRand(minRoomSize, height - 2);
 
-        room->x = 1 + rand() % (width - room->width + 1);
-        room->y = 1 + rand() % (height - room->height + 1);
+        room->x = getRand(1, width - room->width - 1) + x;
+        room->y = getRand(1, height - room->height - 1) + y;
     }
-}*/
+}
 
 std::vector<std::shared_ptr<Tree::leaf>> Tree::getLeafs(int width, int height) {
     auto root = std::make_shared<leaf>(0, 0, width, height);
@@ -78,7 +78,7 @@ std::vector<std::shared_ptr<Tree::leaf>> Tree::getLeafs(int width, int height) {
         }
     }
 
-    // root->createRooms();
+    root->createRooms();
 
     return leafs;
 }

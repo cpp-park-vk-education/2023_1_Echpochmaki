@@ -6,8 +6,10 @@
 
 #include <memory>
 
-inline const int minLeafSize = 6;
+inline const int minLeafSize = 12;
 inline const int maxLeafSize = 20;
+
+inline const int minRoomSize = 6;
 
 struct RoomDescription : RoomDescriptionBase {
     int x;
@@ -40,7 +42,7 @@ private:
         int width;
         int height;
 
-        RoomDescription room;
+        std::unique_ptr<RoomDescription> room;
         std::vector<Hall> halls;
 
         std::shared_ptr<class Leaf> leftChild;

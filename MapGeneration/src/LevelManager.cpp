@@ -95,8 +95,8 @@ tileMap MapGeneratorBSP::generateMap(const MapDescriptionBase &parameters) {
 
     for (auto l: leafs) {
         if (!l->rightChild && !l->leftChild) {
-            for (int i = l->y + 1; i < l->height + l->y; ++i) {
-                for (int j = l->x + 1; j < l->width + l->x; ++j) {
+            for (int i = l->room->y; i < l->room->height + l->room->y; ++i) {
+                for (int j = l->room->x; j < l->room->width + l->room->x; ++j) {
                     map[i][j] = floorTile;
                 }
             }
