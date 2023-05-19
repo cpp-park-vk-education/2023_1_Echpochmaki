@@ -29,6 +29,8 @@ public:
 
     void setRoomGenerator(std::unique_ptr<IRoomGenerator> generator) override;
 
+    void drawWalls(tileMap &map);
+
 private:
     std::unique_ptr<IRoomGenerator> roomGenerator;
 };

@@ -91,7 +91,7 @@ tileMap MapGeneratorBSP::generateMap(const MapDescriptionBase &parameters) {
     Tree t;
     auto leafs = t.getLeafs(parameters.width - 1, parameters.height - 1);
 
-    tileMap map(parameters.height, std::vector<EntityTileBase>(parameters.width, wallTile));
+    tileMap map(parameters.height, std::vector<EntityTileBase>(parameters.width, fakeTile));
 
     for (auto l: leafs) {
         if (!l->rightChild && !l->leftChild) {
@@ -103,7 +103,41 @@ tileMap MapGeneratorBSP::generateMap(const MapDescriptionBase &parameters) {
         }
     }
 
+    drawWalls(map);
+
     return map;
+}
+
+void MapGeneratorBSP::drawWalls(tileMap &map) {
+    for (int i = 0; i < map.size(); ++i) {
+        for (int j = 0; j < map[0].size(); ++j) {
+            if (map[i][j].objectId == floorTile.objectId) {
+                if (map[i][j - 1].objectId == fakeTile.objectId)
+                    map[i][j - 1] = wallTile;
+                
+                if (map[i - 1][j - 1].objectId == fakeTile.objectId)
+                    map[i - 1][j - 1] = wallTile;
+
+                if (map[i - 1][j].objectId == fakeTile.objectId)
+                    map[i - 1][j] = wallTile;
+
+                if (map[i - 1][j + 1].objectId == fakeTile.objectId)
+                    map[i - 1][j + 1] = wallTile;
+
+                if (map[i][j + 1].objectId == fakeTile.objectId)
+                    map[i][j + 1] = wallTile;
+
+                if (map[i + 1][j + 1].objectId == fakeTile.objectId)
+                    map[i + 1][j + 1] = wallTile;
+
+                if (map[i + 1][j].objectId == fakeTile.objectId)
+                    map[i + 1][j] = wallTile;
+
+                if (map[i + 1][j - 1].objectId == fakeTile.objectId)
+                    map[i + 1][j - 1] = wallTile;
+            }
+        }
+    }
 }
 
 void MapGeneratorBSP::setRoomGenerator(std::unique_ptr<IRoomGenerator> generator) {

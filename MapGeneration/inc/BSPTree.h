@@ -17,7 +17,7 @@ struct RoomDescription : RoomDescriptionBase {
 };
 
 struct Hall {
-    int x;
+    std::vector<std::pair<int, int>> points;
 };
 
 class Tree {
