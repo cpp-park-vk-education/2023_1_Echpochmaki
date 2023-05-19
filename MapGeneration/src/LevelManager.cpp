@@ -118,8 +118,20 @@ tileMap MapGeneratorBSP::generateMap(const MapDescriptionBase &parameters) {
 
 
     drawWalls(map);
+    setPlayer(map);
 
     return map;
+}
+
+void MapGeneratorBSP::setPlayer(tileMap &map) {
+    for (int i = 0; i < map.size(); ++i) {
+        for (int j = 0; j < map[0].size(); ++j) {
+            if (map[i][j].objectId == floorTile.objectId) {
+                map[i][j] = playerTile;
+                return;
+            }
+        }
+    }
 }
 
 void MapGeneratorBSP::drawWalls(tileMap &map) {
@@ -189,13 +201,13 @@ tileMap LevelManager::createMap() {
 
     auto m = mapGenerator->generateMap(map);
 
-    for (int i = 0; i < m.size(); ++i) {
-        for (int j = 0; j < m[0].size(); ++j) {
-            std::cout << m[i][j].objectId << " ";
-        }
-        std::cout << std::endl;
-    }
-
+    /* for (int i = 0; i < m.size(); ++i) {
+         for (int j = 0; j < m[0].size(); ++j) {
+             std::cout << m[i][j].objectId << " ";
+         }
+         std::cout << std::endl;
+     }
+ */
     return m;
 }
 

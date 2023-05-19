@@ -19,6 +19,7 @@ inline constexpr EntityTileBase wallTile(1);
 inline constexpr EntityTileBase doorTile(2);
 
 inline constexpr EntityTileBase enemyTile(3);
+inline constexpr EntityTileBase playerTile(4);
 
 using tileMap = std::vector<std::vector<EntityTileBase>>;
 

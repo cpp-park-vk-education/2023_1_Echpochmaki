@@ -38,73 +38,8 @@ void Game::run() {
 //	window.setVerticalSyncEnabled(true);
 
     //Components
-    Entity player;
-
-    std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
     std::string path_to_main_font = "../Graphics/fonts/main_font.ttf";
-
-    FramesCreator creator{hero_king_texture_path};
-    auto frames = creator.GetFrames(9, 10, 14, 40, 0, 0);
-
-    std::vector<sf::Texture> moving_frames{frames.begin() + 7, frames.begin() + 17};
-    std::vector<sf::Texture> attack_frames{frames.begin() + 18, frames.begin() + 24};
-    std::vector<sf::Texture> idling_frames{frames.begin() + 0, frames.begin() + 7};
-    std::vector<sf::Texture> die_frames{frames.begin() + 49, frames.begin() + 57};
-
-
-    std::vector<std::vector<sf::Texture>> all_frames;
-    all_frames.push_back(moving_frames);
-    all_frames.push_back(attack_frames);
-    all_frames.push_back(idling_frames);
-	all_frames.push_back(die_frames);
-
-
-	std::vector<float> moving_frames_durations(moving_frames.size(),2);
-	std::vector<float> attack_frames_durations(attack_frames.size(),2);
-	std::vector<float> idling_frames_durations(idling_frames.size(),4);
-	std::vector<float> die_frames_durations(die_frames.size(),3);
-
-	std::vector<std::vector<float>> all_animation_durations;
-	all_animation_durations.push_back(moving_frames_durations);
-	all_animation_durations.push_back(attack_frames_durations);
-	all_animation_durations.push_back(idling_frames_durations);
-	all_animation_durations.push_back(die_frames_durations);
-
-
-
-
-
-
-    player.AddComponent<PositionComponent>(200, 200);
-    player.AddComponent<VelocityComponent>();
-    player.AddComponent<PlayerComponent>();
-    player.AddComponent<AttackComponent>(2);
-
-    Sprite sprite;
-    sprite.setTexture(frames[0]);
-
-    player.AddComponent<SpriteComponent>(sprite, 100);
-    player.AddComponent<CollisionComponent>(IntRect(0,0,30,40),Vector2<DistanceValueType>(30 / 2,40 / 2));
-    player.AddComponent<MoveDirectionComponent>();
-    player.AddComponent<FramesComponent>(all_frames, all_frames[0][0],all_animation_durations);
-    player.AddComponent<SinkableComponent>(random());
-    player.AddComponent<HealthComponent>(100);
-//    player.AddComponent<AttackAnimationComponent>(attack_frames, frames[0]);
-//    player.AddComponent<AnimationMovingComponent>(moving_frames, frames[0]);
-
-
-    entityManager->addEntity(&player);
-
-
-    //Collider starts here
-    Sprite collider;
-    collider.setTexture(frames[0]);
-    Entity testCollider;
-    testCollider.AddComponent<PositionComponent>(0, 0);
-    testCollider.AddComponent<CollisionComponent>(IntRect(0, 0, 60, 60));
-    testCollider.AddComponent<SpriteComponent>(collider);
-
-    entityManager->addEntity(&testCollider);
+    
 
     //Systems
     DrawSystem drawSystem;
@@ -125,15 +60,12 @@ void Game::run() {
     entityManager->addSystem(&animateDirectionSystem);
 
 
+    CameraSystem cameraSystem;
+    cameraSystem.setRenderWindow(&window);
+    entityManager->addSystem(&cameraSystem);
 
-
-
-	CameraSystem cameraSystem;
-	cameraSystem.setRenderWindow(&window);
-	entityManager->addSystem(&cameraSystem);
-
-	RenderInfoSystem renderInfoSystem{&window, path_to_main_font};
-	entityManager->addSystem(&renderInfoSystem);
+    RenderInfoSystem renderInfoSystem{&window, path_to_main_font};
+    entityManager->addSystem(&renderInfoSystem);
 
 
 //    AttackAnimationSystem attackAnimationSystem;
@@ -155,8 +87,7 @@ void Game::run() {
 
     std::cout << "entities size=" << entityManager->entities.size() << std::endl;
     int id = 0;
-    for (auto &e : entityManager->entities)
-    {
+    for (auto &e: entityManager->entities) {
 //        e->id = Entity::nextId();
 //        std::cout << "e: " << e->id << std::endl;
     }
@@ -172,19 +103,17 @@ void Game::run() {
         network->connectToHost("localhost", Network::HOST_PORT);
 
 
-
     while (window.isOpen()) {
         //std::cout << "update " << random() % 10 << std::endl;
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
-	        if (event.type == sf::Event::Resized)
-	        {
-		        // update the view to the new size of the window
-		        sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-		        window.setView(sf::View(visibleArea));
-	        }
+            if (event.type == sf::Event::Resized) {
+                // update the view to the new size of the window
+                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+                window.setView(sf::View(visibleArea));
+            }
         }
 
         // TODO: Update frames

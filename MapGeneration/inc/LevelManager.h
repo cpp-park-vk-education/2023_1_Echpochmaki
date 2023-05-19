@@ -31,6 +31,8 @@ public:
 
     void drawWalls(tileMap &map);
 
+    void setPlayer(tileMap &map);
+
 private:
     std::unique_ptr<IRoomGenerator> roomGenerator;
 };
