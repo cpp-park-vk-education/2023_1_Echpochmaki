@@ -28,7 +28,14 @@ public:
                 {
                     if (attacker->HasComponent<CollisionComponent>() && goal->HasComponent<CollisionComponent>())
                     {
-                        auto& rect = attacker->getComponent<CollisionComponent>().collisionBox;
+                        auto rect = attacker->getComponent<CollisionComponent>().collisionBox;
+                        std::cout << "Rect before: " << rect.height << rect.width << std::endl;
+
+                        auto& attack_component = attacker->getComponent<AttackComponent>();
+                        rect.height = attack_component.attackBox.height;
+                        rect.width = attack_component.attackBox.width;
+
+                        std::cout << "Rect after: " << rect.height << rect.width << std::endl;
 
                         if (goal->getComponent<CollisionComponent>().collisionBox.intersects(rect) &&
                             attacker->getComponent<AttackComponent>().attack_started)

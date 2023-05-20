@@ -12,13 +12,17 @@ using namespace sf;
 
 using DamageValueType = int;
 
+static constexpr int DefaultAttackBoxSize = 50;
+
 struct AttackComponent : public Component {
     DamageValueType damage;
+    sf::IntRect attackBox;
 
     AttackComponent() = default;
 
-    AttackComponent(DamageValueType damageSrc) {
+    AttackComponent(DamageValueType damageSrc, sf::IntRect attackBoxSrc = {0, 0, DefaultAttackBoxSize, DefaultAttackBoxSize}) {
         damage = damageSrc;
+        attackBox = attackBoxSrc;
     }
 
 

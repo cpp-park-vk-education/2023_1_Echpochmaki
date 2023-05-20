@@ -38,7 +38,7 @@ void Game::run() {
 //	window.setVerticalSyncEnabled(true);
 
     //Components
-    std::string path_to_main_font = "../Graphics/fonts/main_font.ttf";
+    std::string path_to_main_font = "./Graphics/fonts/main_font.ttf";
     
 
     //Systems
