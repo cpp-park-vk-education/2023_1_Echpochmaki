@@ -49,7 +49,7 @@ void Tree::Leaf::createRooms() {
         }
 
     } else {
-        room = std::unique_ptr<RoomDescription>(new RoomDescription);
+        room = std::make_unique<RoomDescription>(RoomDescription());
 
         room->width = getRand(minRoomSize, width - 2);
         room->height = getRand(minRoomSize, height - 2);
