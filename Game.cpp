@@ -18,6 +18,7 @@ void Game::loadMap() {
     // Получение карты, передача Entity Creator
     // map -> EntityCreator -> (vector <Entity>) -> EntityManager
     auto map = level->createMap();
+    std::cout << "================ createEntitiesByMap ====================== " << entityCreator.get() << std::endl;
     auto entities = entityCreator->createEntitiesByMap(map);
     for (auto entity: entities) {
         entityManager->addEntity(entity);
@@ -33,7 +34,7 @@ void Game::run() {
 
 //    RenderWindow window(sf::VideoMode(1280, 1024), "Boys game");
     window.create(sf::VideoMode(640, 480), "Boys game");
-    //window.setFramerateLimit(60);
+    window.setFramerateLimit(1);
 
 //	window.setVerticalSyncEnabled(true);
 
