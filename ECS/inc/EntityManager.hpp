@@ -50,7 +50,7 @@ class EntityManager
 
 	void update(Game* game);
 
-	
+	void removeEntityDuplicates();
 
 
 

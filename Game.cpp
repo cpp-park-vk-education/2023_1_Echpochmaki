@@ -34,13 +34,17 @@ void Game::run() {
 
 //    RenderWindow window(sf::VideoMode(1280, 1024), "Boys game");
     window.create(sf::VideoMode(640, 480), "Boys game");
-    window.setFramerateLimit(1);
+//    window.setFramerateLimit(1);
 
 //	window.setVerticalSyncEnabled(true);
 
     //Components
     std::string path_to_main_font = "./Graphics/fonts/main_font.ttf";
-    
+
+
+    SyncSystem syncSystem;
+    std::cout << "add syncSystem success=" << entityManager->addSystem(&syncSystem);
+
 
     //Systems
     DrawSystem drawSystem;
@@ -82,9 +86,6 @@ void Game::run() {
 
     FramesSystem framesSystem;
     entityManager->addSystem(&framesSystem);
-
-    SyncSystem syncSystem;
-    std::cout << "add syncSystem success=" << entityManager->addSystem(&syncSystem);
 
     std::cout << "entities size=" << entityManager->entities.size() << std::endl;
     int id = 0;

@@ -10,6 +10,7 @@
 #include "ECS.h"
 #include <SFML/Graphics.hpp>
 #include "BaseSystem.h"
+#include <set>
 
 
 class Game; // Fake game for compiling
@@ -95,6 +96,7 @@ public:
         for (auto s: systems) {
             s->update(this);
         }
+        removeDuplicates();
         //TODO::Make Implementation
     }
 
@@ -118,6 +120,12 @@ public:
         }
 
         return false;
+    }
+
+    void removeDuplicates()
+    {
+        std::set<Entity*> s( entities.begin(), entities.end() );
+        entities.assign( s.begin(), s.end() );
     }
 };
 

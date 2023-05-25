@@ -42,3 +42,5 @@ void  EntityManager::update(Game* game)
 {
 	//TODO::Make Implementation
 }
+
+void removeEntityDuplicates();

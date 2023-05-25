@@ -22,9 +22,11 @@ class SyncSystem : public BaseSystem {
 public:
 
 
-    static constexpr sf::Int8 SYNC_POS_ID = 1;
-    static constexpr sf::Int8 SYNC_VEL_ID = 2;
-    static constexpr sf::Int8 SYNC_HP_ID =  3;
+    static constexpr sf::Int8 SYNC_POS_ID =     1;
+    static constexpr sf::Int8 SYNC_VEL_ID =     2;
+    static constexpr sf::Int8 SYNC_HP_ID =      3;
+    static constexpr sf::Int8 SYNC_MOVEDIR_ID = 4;
+    static constexpr sf::Int8 SYNC_FRAMES_ID =  5;
 
     static constexpr sf::Int8 END_ENTITY_DESCRIPTION = -128;
 
@@ -82,6 +84,12 @@ public:
 
             for (auto &e : need_sync)
             {
+                if (e->HasComponent<PlayerComponent>())
+                {
+                    auto& player = e->getComponent<PlayerComponent>();
+                    if (player.is_remote)
+                        continue;
+                }
                 writeEntity(pack, e);
             }
 
@@ -188,8 +196,26 @@ public:
             pack << sf::Int32(hp.health);
         }
 
-        // frames component
-        // direction component
+        if (e->HasComponent<MoveDirectionComponent>())
+        {
+            auto &md = e->getComponent<MoveDirectionComponent>();
+            pack << SYNC_MOVEDIR_ID;
+            pack << sf::Int8(md.dir);
+            pack << md.has_dir_changed;
+        }
+
+        if (e->HasComponent<FramesComponent>())
+        {
+            auto& frames = e->getComponent<FramesComponent>();
+            pack << SYNC_FRAMES_ID;
+            pack << sf::Uint32(frames.frame_sets_size);
+            pack << sf::Uint32(frames.cur_frame);
+            pack << sf::Uint32(frames.cur_frame_set);
+//            pack << frames.passed_time;
+            pack << frames.animation_started;
+            pack << frames.died;
+            pack << frames.dying;
+        }
 
         pack << END_ENTITY_DESCRIPTION;
     }
@@ -201,8 +227,10 @@ public:
         while ((pack >> comp_id) && comp_id != END_ENTITY_DESCRIPTION)
         {
             // TODO добавлять отсутствующий компонент?
+            // TODO может быть читать данные, но не сохранять никуда, если компонента нет
             switch (comp_id) {
                 case SYNC_POS_ID:
+
                     if (e->HasComponent<PositionComponent>())
                     {
                         auto& pos = e->getComponent<PositionComponent>();
@@ -225,6 +253,34 @@ public:
                         hp.health = tmp_health;
                     }
                     break;
+                case SYNC_MOVEDIR_ID:
+                    if (e->HasComponent<MoveDirectionComponent>())
+                    {
+                        auto &md = e->getComponent<MoveDirectionComponent>();
+                        sf::Int8 tmp_dir;
+                        pack >> tmp_dir;
+                        md.dir = Direction(tmp_dir);
+                        pack >> md.has_dir_changed;
+                        cout << "[syncsys] " << " md.has_dir_changed =" << md.has_dir_changed << endl;
+                    }
+                    break;
+                case SYNC_FRAMES_ID:
+                    if (e->HasComponent<FramesComponent>())
+                    {
+                        auto& frames = e->getComponent<FramesComponent>();
+                        sf::Uint32 tmp_uint;
+                        pack >> tmp_uint;
+                        frames.frame_sets_size = tmp_uint;
+                        pack >> tmp_uint;
+                        frames.cur_frame = tmp_uint;
+                        pack >> tmp_uint;
+                        frames.cur_frame_set = FrameSet(tmp_uint);
+//                        pack >> frames.passed_time;
+                        pack >> frames.animation_started;
+                        pack >> frames.died;
+                        pack >> frames.dying;
+                    }
+
                 default:
                     break;
             }
@@ -237,7 +293,11 @@ public:
     {
         sf::Int8 comp_id;
         sf::Int32 tmp_int32;
+        sf::Int8 tmp_int8;
+        sf::Uint32 tmp_uint32;
         float tmp_float;
+        double tmp_double;
+        bool tmp_bool;
 
         // просто идем до конца описания сущности и ситаем байты
         while ((pack >> comp_id) && comp_id != END_ENTITY_DESCRIPTION)
@@ -252,6 +312,18 @@ public:
                 case SYNC_HP_ID:
                     pack >> tmp_int32;
                     break;
+                case SYNC_MOVEDIR_ID:
+                    pack >> tmp_int8;
+                    pack >> tmp_bool;
+                    break;
+                case SYNC_FRAMES_ID:
+                    pack >> tmp_uint32;
+                    pack >> tmp_uint32;
+                    pack >> tmp_uint32;
+//                    pack >> tmp_double;
+                    pack >> tmp_bool;
+                    pack >> tmp_bool;
+                    pack >> tmp_bool;
                 default:
                     break;
             }
