@@ -216,8 +216,8 @@ std::vector<Entity *> EntityCreator::createEntitiesByMap(const tileMap &tilemap)
         for (size_t j = 0; j < tilemap[0].size(); ++j) {
 
             if (tilemap[i][j].objectId == enemyTile.objectId ||
-                tilemap[i][j].objectId == playerTile.objectId ||
-                tilemap[i][j].objectId == remotePlayerTile.objectId) {
+                tilemap[i][j].objectId == playerTile.objectId /* ||
+                tilemap[i][j].objectId == remotePlayerTile.objectId*/) {
 
                 Entity *entity = createEntity(floorTile);
                 entity->AddComponent<PositionComponent>(j * tileWidth, i * tileHeight);
