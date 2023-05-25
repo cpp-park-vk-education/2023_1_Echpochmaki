@@ -2,6 +2,14 @@
 #include "Packets.h"
 #include "IClient.h"
 #include "client.h"
+#include "../../ECS/inc/EntityCreator.h"
+#include "../Game.h"
+
+
+#ifndef INFO
+#define INFO __FILE__ << ":" << __LINE__
+#endif
+
 
 
 void Host::handleClient(const sf::IpAddress& addr, sf::Uint16 port)
@@ -20,7 +28,10 @@ void Host::handleClient(IClient* c)
     // возможно переделать этот момент на ивенты или как то так, просто сейчас не знаю как получать данные о карте
     pack << Packets::MapGenerationInfo;
     // типа сид для карты
-    pack << int(0);
+
+    EntityCreator::packTileMap(Game::instance->map, pack);
+    std::cout << "[host] " << INFO << " total size map packet = " << pack.getDataSize() << std::endl;
+
     socket.send(pack, c->addr, c->port);
 
     connected.push_back(unique_ptr<IClient>(c));

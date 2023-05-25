@@ -58,7 +58,7 @@ public:
     sf::RenderWindow window;
 
     static Game *instance;
-
+    tileMap map;
 };
 
 

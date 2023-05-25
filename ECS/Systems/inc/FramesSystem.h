@@ -49,7 +49,7 @@ class FramesSystem : public BaseSystem {
 							continue;
 						}
                 }
-				framesComponent.passed_time += Timer::getTimer().getElapsedTime().asMicroseconds(); //TODO::fix const values for frames
+				framesComponent.passed_time += Timer::getTimer().getElapsedTime().asMicroseconds() / 10; //TODO::fix const values for frames
 
 				//std::cout << "passed_time" <<  framesComponent.passed_time << '\n';
 				//Timer::getTimer().restart();
@@ -61,7 +61,7 @@ class FramesSystem : public BaseSystem {
 					sprite.sprite.setTexture(
 						framesComponent.frames_sets[static_cast<unsigned long>(framesComponent.cur_frame_set)][framesComponent.cur_frame++]); // возможно стоит сбросить ректангл, подумать!!
 					framesComponent.passed_time  = 0;
-					Timer::getTimer().restart();
+//					Timer::getTimer().restart();
 				}
 
             }

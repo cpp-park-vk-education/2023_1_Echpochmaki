@@ -46,7 +46,7 @@ public:
 	            entity->getComponent<FramesComponent>().dying = true;
 				if (entity->getComponent<FramesComponent>().died)
                 {
-                    if (entity->HasComponent<PlayerComponent>())
+                    if (entity->HasComponent<PlayerComponent>() && ! entity->getComponent<PlayerComponent>().is_remote) // подумать
                     {
                         sf::Font default_font;
                         default_font.loadFromFile("../Graphics/fonts/main_font.ttf");
@@ -67,7 +67,7 @@ public:
                     else {
                         ++amount_deleted;
                         pack << sf::Int32(entity->id);
-                        cout << "   packed id=" << sf::Int32(entity->id) << endl;
+//                        cout << "   packed id=" << sf::Int32(entity->id) << endl;
                         manager->deleteEntity(entity);
                     }
                 }

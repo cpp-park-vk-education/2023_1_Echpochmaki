@@ -22,10 +22,15 @@ class  CameraSystem : public BaseSystem
 	{
 		std::vector<Entity*> entities;
 		manager->selectEntites<PlayerComponent,PositionComponent>(entities);
+
+
 		for (Entity* e: entities)
 		{
-			auto position = e->getComponent<PositionComponent>().position;
-			cameraView.setCenter(position.x + defaultCameraDelta,position.y + defaultCameraDelta);
+            if ( ! e->getComponent<PlayerComponent>().is_remote)
+            {
+                auto position = e->getComponent<PositionComponent>().position;
+                cameraView.setCenter(position.x + defaultCameraDelta,position.y + defaultCameraDelta);
+            }
 		}
 		window->setView(cameraView);
 	}

@@ -22,6 +22,7 @@ struct PlayerComponent : public Component {
     DistanceValueType speed;
     size_t kills = 0;
     size_t deaths = 0;
+    bool is_remote = false;
 
     PlayerComponent() {
         speed = defaultSpeed;

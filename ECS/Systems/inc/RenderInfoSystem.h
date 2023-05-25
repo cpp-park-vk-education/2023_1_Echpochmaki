@@ -6,6 +6,7 @@
 #include "PlayerComponent.h"
 #include "HealthComponent.h"
 #include "PositionComponent.h"
+#include <algorithm>
 
 const int RenderInfoSystemID = 32523501;
 class  RenderInfoSystem : public BaseSystem
@@ -19,10 +20,15 @@ public:
         std::cout << "Render info started" << std::endl;
         std::vector<Entity*> players;
         manager->selectEntites<PlayerComponent>(players);
+//        std::erase_if(cnt, [](char x) { return (x - '0') % 2 == 0; });
+        Entity* local_player;
+        for (auto& e : players)
+            if ( ! e->getComponent<PlayerComponent>().is_remote )
+                local_player = e;
 
-        size_t kills = players.front()->getComponent<PlayerComponent>().kills;
-        size_t health = players.front()->getComponent<HealthComponent>().health;
-        size_t deaths = players.front()->getComponent<PlayerComponent>().deaths;
+        size_t kills = local_player->getComponent<PlayerComponent>().kills;
+        size_t health = local_player->getComponent<HealthComponent>().health;
+        size_t deaths = local_player->getComponent<PlayerComponent>().deaths;
 
         sf::Font default_font;
         default_font.loadFromFile(font_filepath);
@@ -32,7 +38,7 @@ public:
         info.setFont(default_font);
         info.setCharacterSize(30);
 
-        Vector2f position = players.front()->getComponent<PositionComponent>().position;
+        Vector2f position = local_player->getComponent<PositionComponent>().position;
        auto& view = window->getView();
         info.setPosition(position.x + 310, position.y - 450);
 

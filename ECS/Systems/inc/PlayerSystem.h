@@ -35,7 +35,8 @@ public:
         std::vector<Entity *> entities;
         manager->selectEntites<PlayerComponent>(entities);
         for (Entity *e: entities) {
-            controlEntity(e);
+            if ( ! e->getComponent<PlayerComponent>().is_remote)
+                controlEntity(e);
         }
     }
 

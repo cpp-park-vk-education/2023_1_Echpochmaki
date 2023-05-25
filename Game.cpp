@@ -17,7 +17,7 @@ Game *Game::instance;
 void Game::loadMap() {
     // Получение карты, передача Entity Creator
     // map -> EntityCreator -> (vector <Entity>) -> EntityManager
-    auto map = level->createMap();
+    map = level->createMap();
     std::cout << "================ createEntitiesByMap ====================== " << entityCreator.get() << std::endl;
     auto entities = entityCreator->createEntitiesByMap(map);
     for (auto entity: entities) {
@@ -119,6 +119,8 @@ void Game::run() {
 
         // TODO: Update frames
         window.clear();
+
+        Timer::getTimer().restart();
 
         network->update();
 

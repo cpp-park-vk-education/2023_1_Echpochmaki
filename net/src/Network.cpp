@@ -4,6 +4,8 @@
 #include "Packets.h"
 #include "events.h"
 #include <iostream>
+#include "../../ECS/inc/EntityCreator.h"
+#include "../../Game.h"
 
 using std::cout;
 using std::endl;
@@ -168,7 +170,15 @@ void Network::updateClient()
             event.pack = &pack;
             event.sender_addr = addr;
             event.sender_port = port;
-            Events::fire(Events::EventType::MapInfoFromNetReceived, &event);
+            cout << "[net] " << INFO << "   call=EntityCreator::loadTileMap(pack);" << endl;
+            cout.flush();
+            EntityCreator::loadTileMap(pack);
+
+            auto player = EntityCreator::createPlayer(false);
+            Game::instance->entityManager->addEntity(player);
+            Packets::sendCreateRemotePlayerPacket(player, currentClient);
+
+//            Events::fire(Events::EventType::MapInfoFromNetReceived, &event);
         }
 
         if (type == Packets::SyncAllEntitiesFromHost && currentClient->connected && currentClient->map_received)
@@ -216,6 +226,12 @@ void Network::updateHost()
 
         if (type == Packets::AskConnection) {
             currentHost->handleClient(addr, port);
+        }
+
+        if (type == Packets::AddRemotePlayer) {
+            auto player = EntityCreator::createPlayer(true);
+//            player->getComponent<PositionComponent>();
+            Game::instance->entityManager->addEntity(player);
         }
 
         if (type == Packets::SyncPlayerFromClient) {

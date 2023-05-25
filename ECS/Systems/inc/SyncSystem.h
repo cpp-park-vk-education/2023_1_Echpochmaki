@@ -38,6 +38,19 @@ public:
     {
 //        std::cout << ">>>>>>>>>>>>>> sync system work" << std::endl;
 
+
+        std::vector<Entity *> test_entities;
+        manager->selectEntites<PlayerComponent>(test_entities);
+        cout << "[syncsys] " << INFO << " TEST SYNC test_entities.size=" << test_entities.size() << endl;
+        for (auto& e : test_entities)
+        {
+            cout << "   e.id=" << e->id
+                 << " has_sync=" << e->HasComponent<SinkableComponent>()
+                 << " is_remote=" << e->getComponent<PlayerComponent>().is_remote
+                 << " addr e=" << e
+                 << std::endl;
+        }
+
         if (Game::instance->network->isClient())
         {
             sf::Packet pack;
@@ -49,7 +62,8 @@ public:
 
             for (auto &e : players_to_sync)
             {
-                writeEntity(pack, e);
+                if ( ! e->getComponent<PlayerComponent>().is_remote)
+                    writeEntity(pack, e);
             }
 
             SyncSystemSyncEvent event;
@@ -173,6 +187,9 @@ public:
             pack << SYNC_HP_ID;
             pack << sf::Int32(hp.health);
         }
+
+        // frames component
+        // direction component
 
         pack << END_ENTITY_DESCRIPTION;
     }

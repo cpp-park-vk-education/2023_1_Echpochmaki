@@ -70,9 +70,12 @@ public:
         id = nextId();
     }
 
-    static inline int nextId()
+    static inline int nextId(bool flush=false)
     {
         static int global_id = 0;
+        if (flush)
+            global_id = 0;
+
         return global_id++;
     }
 

@@ -20,9 +20,17 @@ public:
         std::cout << "[entitycreator] " << INFO << " instance created" << std::endl;
     }
 
-    std::vector<Entity *> createEntitiesByMap(const tileMap &tilemap);
+    static std::vector<Entity *> createEntitiesByMap(const tileMap &tilemap);
 
-    Entity *createEntity(const EntityTileBase &tile);
+    static Entity *createEntity(const EntityTileBase &tile);
+
+//    void *createRemotePlayer()
+
+    static void packTileMap(const tileMap &tilemap, sf::Packet& pack);
+
+    static void loadTileMap(sf::Packet& pack);
+
+    static Entity *createPlayer(bool is_remote = false);
 };
 
 #endif //GAME_ENTITYCREATOR_H

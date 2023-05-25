@@ -2,6 +2,9 @@
 
 #include <SFML/Network.hpp>
 #include <iostream>
+#include "../../ECS/inc/ECS.h"
+#include "IClient.h"
+
 
 class Packets
 {
@@ -45,7 +48,7 @@ public:
         // означает пакет с набором айдишников, котрые надо удалить, может быть отправлен как с хоста так и с клиента
         DeleteEntitiesByIds,
 
-//        AddEntitiesByTypeId
+        AddRemotePlayer,
 
         // просто значение для обозначения наибольшего элемента энума, не используется в пакетах
         LastType,
@@ -62,6 +65,8 @@ public:
     // static void sendDisconnect(sf::UdpSocket& sock, const sf::IpAddress& addr, sf::Uint16 port);
 
     static PacketType getPacketType(sf::Packet& pack);
+
+    static void sendCreateRemotePlayerPacket(Entity *player, std::shared_ptr<IClient> client);
 
 };
 
@@ -98,6 +103,9 @@ static inline std::ostream& operator<<(std::ostream& ss, Packets::PacketType typ
         break;
     case Packets::DeleteEntitiesByIds:
         ss << "DeleteEntityByIds";
+        break;
+    case Packets::AddRemotePlayer:
+        ss << "AddRemotePlayer";
         break;
     case Packets::LastType:
         ss << "LastType(utility)";

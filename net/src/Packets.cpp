@@ -21,6 +21,14 @@ Packets::PacketType Packets::getPacketType(sf::Packet& pack)
     return Unknown;
 }
 
+void Packets::sendCreateRemotePlayerPacket(Entity *player, std::shared_ptr<IClient> client)
+{
+    sf::Packet pack;
+    pack << AddRemotePlayer;
+
+    client->send(pack);
+}
+
 void Packets::sendAskConnection(sf::UdpSocket& sock, const sf::IpAddress& addr, sf::Uint16 port)
 {
     // sf::Packet pack;
