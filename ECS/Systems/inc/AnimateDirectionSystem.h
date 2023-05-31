@@ -26,19 +26,28 @@ class AnimateDirectionSystem : public BaseSystem {
         manager->selectEntites<MoveDirectionComponent>(entities);
 
         for (auto entity: entities) {
-            //if (entity->HasComponent<VelocityComponent>() && entity->HasComponent<SpriteComponent>())
-            //{
-                //auto velocity = entity->getComponent<VelocityComponent>();
-                auto dir_component = entity->getComponent<MoveDirectionComponent>();
+            if (entity->HasComponent<VelocityComponent>() && entity->HasComponent<SpriteComponent>())
+            {
+//                auto dir_component = entity->getComponent<MoveDirectionComponent>();
 
-                if (dir_component.has_dir_changed)
+                auto velocity = entity->getComponent<VelocityComponent>();
+                auto rect = entity->getComponent<SpriteComponent>().sprite.getTextureRect();
+                if ((velocity.velocity.x > 0 && rect.width < 0) || (velocity.velocity.x < 0 && rect.width > 0))
                 {
-                    auto rect = entity->getComponent<SpriteComponent>().sprite.getTextureRect();
                     rect.left += rect.width;
                     rect.width = -rect.width;
 
                     entity->getComponent<SpriteComponent>().sprite.setTextureRect(rect);
                 }
+
+//                if (dir_component.has_dir_changed)
+//                {
+//                    auto rect = entity->getComponent<SpriteComponent>().sprite.getTextureRect();
+//                    rect.left += rect.width;
+//                    rect.width = -rect.width;
+//
+//                    entity->getComponent<SpriteComponent>().sprite.setTextureRect(rect);
+//                }
 //                else if (velocity.velocity.x < 0)
 //                {
 //                    auto rect = entity->getComponent<SpriteComponent>().sprite.getTextureRect();
@@ -48,7 +57,7 @@ class AnimateDirectionSystem : public BaseSystem {
 //                    entity->getComponent<SpriteComponent>().sprite.setTextureRect(rect);
 //                }
 
-            //}
+            }
         }
     }
 
