@@ -21,6 +21,7 @@ public:
     SpriteComponent() = default;
 
     explicit SpriteComponent(const Sprite &spriteSrc) : sprite(spriteSrc) {
+
     }
 
     SpriteComponent(const Sprite &spriteSrc, int drawingPriority_) : sprite(spriteSrc),

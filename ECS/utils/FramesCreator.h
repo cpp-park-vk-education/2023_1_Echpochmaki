@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "assets/Assets.h"
 
 class FramesCreator {
 public:
@@ -13,7 +14,8 @@ public:
     std::vector<sf::Texture> GetFrames(size_t rows, size_t cols, size_t margin_left, size_t margin_right,
                                        size_t margin_top, size_t margin_bottom) {
         sf::Texture texture;
-        texture.loadFromFile(filepath);
+        Assets::loadTextureFromFile(filepath, texture);
+//        texture.loadFromFile(filepath);
         auto size = texture.getSize();
         std::vector<sf::Texture> frames;
         size_t width_frame = size.x / cols;
@@ -24,8 +26,11 @@ public:
         for (size_t i = 0; i < rows; ++i) {
             for (size_t j = 0; j < cols; ++j) {
                 sf::Texture frame;
-                frame.loadFromFile(filepath, sf::IntRect(j * width_frame + margin_left, i * height_frame + margin_top,
+                Assets::loadTextureFromFile(filepath, texture, sf::IntRect(j * width_frame + margin_left, i * height_frame + margin_top,
                                                          width_frame - margin_right, height_frame - margin_bottom));
+
+//                frame.loadFromFile(filepath, sf::IntRect(j * width_frame + margin_left, i * height_frame + margin_top,
+//                                                         width_frame - margin_right, height_frame - margin_bottom));
                 // std::cout << j * width_frame << " " << i * height_frame << " " << width_frame  << " " << height_frame << std::endl;
                 frames.push_back(frame);
             }

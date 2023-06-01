@@ -14,6 +14,7 @@
 #include "SinkableComponent.h"
 #include "PlayerComponent.h"
 #include "../../Game.h"
+#include "../../assets/Assets.h"
 
 const int DefaultCollideWidth = 60;
 const int DefaultCollideHeight = 60;
@@ -37,13 +38,15 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
 
     switch (tile.objectId) {
         case floorTile.objectId: {
-            texture->loadFromFile(floor_texture_path);
+            Assets::loadTextureFromFile(floor_texture_path, *texture);
+//            texture->loadFromFile(floor_texture_path);
             sprite.setTexture(*texture);
             entity->AddComponent<SpriteComponent>(sprite, floorTile.objectId);
         }
             break;
         case wallTile.objectId: {
-            texture->loadFromFile(wall_texture_path);
+            Assets::loadTextureFromFile(wall_texture_path, *texture);
+//            texture->loadFromFile(wall_texture_path);
             sprite.setTexture(*texture);
 
             entity->AddComponent<SpriteComponent>(sprite, wallTile.objectId);
@@ -51,7 +54,8 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
         }
             break;
         case doorTile.objectId: {
-            texture->loadFromFile(door_texture_path);
+            Assets::loadTextureFromFile(door_texture_path, *texture);
+//            texture->loadFromFile(door_texture_path);
             sprite.setTexture(*texture);
 
             entity->AddComponent<SpriteComponent>(sprite, doorTile.objectId);
@@ -92,6 +96,7 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
             all_animation_durations.push_back(die_frames_durations);
 
             entity->AddComponent<FramesComponent>(all_frames, all_frames[0][0], all_animation_durations);
+
             sprite.setTexture(frames[0]);
 
             entity->AddComponent<SpriteComponent>(sprite, enemyTile.objectId);
