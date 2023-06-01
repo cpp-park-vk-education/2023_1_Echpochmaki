@@ -29,10 +29,10 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
 
     sf::Texture *texture = new sf::Texture;
 
-    std::string floor_texture_path = "../Graphics/textures/floor.png";
-    std::string wall_texture_path = "../Graphics/textures/wall.png";
-    std::string door_texture_path = "../Graphics/textures/door.png";
-    std::string hero_king_texture_path = "../Graphics/textures/HeroKnight.png";
+    std::string floor_texture_path = "Graphics/textures/floor.png";
+    std::string wall_texture_path = "Graphics/textures/wall.png";
+    std::string door_texture_path = "Graphics/textures/door.png";
+    std::string hero_king_texture_path = "Graphics/textures/HeroKnight.png";
 
     FramesCreator creator(hero_king_texture_path);
 
@@ -77,11 +77,15 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
             std::vector<sf::Texture> idling_frames{frames.begin() + 0, frames.begin() + 7};
             std::vector<sf::Texture> dying_frames{frames.begin() + 49, frames.begin() + 57};
 
+
             std::vector<std::vector<sf::Texture>> all_frames;
             all_frames.push_back(moving_frames);
             all_frames.push_back(attack_frames);
             all_frames.push_back(idling_frames);
             all_frames.push_back(dying_frames);
+
+	        auto color = sf::Color(155+random() %100, 155+random() %100, 155+random() %100);
+			sprite.setColor(color);
 
 
             std::vector<float> moving_frames_durations(moving_frames.size(), 1);
@@ -136,7 +140,8 @@ Entity *EntityCreator::createEntity(const EntityTileBase &tile) {
             std::vector<float> moving_frames_durations_player(moving_frames_player.size(), 1);
             std::vector<float> attack_frames_durations_player(attack_frames_player.size(), 1);
             std::vector<float> idling_frames_durations_player(idling_frames_player.size(), 2);
-            std::vector<float> die_frames_durations_player(dying_frames_player.size(), 3);
+            std::vector<float> die_frames_durations_player(dying_frames_player.size(), 5);
+
 
             std::vector<std::vector<float>> all_animation_durations_player;
             all_animation_durations_player.push_back(moving_frames_durations_player);

@@ -26,11 +26,11 @@ public:
         for (size_t i = 0; i < rows; ++i) {
             for (size_t j = 0; j < cols; ++j) {
                 sf::Texture frame;
-                Assets::loadTextureFromFile(filepath, texture, sf::IntRect(j * width_frame + margin_left, i * height_frame + margin_top,
-                                                         width_frame - margin_right, height_frame - margin_bottom));
-
-//                frame.loadFromFile(filepath, sf::IntRect(j * width_frame + margin_left, i * height_frame + margin_top,
+//                Assets::loadTextureFromFile(filepath, texture, sf::IntRect(j * width_frame + margin_left, i * height_frame + margin_top,
 //                                                         width_frame - margin_right, height_frame - margin_bottom));
+
+                frame.loadFromFile(filepath, sf::IntRect(j * width_frame + margin_left, i * height_frame + margin_top,
+                                                         width_frame - margin_right, height_frame - margin_bottom));
                 // std::cout << j * width_frame << " " << i * height_frame << " " << width_frame  << " " << height_frame << std::endl;
                 frames.push_back(frame);
             }

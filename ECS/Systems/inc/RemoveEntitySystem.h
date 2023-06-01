@@ -49,7 +49,7 @@ public:
                     if (entity->HasComponent<PlayerComponent>() && ! entity->getComponent<PlayerComponent>().is_remote) // подумать
                     {
                         sf::Font default_font;
-                        default_font.loadFromFile("../Graphics/fonts/main_font.ttf");
+                        default_font.loadFromFile("Graphics/fonts/main_font.ttf");
                         sf::Text info;
                         std::string msg = "You died";
                         info.setString(msg);

@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Game"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\SFML\;CMake Files\MapGeneration\;CMake Files\Graphics\;CMake Files\events\;CMake Files\net\;CMake Files\ECS\;CMake Files\ECS\Systems\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="app">
+				<Option output="/home/andrew/Projects/2023_1_Echpochmaki/app" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Components"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/Time"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/net/inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/events/inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/."/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 app"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="app/fast">
+				<Option output="/home/andrew/Projects/2023_1_Echpochmaki/app" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Components"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/Time"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/net/inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/events/inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/."/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 app/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="LevelManager">
+				<Option output="/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/libLevelManager.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/inc"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/Makefile&quot;  VERBOSE=1 LevelManager"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="LevelManager/fast">
+				<Option output="/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/libLevelManager.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/inc"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/Makefile&quot;  VERBOSE=1 LevelManager/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="events">
+				<Option output="/home/andrew/Projects/2023_1_Echpochmaki/events/libevents.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki/events"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/events/inc"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/events/Makefile&quot;  VERBOSE=1 events"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/events/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/events/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/events/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="events/fast">
+				<Option output="/home/andrew/Projects/2023_1_Echpochmaki/events/libevents.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki/events"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/events/inc"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/events/Makefile&quot;  VERBOSE=1 events/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/events/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/events/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/events/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="net">
+				<Option output="/home/andrew/Projects/2023_1_Echpochmaki/net/libnet.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki/net"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/net/inc"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/net/Makefile&quot;  VERBOSE=1 net"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/net/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/net/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/net/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="net/fast">
+				<Option output="/home/andrew/Projects/2023_1_Echpochmaki/net/libnet.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki/net"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/net/inc"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/net/Makefile&quot;  VERBOSE=1 net/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/net/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/net/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/net/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="EntityManager">
+				<Option output="/home/andrew/Projects/2023_1_Echpochmaki/ECS/libEntityManager.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki/ECS"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/inc"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Makefile&quot;  VERBOSE=1 EntityManager"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="EntityManager/fast">
+				<Option output="/home/andrew/Projects/2023_1_Echpochmaki/ECS/libEntityManager.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki/ECS"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/inc"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Makefile&quot;  VERBOSE=1 EntityManager/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="System">
+				<Option output="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/libSystem.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/../inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/../Components"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/Makefile&quot;  VERBOSE=1 System"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="System/fast">
+				<Option output="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/libSystem.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/../inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/inc"/>
+					<Add directory="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/../Components"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/Makefile&quot;  VERBOSE=1 System/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Components/AnimationMovingComponent.h">
+			<Option target="EntityManager"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Components/FramesComponent.h">
+			<Option target="EntityManager"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Components/SinkableComponent.h">
+			<Option target="EntityManager"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/inc/AnimateMovingDirectionSystem.h">
+			<Option target="System"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/inc/AttackSystem.h">
+			<Option target="System"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/inc/CameraSystem.h">
+			<Option target="System"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/inc/FramesSystem.h">
+			<Option target="System"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/inc/RemoveEntitySystem.h">
+			<Option target="System"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/inc/RenderInfoSystem.h">
+			<Option target="System"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/src/BaseSystem.cpp">
+			<Option target="System"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/src/EnemySystem.cpp">
+			<Option target="System"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/src/HitBoxSystem.cpp">
+			<Option target="System"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/src/MoveSystem.cpp">
+			<Option target="System"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/src/PlayerSystem.cpp">
+			<Option target="System"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/src/SyncSystem.cpp">
+			<Option target="System"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/src/EntityCreator.cpp">
+			<Option target="app"/>
+			<Option target="EntityManager"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/src/EntityManager.cpp">
+			<Option target="EntityManager"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/Game.cpp">
+			<Option target="app"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/Game.h">
+			<Option target="app"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/src/BSPTree.cpp">
+			<Option target="app"/>
+			<Option target="LevelManager"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/src/LevelManager.cpp">
+			<Option target="app"/>
+			<Option target="LevelManager"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/Time/Timer.cpp">
+			<Option target="app"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/Time/Timer.h">
+			<Option target="app"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/assets/Assets.cpp">
+			<Option target="app"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/assets/Assets.h">
+			<Option target="app"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/events/src/events.cpp">
+			<Option target="app"/>
+			<Option target="events"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/main.cpp">
+			<Option target="app"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/net/src/Client.cpp">
+			<Option target="app"/>
+			<Option target="net"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/net/src/Host.cpp">
+			<Option target="app"/>
+			<Option target="net"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/net/src/Network.cpp">
+			<Option target="app"/>
+			<Option target="net"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/net/src/Packets.cpp">
+			<Option target="app"/>
+			<Option target="net"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/../../../../usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/../../../../usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLConfigDependencies.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/../../../../usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/../../../../usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLSharedTargets-none.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/../../../../usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLSharedTargets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/MapGeneration/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\MapGeneration\"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/Graphics/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\Graphics\"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/events/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\events\"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/net/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\net\"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ECS\"/>
+		</Unit>
+		<Unit filename="/home/andrew/Projects/2023_1_Echpochmaki/ECS/Systems/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ECS\Systems\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
